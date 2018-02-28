@@ -345,3 +345,132 @@ let photoPosts = [
     }
 
 ];
+
+(function () {
+    let getPhotoPosts = (skip, top, filterConfig = {}) => {
+        skip = skip ? skip : 0;
+        top = top ? top : 10;
+        let resPhotoPosts = photoPosts;
+        if (filterConfig.length !== 0) {
+            if (Object.keys(filterConfig).includes("author")) {
+                resPhotoPosts = resPhotoPosts.filter(post => {
+                    return (post.author.startsWith(filterConfig.author))
+                });
+            }
+            if (Object.keys(filterConfig).includes("dateFrom")) {
+                resPhotoPosts = resPhotoPosts.filter(post => {
+                    return (post.createdAt >= filterConfig.dateFrom)
+                });
+            }
+            if (Object.keys(filterConfig).includes("dateTo")) {
+                resPhotoPosts = resPhotoPosts.filter(post => {
+                    return (post.createdAt <= filterConfig.dateTo)
+                });
+            }
+            if (Object.keys(filterConfig).includes("hashtag")) {
+                resPhotoPosts = resPhotoPosts.filter(post => {
+                    let res = false;
+                    post.hashTags.map(tag => {
+                        if (tag.startsWith(filterConfig.hashtag)) {
+                            res = true;
+                        }
+                    });
+                    return res;
+                });
+            }
+        }
+        return resPhotoPosts.slice(skip, top + skip);
+    };
+
+    let getPhotoPost = id => {
+        let res = null;
+        photoPosts.map(post => {
+            if (post.id === id) {
+                res = post;
+            }
+        });
+        return res;
+    };
+
+    let validatePhotoPost = post => {
+        if (Object.keys(post).includes('id')) {
+            if (typeof post.id !== 'string' || post.id.length === 0 || getPhotoPost(post.id) !== null) {
+                return false;
+            }
+        }
+        else {
+            return false;
+        }
+        if (Object.keys(post).includes('description')) {
+            if (typeof post.description !== 'string' || post.description.length >= 200) {
+                return false;
+            }
+        }
+        else {
+            return false;
+        }
+        if (Object.keys(post).includes('createdAt')) {
+            if (typeof post.createdAt !== 'object') {
+                return false;
+            }
+        }
+        else {
+            return false;
+        }
+        if (Object.keys(post).includes('author')) {
+            if (typeof post.author !== 'string' || post.author.length === 0) {
+                return false;
+            }
+        }
+        else {
+            return false;
+        }
+        if (Object.keys(post).includes('photoLink')) {
+            if (typeof post.photoLink !== 'string' || post.photoLink.length === 0) {
+                return false;
+            }
+        }
+        else {
+            return false;
+        }
+        if (Object.keys(post).includes('hashTags')) {
+            if (typeof post.hashTags !== 'object') {
+                return false;
+            }
+        }
+        if (Object.keys(post).includes('likes')) {
+            if (typeof post.likes !== 'object') {
+                return false;
+            }
+        }
+        return true;
+    };
+
+    let addPhotoPost = post => {
+        if (validatePhotoPost(post)) {
+            photoPosts.push(post);
+            return true;
+        }
+        return false;
+    };
+
+    let editPhotoPost = (id, editedPost) => {
+        let post = getPhotoPost(id);
+        if (post !== null) {
+            photoPosts.splice(photoPosts.indexOf(post), 1);
+            photoPosts.push({...post, ...editedPost});
+            return true;
+        }
+        return false;
+    };
+
+    let removePhotoPost = id => {
+        let post = getPhotoPost(id);
+        if (post !== null) {
+            photoPosts.splice(photoPosts.indexOf(post), 1);
+            return true;
+        }
+        return false;
+    };
+})();
+
