@@ -346,7 +346,7 @@ let photoPosts = [
 
 ];
 
-(function () {
+const PhotoActions = (function () {
     let getPhotoPosts = (skip, top, filterConfig = {}) => {
         skip = skip ? skip : 0;
         top = top ? top : 10;
@@ -384,7 +384,7 @@ let photoPosts = [
 
     let getPhotoPost = id => {
         let res = null;
-        photoPosts.map(post => {
+        photoPosts.forEach(post => {
             if (post.id === id) {
                 res = post;
             }
@@ -472,5 +472,13 @@ let photoPosts = [
         }
         return false;
     };
-})();
 
+    return {
+        getPhotoPosts: getPhotoPosts,
+        getPhotoPost: getPhotoPost,
+        validatePhotoPost: validatePhotoPost,
+        addPhotoPost: addPhotoPost,
+        editPhotoPost: editPhotoPost,
+        removePhotoPost: removePhotoPost
+    }
+})();
