@@ -351,25 +351,19 @@ let photoActions = (function () {
         top = top ? top : 10;
         let resPhotoPosts = photoPosts;
         if (filterConfig.length !== 0) {
-            if (Object.keys(filterConfig).includes("author")) {
-                resPhotoPosts = resPhotoPosts.filter(post => {
-                    return (post.author.startsWith(filterConfig.author))
-                });
+            if (filterConfig.hasOwnProperty("author")) {
+                resPhotoPosts = resPhotoPosts.filter(post => post.author.startsWith(filterConfig.author));
             }
-            if (Object.keys(filterConfig).includes("dateFrom")) {
-                resPhotoPosts = resPhotoPosts.filter(post => {
-                    return (post.createdAt >= filterConfig.dateFrom)
-                });
+            if (filterConfig.hasOwnProperty("dateFrom")) {
+                resPhotoPosts = resPhotoPosts.filter(post => post.createdAt >= filterConfig.dateFrom);
             }
-            if (Object.keys(filterConfig).includes("dateTo")) {
-                resPhotoPosts = resPhotoPosts.filter(post => {
-                    return (post.createdAt <= filterConfig.dateTo)
-                });
+            if (filterConfig.hasOwnProperty("dateTo")) {
+                resPhotoPosts = resPhotoPosts.filter(post => post.createdAt <= filterConfig.dateTo);
             }
-            if (Object.keys(filterConfig).includes("hashtag")) {
+            if (filterConfig.hasOwnProperty("hashtag")) {
                 resPhotoPosts = resPhotoPosts.filter(post => {
                     let res = false;
-                    post.hashTags.map(tag => {
+                    post.hashTags.forEach(tag => {
                         if (tag.startsWith(filterConfig.hashtag)) {
                             res = true;
                         }
@@ -391,70 +385,70 @@ let photoActions = (function () {
         return res;
     };
 
-    let validateId = post => {
-        if (Object.keys(post).includes('id')) {
+    let validateId = (post, presence) => {
+        if (post.hasOwnProperty('id')) {
             if (typeof post.id !== 'string' || post.id.length === 0 || getPhotoPost(post.id) !== null) {
                 console.log('Field \'id\' has an invalid format');
                 return false;
             }
         }
-        else {
+        else if (presence) {
             console.log('Post doesn\'t have field \'id\'');
             return false;
         }
         return true;
     };
 
-    let validateDesc = post => {
-        if (Object.keys(post).includes('description')) {
+    let validateDesc = (post, presence) => {
+        if (post.hasOwnProperty('description')) {
             if (typeof post.description !== 'string' || post.description.length >= 200 || post.description.length === 0) {
                 console.log('Field \'description\' has an invalid format');
                 return false;
             }
         }
-        else {
+        else if (presence) {
             console.log('Post doesn\'t have field \'description\'');
             return false;
         }
         return true;
     };
 
-    let validateDate = post => {
-        if (Object.keys(post).includes('createdAt')) {
-            if (typeof post.createdAt !== 'object') {
+    let validateDate = (post, presence) => {
+        if (post.hasOwnProperty('createdAt')) {
+            if ({}.toString.call(post.createdAt) !== '[object Date]') {
                 console.log('Field \'createdAt\' has an invalid format');
                 return false;
             }
         }
-        else {
+        else if (presence) {
             console.log('Post doesn\'t have field \'createdAt\'');
             return false;
         }
         return true;
     };
 
-    let validateAuthor = post => {
-        if (Object.keys(post).includes('author')) {
+    let validateAuthor = (post, presence) => {
+        if (post.hasOwnProperty('author')) {
             if (typeof post.author !== 'string' || post.author.length === 0) {
                 console.log('Field \'author\' has an invalid format');
                 return false;
             }
         }
-        else {
+        else if (presence) {
             console.log('Post doesn\'t have field \'author\'');
             return false;
         }
         return true;
     };
 
-    let validateLink = post => {
-        if (Object.keys(post).includes('photoLink')) {
+    let validateLink = (post, presence) => {
+        if (post.hasOwnProperty('photoLink')) {
             if (typeof post.photoLink !== 'string' || post.photoLink.length === 0) {
                 console.log('Field \'photoLink\' has an invalid format');
                 return false;
             }
         }
-        else {
+        else if (presence) {
             console.log('Post doesn\'t have field \'photoLink\'');
             return false;
         }
@@ -462,15 +456,15 @@ let photoActions = (function () {
     };
 
     let validateHashTags = post => {
-        if (Object.keys(post).includes('hashTags')) {
-            if (typeof post.hashTags !== 'object') {
+        if (post.hasOwnProperty('hashTags')) {
+            if ({}.toString.call(post.hashTags) !== '[object Array]') {
                 console.log('Field \'hashTags\' has an invalid format');
                 return false;
             }
             let regexp = new RegExp('#[A-Za-z_]+');
             let res = true;
             post.hashTags.forEach(hashtag => res = regexp.test(hashtag) ? res : false);
-            if(!res){
+            if (!res) {
                 console.log('Field \'hashTags\' has an invalid format');
                 return false;
             }
@@ -479,8 +473,8 @@ let photoActions = (function () {
     };
 
     let validateLikes = post => {
-        if (Object.keys(post).includes('likes')) {
-            if (typeof post.likes !== 'object') {
+        if (post.hasOwnProperty('likes')) {
+            if ({}.toString.call(post.hashTags) !== '[object Array]') {
                 console.log('Field \'likes\' has an invalid format');
                 return false;
             }
@@ -488,35 +482,22 @@ let photoActions = (function () {
         return true;
     };
 
-    let validatePhotoPost = post => {
-        let res = validateId(post);
-        if (res) {
-            res = validateDesc(post);
-        }
-        if (res) {
-            res = validateDate(post);
-        }
-        if (res) {
-            res = validateAuthor(post);
-        }
-        if (res) {
-            res = validateLink(post);
-        }
-        if (res) {
-            res = validateHashTags(post);
-        }
-        if (res) {
-            res = validateLikes(post);
-        }
-        if (res) {
+    //параметр presence обозначает, обязательно ли
+    //присутсвие всех полей (кроме likes и hashTags) в проверяемом объекте
+    let validatePhotoPost = (post, presence) => {
+        if (validateAuthor(post, presence) && validateDate(post, presence) && validateDesc(post, presence)
+            && validateHashTags(post, presence) && validateId(post, presence) && validateLikes(post, presence)
+            && validateLink(post, presence)) {
             console.log('Post passed validation!:)');
+            return true;
         }
-        return res;
+        return false;
     };
 
     let addPhotoPost = post => {
         if (validatePhotoPost(post)) {
             photoPosts.push(post);
+            photoPosts = photoPosts.sort((a, b) => a.createdAt - b.createdAt);
             return true;
         }
         return false;
@@ -525,9 +506,15 @@ let photoActions = (function () {
     let editPhotoPost = (id, editedPost) => {
         let post = getPhotoPost(id);
         if (post !== null) {
-            photoPosts.splice(photoPosts.indexOf(post), 1);
-            photoPosts.push({...post, ...editedPost});
-            return true;
+            let res = true;
+            Object.keys(editedPost).forEach(prop => res = post.hasOwnProperty(prop));
+            if (res) {
+                if (validatePhotoPost(editedPost, false)) {
+                    photoPosts.splice(photoPosts.indexOf(post), 1);
+                    photoPosts.push({...post, ...editedPost});
+                    return true;
+                }
+            }
         }
         return false;
     };
@@ -553,11 +540,11 @@ let photoActions = (function () {
 
 //- Test
 console.log('<------- getPhotoPosts ------->\n');
-console.log('The result of photoActions.getPhotoPosts(null, 5, {author: \'Kate\', hashtag: \'#life\', dateTo: new Date(\'2018-02-22T00:00:00\')}) is\n\n',
-    photoActions.getPhotoPosts(null, 5, {
+console.log('The result of photoActions.getPhotoPosts(null, 3, {author: \'Kate\', hashtag: \'#life\', dateTo: new Date(\'2018-02-25T00:00:00\')}) is\n\n',
+    photoActions.getPhotoPosts(null, 3, {
         author: 'Kate',
         hashtag: '#life',
-        dateTo: new Date('2018-02-22T00:00:00')
+        dateTo: new Date('2018-02-25T00:00:00')
     }), '\n\n');
 
 console.log('<------- getPhotoPost ------->\n');
@@ -582,7 +569,7 @@ console.log(photoActions.validatePhotoPost({
         '#me',
         '#life'
     ]
-}) + '\n');
+}, true) + '\n');
 
 console.log(photoActions.validatePhotoPost({
     id: '28',
@@ -597,10 +584,10 @@ console.log(photoActions.validatePhotoPost({
         'Egor1995'
     ],
     hashTags: [
-        'me',
+        '#me',
         '#life'
     ]
-}) + '\n');
+}, true) + '\n');
 
 console.log(photoActions.validatePhotoPost({
     id: '28',
@@ -618,7 +605,7 @@ console.log(photoActions.validatePhotoPost({
         '#me',
         '#life'
     ]
-}) + '\n');
+}, true) + '\n');
 
 console.log(photoActions.validatePhotoPost({
     id: '28',
@@ -635,7 +622,7 @@ console.log(photoActions.validatePhotoPost({
         '#me',
         '#life'
     ]
-}) + '\n');
+}, true) + '\n');
 
 console.log('<------- addPhotoPost ------->\n');
 console.log('Before adding a post the result of photoActions.getPhotoPost(\'31\') is\n',
@@ -661,7 +648,7 @@ console.log('The result of adding: ', photoActions.addPhotoPost({
 console.log('After adding a post the result of photoActions.getPhotoPost(\'31\') is\n',
     photoActions.getPhotoPost('31'), '\n');
 
-console.log('Tring to add existing post: ', photoActions.addPhotoPost({
+console.log('Trying to add existing post: ', photoActions.addPhotoPost({
     id: '15',
     description: 'To love or To be loved? How you\'ve spent St. Valintine\'s day? Mine was great!',
     createdAt: new Date('2018-02-14T21:45:08'),
@@ -684,9 +671,18 @@ console.log('<------- editPhotoPosts ------->\n');
 console.log('Before editing:\n', photoActions.getPhotoPost('13'), '\n');
 console.log('The result of editing: ', photoActions.editPhotoPost('13', {
     description: 'Wow! I was edited!',
-    hashTags: '#editing_is_cool'
+    hashTags: ['#editing_is_cool']
 }), '\n');
+
+
 console.log('After editing:\n', photoActions.getPhotoPost('13'), '\n');
+
+console.log('The result of editing: ', photoActions.editPhotoPost('13', {
+    description: 'Wow! I was edited!',
+    hashTags: '#editing_is_cool',
+
+}), '\n');
+
 
 console.log('<------- removePhotoPosts ------->\n');
 console.log('Before removing a post the result of photoActions.getPhotoPost(\'13\') is\n',
@@ -696,4 +692,4 @@ console.log('The result of removing: ', photoActions.removePhotoPost('13'), '\n'
 console.log('After removing a post the result of photoActions.getPhotoPost(\'13\') is\n',
     photoActions.getPhotoPost('13'), '\n');
 
-console.log('Tring to remove nonexistent post: ', photoActions.removePhotoPost('543'));
+console.log('Trying to remove nonexistent post: ', photoActions.removePhotoPost('543'));
