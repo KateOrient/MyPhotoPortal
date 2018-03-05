@@ -350,17 +350,17 @@ let photoActions = (function () {
         skip = skip ? skip : 0;
         top = top ? top : 10;
         let resPhotoPosts = photoPosts;
-        if (filterConfig.length !== 0) {
-            if (filterConfig.hasOwnProperty("author")) {
+        if (JSON.stringify(filterConfig) !== '{}') {
+            if (filterConfig.hasOwnProperty('author')) {
                 resPhotoPosts = resPhotoPosts.filter(post => post.author.startsWith(filterConfig.author));
             }
-            if (filterConfig.hasOwnProperty("dateFrom")) {
+            if (filterConfig.hasOwnProperty('dateFrom')) {
                 resPhotoPosts = resPhotoPosts.filter(post => post.createdAt >= filterConfig.dateFrom);
             }
-            if (filterConfig.hasOwnProperty("dateTo")) {
+            if (filterConfig.hasOwnProperty('dateTo')) {
                 resPhotoPosts = resPhotoPosts.filter(post => post.createdAt <= filterConfig.dateTo);
             }
-            if (filterConfig.hasOwnProperty("hashtag")) {
+            if (filterConfig.hasOwnProperty('hashtag')) {
                 resPhotoPosts = resPhotoPosts.filter(post => {
                     let res = false;
                     post.hashTags.forEach(tag => {
@@ -376,18 +376,12 @@ let photoActions = (function () {
     };
 
     let getPhotoPost = id => {
-        let res = null;
-        photoPosts.forEach(post => {
-            if (post.id === id) {
-                res = post;
-            }
-        });
-        return res;
+        return photoPosts.find(el => el.id === id);
     };
 
     let validateId = (post, presence) => {
         if ('id' in post) {
-            if (typeof post.id !== 'string' || post.id.length === 0 || getPhotoPost(post.id) !== null) {
+            if (typeof post.id !== 'string' || post.id.length === 0 || getPhotoPost(post.id)) {
                 console.log('Field \'id\' has an invalid format');
                 return false;
             }
@@ -462,9 +456,7 @@ let photoActions = (function () {
                 return false;
             }
             let regexp = new RegExp('#[A-Za-z_]+');
-            let isHashTag = true;
-            post.hashTags.forEach(hashtag => isHashTag = regexp.test(hashtag) ? isHashTag : false);
-            if (!isHashTag) {
+            if (!post.hashTags.every(hashtag => regexp.test(hashtag))) {
                 console.log('Field \'hashTags\' has an invalid format');
                 return false;
             }
@@ -483,7 +475,7 @@ let photoActions = (function () {
     };
 
     //параметр presence обозначает, обязательно ли
-    //присутсвие всех "обязательных" полей в проверяемом объекте
+    //присутсвие всех 'обязательных' полей в проверяемом объекте
     let validatePhotoPost = (post, presence) => {
 
         if (validateAuthor(post, presence) &&
@@ -503,7 +495,7 @@ let photoActions = (function () {
     let addPhotoPost = post => {
         if (validatePhotoPost(post)) {
             photoPosts.push(post);
-
+            photoPosts = photoPosts.sort((a, b) => b.createdAt - a.createdAt);
             return true;
         }
         return false;
@@ -511,14 +503,12 @@ let photoActions = (function () {
 
     let editPhotoPost = (id, editedPost) => {
         let post = getPhotoPost(id);
-        if (post !== null) {
-            let res = true;
-            Object.keys(editedPost).forEach(prop => res = prop in post ? res : false);
-            if (res) {
+        if (post) {
+            if (Object.keys(editedPost).every(prop => prop in post)) {
                 if (validatePhotoPost(editedPost, false)) {
                     photoPosts.splice(photoPosts.indexOf(post), 1);
                     photoPosts.push({...post, ...editedPost});
-                    photoPosts = photoPosts.sort((a, b) => a.createdAt - b.createdAt);
+                    photoPosts = photoPosts.sort((a, b) => b.createdAt - a.createdAt);
                     return true;
                 }
             }
@@ -528,7 +518,7 @@ let photoActions = (function () {
 
     let removePhotoPost = id => {
         let post = getPhotoPost(id);
-        if (post !== null) {
+        if (post) {
             photoPosts.splice(photoPosts.indexOf(post), 1);
             return true;
         }
