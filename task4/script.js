@@ -386,7 +386,7 @@ let photoActions = (function () {
     };
 
     let validateId = (post, presence) => {
-        if (post.hasOwnProperty('id')) {
+        if ('id' in post) {
             if (typeof post.id !== 'string' || post.id.length === 0 || getPhotoPost(post.id) !== null) {
                 console.log('Field \'id\' has an invalid format');
                 return false;
@@ -400,7 +400,7 @@ let photoActions = (function () {
     };
 
     let validateDesc = (post, presence) => {
-        if (post.hasOwnProperty('description')) {
+        if ('description' in post) {
             if (typeof post.description !== 'string' || post.description.length >= 200 || post.description.length === 0) {
                 console.log('Field \'description\' has an invalid format');
                 return false;
@@ -414,7 +414,7 @@ let photoActions = (function () {
     };
 
     let validateDate = (post, presence) => {
-        if (post.hasOwnProperty('createdAt')) {
+        if ('createdAt' in post) {
             if ({}.toString.call(post.createdAt) !== '[object Date]') {
                 console.log('Field \'createdAt\' has an invalid format');
                 return false;
@@ -428,7 +428,7 @@ let photoActions = (function () {
     };
 
     let validateAuthor = (post, presence) => {
-        if (post.hasOwnProperty('author')) {
+        if ('author' in post) {
             if (typeof post.author !== 'string' || post.author.length === 0) {
                 console.log('Field \'author\' has an invalid format');
                 return false;
@@ -442,7 +442,7 @@ let photoActions = (function () {
     };
 
     let validateLink = (post, presence) => {
-        if (post.hasOwnProperty('photoLink')) {
+        if ('photoLink' in post) {
             if (typeof post.photoLink !== 'string' || post.photoLink.length === 0) {
                 console.log('Field \'photoLink\' has an invalid format');
                 return false;
@@ -456,15 +456,15 @@ let photoActions = (function () {
     };
 
     let validateHashTags = post => {
-        if (post.hasOwnProperty('hashTags')) {
+        if ('hashTags' in post) {
             if ({}.toString.call(post.hashTags) !== '[object Array]') {
                 console.log('Field \'hashTags\' has an invalid format');
                 return false;
             }
             let regexp = new RegExp('#[A-Za-z_]+');
-            let res = true;
-            post.hashTags.forEach(hashtag => res = regexp.test(hashtag) ? res : false);
-            if (!res) {
+            let isHashTag = true;
+            post.hashTags.forEach(hashtag => isHashTag = regexp.test(hashtag) ? isHashTag : false);
+            if (!isHashTag) {
                 console.log('Field \'hashTags\' has an invalid format');
                 return false;
             }
@@ -473,7 +473,7 @@ let photoActions = (function () {
     };
 
     let validateLikes = post => {
-        if (post.hasOwnProperty('likes')) {
+        if ('likes' in post) {
             if ({}.toString.call(post.hashTags) !== '[object Array]') {
                 console.log('Field \'likes\' has an invalid format');
                 return false;
@@ -483,11 +483,17 @@ let photoActions = (function () {
     };
 
     //параметр presence обозначает, обязательно ли
-    //присутсвие всех полей (кроме likes и hashTags) в проверяемом объекте
+    //присутсвие всех "обязательных" полей в проверяемом объекте
     let validatePhotoPost = (post, presence) => {
-        if (validateAuthor(post, presence) && validateDate(post, presence) && validateDesc(post, presence)
-            && validateHashTags(post, presence) && validateId(post, presence) && validateLikes(post, presence)
-            && validateLink(post, presence)) {
+
+        if (validateAuthor(post, presence) &&
+            validateDate(post, presence) &&
+            validateDesc(post, presence) &&
+            validateHashTags(post, presence) &&
+            validateId(post, presence) &&
+            validateLikes(post, presence) &&
+            validateLink(post, presence)) {
+
             console.log('Post passed validation!:)');
             return true;
         }
@@ -497,7 +503,7 @@ let photoActions = (function () {
     let addPhotoPost = post => {
         if (validatePhotoPost(post)) {
             photoPosts.push(post);
-            photoPosts = photoPosts.sort((a, b) => a.createdAt - b.createdAt);
+
             return true;
         }
         return false;
@@ -507,11 +513,12 @@ let photoActions = (function () {
         let post = getPhotoPost(id);
         if (post !== null) {
             let res = true;
-            Object.keys(editedPost).forEach(prop => res = post.hasOwnProperty(prop));
+            Object.keys(editedPost).forEach(prop => res = prop in post ? res : false);
             if (res) {
                 if (validatePhotoPost(editedPost, false)) {
                     photoPosts.splice(photoPosts.indexOf(post), 1);
                     photoPosts.push({...post, ...editedPost});
+                    photoPosts = photoPosts.sort((a, b) => a.createdAt - b.createdAt);
                     return true;
                 }
             }
@@ -529,12 +536,12 @@ let photoActions = (function () {
     };
 
     return {
-        getPhotoPosts: getPhotoPosts,
-        getPhotoPost: getPhotoPost,
-        validatePhotoPost: validatePhotoPost,
-        addPhotoPost: addPhotoPost,
-        editPhotoPost: editPhotoPost,
-        removePhotoPost: removePhotoPost
+        getPhotoPosts,
+        getPhotoPost,
+        validatePhotoPost,
+        addPhotoPost,
+        editPhotoPost,
+        removePhotoPost
     }
 })();
 
