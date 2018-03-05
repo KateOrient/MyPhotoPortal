@@ -83,15 +83,14 @@ body {
 	margin: 10px 0 10px 0;
 	border: 1px solid #C2C1C1;
 	color: #333333;
-	font-size: 3vh;
+	font-size: 2.5vh;
 	cursor: pointer;
 }
 
 #phototable {
-	display: block;
 	height: 100%;
-	text-align: left;
 	margin: auto;
+	padding: 0;
 }
 
 .photo-cell {
@@ -113,7 +112,11 @@ body {
 	text-align: right;
 	text-decoration: underline;
 	cursor: pointer;
-} 
+}
+
+.delete.true {
+	visibility: visible;
+}
 
 .edit {
 	cursor: pointer;
@@ -122,6 +125,10 @@ body {
 	display: inline-block;
 	text-decoration:underline;
 	visibility: hidden;
+}
+
+.edit.true {
+	visibility: visible;
 }
 
 .photo {

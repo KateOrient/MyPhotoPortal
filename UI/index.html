@@ -5,60 +5,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="theme-color" content="#000000">
     <link rel="stylesheet" type="text/css" href="styles.css">
+    <script src="../task4/script.js"></script>
     <script type="text/javascript">
-    window.onload = () => {
-      renderPhoto(10);
-      resizePhototable();
-
-      window.onresize = () => {
-        resizePhototable();
-      }
-    }
-
-    var resizePhototable = () => {
-      var wScreen = document.body.clientWidth;
-      var wBlock = parseInt(getComputedStyle( document.getElementsByClassName("photo-cell")[0] ).width);
-    
-      phototable.style.width = Math.floor( wScreen/wBlock)*(wBlock+6) + "px"; 
-    } 
-
-    let renderPhoto = (num) => {
-      for(let i = 0;i < num; i++){
-    		phototable.innerHTML+=`
-    		<div class="photo-cell">
-    		  <div class="edit">edit</div>
-    		  <div class="delete">delete</div>
-          <div class="photo">
-            <img src="./img/photo/`+i+`.jpg" class="photo-img"/>
-          </div>
-          <div class="author">@user`+i+`</div>
-          <div class="photo-info-short">
-            <div class="like-info">
-              <img src="./img/like/like-outline.png" onclick="like(this)" class="like"/>
-              <div  class="like-num">`+(i+23)+`</div>
-            </div>
-            <div class="hashtags">
-              #hashtag1 #hashtag2
-            </div>
-            <div class="post-date">
-              08.02.2018 12:24
-            </div>
-            <div class="discription">
-               This is an amazing photo! Do you like it?
-            </div>
-          </div>
-        </div>`;
-
-        if(i==1){
-          document.getElementsByClassName('delete')[1].style.visibility = 'visible';
-          document.getElementsByClassName('edit')[1].style.visibility = 'visible';
-        }
-      }
-    }
-
-    var like = (target) => {
-    	var like_outline = new RegExp(".*like-outline.png");
-    	var like = new RegExp(".*like.png");
+    let like = (target) => {
+    	let like_outline = new RegExp(".*like-outline.png");
+    	let like = new RegExp(".*like.png");
     	if(like_outline.test(target.src)){
     		target.src ="./img/like/like.png";
     	}
@@ -104,6 +55,236 @@
         <input type="button" value="Add photo" class="add-btn"/>
       </form>
       <div id="phototable">
+        <div class="photo-cell">
+          <div class="edit">edit</div>
+          <div class="delete">delete</div>
+          <div class="photo">
+            <img src="./img/photo/0.jpg" class="photo-img"/>
+          </div>
+          <div class="author">@user0</div>
+          <div class="photo-info-short">
+            <div class="like-info">
+              <img src="./img/like/like-outline.png" onclick="like(this)" class="like"/>
+              <div  class="like-num">25</div>
+            </div>
+            <div class="hashtags">
+              #hashtag1 #hashtag2
+            </div>
+            <div class="post-date">
+              08.02.2018 12:24
+            </div>
+            <div class="discription">
+              This is an amazing photo! Do you like it?
+            </div>
+          </div>
+        </div>
+        <div class="photo-cell">
+          <div class="edit true">edit</div>
+          <div class="delete true">delete</div>
+          <div class="photo">
+            <img src="./img/photo/1.jpg" class="photo-img"/>
+          </div>
+          <div class="author">@user1</div>
+          <div class="photo-info-short">
+            <div class="like-info">
+              <img src="./img/like/like-outline.png" onclick="like(this)" class="like"/>
+              <div  class="like-num">34</div>
+            </div>
+            <div class="hashtags">
+              #hashtag1 #hashtag2
+            </div>
+            <div class="post-date">
+              08.02.2018 12:24
+            </div>
+            <div class="discription">
+              This is an amazing photo! Do you like it?
+            </div>
+          </div>
+        </div>
+        <div class="photo-cell">
+          <div class="edit">edit</div>
+          <div class="delete">delete</div>
+          <div class="photo">
+            <img src="./img/photo/2.jpg" class="photo-img"/>
+          </div>
+          <div class="author">@user2</div>
+          <div class="photo-info-short">
+            <div class="like-info">
+              <img src="./img/like/like-outline.png" onclick="like(this)" class="like"/>
+              <div  class="like-num">142</div>
+            </div>
+            <div class="hashtags">
+              #hashtag1 #hashtag2
+            </div>
+            <div class="post-date">
+              08.02.2018 12:24
+            </div>
+            <div class="discription">
+              This is an amazing photo! Do you like it?
+            </div>
+          </div>
+        </div>
+        <div class="photo-cell">
+          <div class="edit">edit</div>
+          <div class="delete">delete</div>
+          <div class="photo">
+            <img src="./img/photo/3.jpg" class="photo-img"/>
+          </div>
+          <div class="author">@user3</div>
+          <div class="photo-info-short">
+            <div class="like-info">
+              <img src="./img/like/like-outline.png" onclick="like(this)" class="like"/>
+              <div  class="like-num">14</div>
+            </div>
+            <div class="hashtags">
+              #hashtag1 #hashtag2
+            </div>
+            <div class="post-date">
+              08.02.2018 12:24
+            </div>
+            <div class="discription">
+              This is an amazing photo! Do you like it?
+            </div>
+          </div>
+        </div>
+        <div class="photo-cell">
+          <div class="edit">edit</div>
+          <div class="delete">delete</div>
+          <div class="photo">
+            <img src="./img/photo/4.jpg" class="photo-img"/>
+          </div>
+          <div class="author">@user4</div>
+          <div class="photo-info-short">
+            <div class="like-info">
+              <img src="./img/like/like-outline.png" onclick="like(this)" class="like"/>
+              <div  class="like-num">123</div>
+            </div>
+            <div class="hashtags">
+              #hashtag1 #hashtag2
+            </div>
+            <div class="post-date">
+              08.02.2018 12:24
+            </div>
+            <div class="discription">
+              This is an amazing photo! Do you like it?
+            </div>
+          </div>
+        </div>
+        <div class="photo-cell">
+          <div class="edit">edit</div>
+          <div class="delete">delete</div>
+          <div class="photo">
+            <img src="./img/photo/5.jpg" class="photo-img"/>
+          </div>
+          <div class="author">@user5</div>
+          <div class="photo-info-short">
+            <div class="like-info">
+              <img src="./img/like/like-outline.png" onclick="like(this)" class="like"/>
+              <div  class="like-num">452</div>
+            </div>
+            <div class="hashtags">
+              #hashtag1 #hashtag2
+            </div>
+            <div class="post-date">
+              08.02.2018 12:24
+            </div>
+            <div class="discription">
+              This is an amazing photo! Do you like it?
+            </div>
+          </div>
+        </div>
+        <div class="photo-cell">
+          <div class="edit">edit</div>
+          <div class="delete">delete</div>
+          <div class="photo">
+            <img src="./img/photo/6.jpg" class="photo-img"/>
+          </div>
+          <div class="author">@user6</div>
+          <div class="photo-info-short">
+            <div class="like-info">
+              <img src="./img/like/like-outline.png" onclick="like(this)" class="like"/>
+              <div  class="like-num">12</div>
+            </div>
+            <div class="hashtags">
+              #hashtag1 #hashtag2
+            </div>
+            <div class="post-date">
+              08.02.2018 12:24
+            </div>
+            <div class="discription">
+              This is an amazing photo! Do you like it?
+            </div>
+          </div>
+        </div>
+        <div class="photo-cell">
+          <div class="edit">edit</div>
+          <div class="delete">delete</div>
+          <div class="photo">
+            <img src="./img/photo/7.jpg" class="photo-img"/>
+          </div>
+          <div class="author">@user7</div>
+          <div class="photo-info-short">
+            <div class="like-info">
+              <img src="./img/like/like-outline.png" onclick="like(this)" class="like"/>
+              <div  class="like-num">75</div>
+            </div>
+            <div class="hashtags">
+              #hashtag1 #hashtag2
+            </div>
+            <div class="post-date">
+              08.02.2018 12:24
+            </div>
+            <div class="discription">
+              This is an amazing photo! Do you like it?
+            </div>
+          </div>
+        </div>
+        <div class="photo-cell">
+          <div class="edit">edit</div>
+          <div class="delete">delete</div>
+          <div class="photo">
+            <img src="./img/photo/8.jpg" class="photo-img"/>
+          </div>
+          <div class="author">@user8</div>
+          <div class="photo-info-short">
+            <div class="like-info">
+              <img src="./img/like/like-outline.png" onclick="like(this)" class="like"/>
+              <div  class="like-num">423</div>
+            </div>
+            <div class="hashtags">
+              #hashtag1 #hashtag2
+            </div>
+            <div class="post-date">
+              08.02.2018 12:24
+            </div>
+            <div class="discription">
+              This is an amazing photo! Do you like it?
+            </div>
+          </div>
+        </div>
+        <div class="photo-cell">
+          <div class="edit">edit</div>
+          <div class="delete">delete</div>
+          <div class="photo">
+            <img src="./img/photo/9.jpg" class="photo-img"/>
+          </div>
+          <div class="author">@user9</div>
+          <div class="photo-info-short">
+            <div class="like-info">
+              <img src="./img/like/like-outline.png" onclick="like(this)" class="like"/>
+              <div  class="like-num">67</div>
+            </div>
+            <div class="hashtags">
+              #hashtag1 #hashtag2
+            </div>
+            <div class="post-date">
+              08.02.2018 12:24
+            </div>
+            <div class="discription">
+              This is an amazing photo! Do you like it?
+            </div>
+          </div>
+        </div>
       </div>
       <form action="" method="post" name="show-more-photo"><input type="button" value="More" class="more-btn"/></form>
     </div>
