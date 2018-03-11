@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="theme-color" content="#000000">
     <link rel="stylesheet" type="text/css" href="styles.css">
-    <script src="script.js"></script>
+
     <!--<script type="text/javascript">
         let like = (target) => {
             let like_outline = new RegExp(".*like-outline.png");
@@ -33,6 +33,7 @@
     <div id="configrations">
         <form action="" method="post" id="filt-by-name">
             <input type="text" id="filt-input-name" name="filt-input-name" placeholder="name">
+            <datalist id="name-list"></datalist>
         </form>
         <form action="" method="post" id="filt-by-date">
             <input type="date" id="filt-input-date-from" name="filt-input-date">
@@ -288,7 +289,7 @@
 </div>
 <template id="photocell_temp">
     <div class="photo-cell">
-        <div class="edit">edit</div>
+        <div class="edit" >edit</div>
         <div class="delete">delete</div>
         <div class="photo">
             <img src="" class="photo-img"/>
@@ -306,4 +307,5 @@
     </div>
 </template>
 </body>
+<script src="script.js"></script>
 </html>

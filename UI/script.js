@@ -241,7 +241,7 @@ let photoPosts = [
     {
         id: '8',
         description: 'Looks amazing, isn\'t it? Do you know what they are doing? If not, visit google.com',
-        createdAt: new Date('2018-02-23T20:00:00'),
+        createdAt: new Date('2018-02-23T20:01:24'),
         author: 'SamiyKrytoi',
         photoLink: './img/photo/7.jpg',
         likes: [
@@ -258,7 +258,7 @@ let photoPosts = [
     {
         id: '16',
         description: 'Thanks for being such a nice team lead! Happy Birthday, Ivan!',
-        createdAt: new Date('2018-02-23T20:00:00'),
+        createdAt: new Date('2018-02-23T20:30:53'),
         author: 'Egor1995',
         photoLink: './img/photo/15.jpg',
         likes: [
@@ -272,7 +272,7 @@ let photoPosts = [
     {
         id: '1',
         description: 'This is an amazing photo! Do you like it?',
-        createdAt: new Date('2018-02-23T20:00:00'),
+        createdAt: new Date('2018-02-23T20:45:32'),
         author: 'Kate145',
         photoLink: './img/photo/0.jpg',
         likes: [
@@ -349,6 +349,7 @@ const USER = 'Kate145';
 //- Module
 let photoActions = (function () {
     let getPhotoPosts = (skip, top, filterConfig = {}) => {
+        photoPosts = photoPosts.sort((a, b) => b.createdAt - a.createdAt);
         skip = skip ? skip : 0;
         top = top ? top : 10;
         let resPhotoPosts = photoPosts;
@@ -498,12 +499,14 @@ let photoActions = (function () {
     let editPhotoPost = (id, editedPost) => {
         let post = getPhotoPost(id);
         if (post) {
-            if (Object.keys(editedPost).every(prop => prop in post)) {
-                if (validatePhotoPost(editedPost, false)) {
-                    photoPosts.splice(photoPosts.indexOf(post), 1);
-                    photoPosts.push({...post, ...editedPost});
-                    photoPosts = photoPosts.sort((a, b) => b.createdAt - a.createdAt);
-                    return true;
+            if (post.author === USER) {
+                if (Object.keys(editedPost).every(prop => prop in post)) {
+                    if (validatePhotoPost(editedPost, false)) {
+                        photoPosts.splice(photoPosts.indexOf(post), 1);
+                        photoPosts.push({...post, ...editedPost});
+                        photoPosts = photoPosts.sort((a, b) => b.createdAt - a.createdAt);
+                        return true;
+                    }
                 }
             }
         }
@@ -513,8 +516,10 @@ let photoActions = (function () {
     let removePhotoPost = id => {
         let post = getPhotoPost(id);
         if (post) {
-            photoPosts.splice(photoPosts.indexOf(post), 1);
-            return true;
+            if (post.author === USER) {
+                photoPosts.splice(photoPosts.indexOf(post), 1);
+                return true;
+            }
         }
         return false;
     };
@@ -531,7 +536,7 @@ let photoActions = (function () {
 
 let DOMActions = (function () {
     let genDate = date => {
-        let options ={year: 'numeric', month: 'numeric',day: 'numeric', hour: 'numeric', minute: 'numeric'};
+        let options = {year: 'numeric', month: 'numeric', day: 'numeric', hour: 'numeric', minute: 'numeric'};
         return date.toLocaleString("ru", options);
     };
 
@@ -602,6 +607,14 @@ let DOMActions = (function () {
         logRoot.appendChild(logName);
         logRoot.appendChild(logInput);
     };
+
+    /*let genNameList = () => {
+        let enteredName = document.getElementById('filt-input-name').value;
+        let names = photoPosts.map(post=>post.author);
+        if(enteredName){
+            names = names.filter(name=>name.startsWith(enteredName));
+        }
+    };*/
 
     let addPhotoPost = post => {
         photoActions.addPhotoPost(post);
@@ -785,7 +798,11 @@ console.log('After removing a post the result of photoActions.getPhotoPost(\'13\
 
 console.log('Trying to remove nonexistent post: ', photoActions.removePhotoPost('543'));
 */
-window.onload = () => {
+
+window.onload=()=>{
     DOMActions.genLog();
     DOMActions.genPhotoPosts();
 };
+
+
+
