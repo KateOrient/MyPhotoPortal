@@ -1,61 +1,55 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
+<head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="theme-color" content="#000000">
     <link rel="stylesheet" type="text/css" href="styles.css">
     <script src="script.js"></script>
-    <script type="text/javascript">
-    let like = (target) => {
-    	let like_outline = new RegExp(".*like-outline.png");
-    	let like = new RegExp(".*like.png");
-    	if(like_outline.test(target.src)){
-    		target.src ="./img/like/like.png";
-    	}
-    	else if (like.test(target.src)){
-    		target.src="./img/like/like-outline.png";
-    	}
-    }
-    </script>
+    <!--<script type="text/javascript">
+        let like = (target) => {
+            let like_outline = new RegExp(".*like-outline.png");
+            let like = new RegExp(".*like.png");
+            if (like_outline.test(target.src)) {
+                target.src = "./img/like/like.png";
+            }
+            else if (like.test(target.src)) {
+                target.src = "./img/like/like-outline.png";
+            }
+        }
+    </script>-->
     <link rel="SHORTCUT ICON" href="./img/logo/small-logo.gif" type="image/gif">
     <title>MyPhotoPortal</title>
-  </head>
-  <body>
-    <div id="header">
-      <img id="big-logo" src="./img/logo/big-logo.png"/>
-      <div id="log">
+</head>
+<body>
+<div id="header">
+    <img id="big-logo" src="./img/logo/big-logo.png"/>
+    <div id="log"><!--
         <span id="username">@user1</span>
-        <span id="sign-out">Sign out</span>
-      </div>
+        <span id="sign-out">Sign out</span>-->
     </div>
-    <div id="content">
-      <div id="configrations">
+</div>
+<div id="content">
+    <div id="configrations">
         <form action="" method="post" id="filt-by-name">
-          <input type="text" id="filt-input-name" name="filt-input-name" placeholder="name">
+            <input type="text" id="filt-input-name" name="filt-input-name" placeholder="name">
         </form>
         <form action="" method="post" id="filt-by-date">
-          <input type="date" id="filt-input-date-from" name="filt-input-date">
-          -
-          <input type="date" id="filt-input-date-to" name="filt-input-date-to">
+            <input type="date" id="filt-input-date-from" name="filt-input-date">
+            -
+            <input type="date" id="filt-input-date-to" name="filt-input-date-to">
         </form>
         <form action="" method="post" id="filt-by-hashtag">
-          <input type="text" list="hashtag-list" name="filt-input-hashtag" id="filt-input-hashtag" pattern="#[A-Za-z_0-9]+" placeholder="#hashtag">
-          <datalist id="hashtag-list">
-            <option>#hashtag1</option>
-            <option>#hashtag2</option>
-            <option>#spring</option>
-            <option>#winter</option>
-            <option>#summer</option>
-            <option>#autumn</option>
-          </datalist>
+            <input type="text" list="hashtag-list" name="filt-input-hashtag" id="filt-input-hashtag"
+                   pattern="#[A-Za-z_0-9]+" placeholder="#hashtag">
+            <datalist id="hashtag-list"></datalist>
         </form>
-      </div>
-      <form action=""  method="post" name="add-photo">
-        <input type="button" value="Add photo" class="add-btn"/>
-      </form>
-      <div id="phototable">
-        <div class="photo-cell">
+    </div>
+    <form action="" method="post" name="add-photo">
+        <input type="button" value="Add photo" onclick="DOMActions.genPhotoPosts()" class="add-btn"/>
+    </form>
+    <div id="phototable">
+        <!--<div class="photo-cell">
           <div class="edit">edit</div>
           <div class="delete">delete</div>
           <div class="photo">
@@ -73,7 +67,7 @@
             <div class="post-date">
               08.02.2018 12:24
             </div>
-            <div class="discription">
+            <div class="description">
               This is an amazing photo! Do you like it?
             </div>
           </div>
@@ -96,7 +90,7 @@
             <div class="post-date">
               08.02.2018 12:24
             </div>
-            <div class="discription">
+            <div class="description">
               This is an amazing photo! Do you like it?
             </div>
           </div>
@@ -119,7 +113,7 @@
             <div class="post-date">
               08.02.2018 12:24
             </div>
-            <div class="discription">
+            <div class="description">
               This is an amazing photo! Do you like it?
             </div>
           </div>
@@ -142,7 +136,7 @@
             <div class="post-date">
               08.02.2018 12:24
             </div>
-            <div class="discription">
+            <div class="description">
               This is an amazing photo! Do you like it?
             </div>
           </div>
@@ -165,7 +159,7 @@
             <div class="post-date">
               08.02.2018 12:24
             </div>
-            <div class="discription">
+            <div class="description">
               This is an amazing photo! Do you like it?
             </div>
           </div>
@@ -188,7 +182,7 @@
             <div class="post-date">
               08.02.2018 12:24
             </div>
-            <div class="discription">
+            <div class="description">
               This is an amazing photo! Do you like it?
             </div>
           </div>
@@ -211,7 +205,7 @@
             <div class="post-date">
               08.02.2018 12:24
             </div>
-            <div class="discription">
+            <div class="description">
               This is an amazing photo! Do you like it?
             </div>
           </div>
@@ -234,7 +228,7 @@
             <div class="post-date">
               08.02.2018 12:24
             </div>
-            <div class="discription">
+            <div class="description">
               This is an amazing photo! Do you like it?
             </div>
           </div>
@@ -257,7 +251,7 @@
             <div class="post-date">
               08.02.2018 12:24
             </div>
-            <div class="discription">
+            <div class="description">
               This is an amazing photo! Do you like it?
             </div>
           </div>
@@ -280,17 +274,36 @@
             <div class="post-date">
               08.02.2018 12:24
             </div>
-            <div class="discription">
+            <div class="description">
               This is an amazing photo! Do you like it?
             </div>
           </div>
+        </div>-->
+    </div>
+    <form action="" method="post" name="show-more-photo"><input type="button" value="More" class="more-btn"/></form>
+</div>
+<div id="footer">
+    <span id="portal-info">MyPhotoPortal, 24.02.2018</span>
+    <span id="admin-info">Сосинович Екатерина, 2 курс 7 группа, orient.ks@gmail.com</span>
+</div>
+<template id="photocell_temp">
+    <div class="photo-cell">
+        <div class="edit">edit</div>
+        <div class="delete">delete</div>
+        <div class="photo">
+            <img src="" class="photo-img"/>
         </div>
-      </div>
-      <form action="" method="post" name="show-more-photo"><input type="button" value="More" class="more-btn"/></form>
+        <div class="author"></div>
+        <div class="photo-info-short">
+            <div class="like-info">
+                <img src="./img/like/like-outline.png" onclick="" class="like"/>
+                <div class="like-num"></div>
+            </div>
+            <div class="hashtags"></div>
+            <div class="post-date"></div>
+            <div class="description"></div>
+        </div>
     </div>
-    <div id="footer">
-      <span id="portal-info">MyPhotoPortal, 24.02.2018</span>
-      <span id="admin-info">Сосинович Екатерина, 2 курс 7 группа, orient.ks@gmail.com</span>
-    </div>
-  </body>
+</template>
+</body>
 </html>

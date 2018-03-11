@@ -96,7 +96,6 @@ body {
 .photo-cell {
 	display: inline-block;
 	background-color: white;
-	height: auto;
 	min-height: 55vh;
 	width: 37vh;
 	border: 1px solid #E1E1E1;
@@ -105,30 +104,22 @@ body {
 
 .delete{
 	display: inline-block;
+    visibility: hidden;
 	height: 10px;
 	margin: 3px;
 	float: right;
-	visibility: hidden;
 	text-align: right;
 	text-decoration: underline;
 	cursor: pointer;
 }
 
-.delete.true {
-	visibility: visible;
-}
-
 .edit {
+    display: inline-block;
+    visibility: hidden;
 	cursor: pointer;
 	height: 10px;
 	margin: 3px;
-	display: inline-block;
 	text-decoration:underline;
-	visibility: hidden;
-}
-
-.edit.true {
-	visibility: visible;
 }
 
 .photo {
@@ -182,6 +173,8 @@ body {
 
 .hashtags {
 	position: relative;
+    overflow: hidden;
+    height: 2.2vh;
 	margin: 2px 0 0 3vh;
 	font-size: 11px;
 	color: #6723F0;
@@ -194,9 +187,11 @@ body {
 	color: #FE8C11;
 }
 
-.discription {
+.description {
+    overflow: hidden;
 	position: relative;
 	margin: 5px 2vh 0 2vh;
+    height: 5vh;
 }
 
 #portal-info {

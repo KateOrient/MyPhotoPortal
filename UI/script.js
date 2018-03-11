@@ -22,7 +22,7 @@ let photoPosts = [
         description: 'To love or To be loved? How you\'ve spent St. Valintine\'s day? Mine was great!',
         createdAt: new Date('2018-02-14T21:45:08'),
         author: 'AnyaKotik',
-        photoLink: './img/14.jpg',
+        photoLink: './img/photo/14.jpg',
         likes: [
             'SamiyKrytoi',
             'Egor1995',
@@ -39,7 +39,7 @@ let photoPosts = [
         description: 'Me and my friends. Enjoy each moment of your life',
         createdAt: new Date('2018-02-15T07:25:48'),
         author: 'Kate145',
-        photoLink: './img/2.jpg',
+        photoLink: './img/photo/2.jpg',
         likes: [
             'Ivan Ivanov',
             'AnyaKotik',
@@ -59,7 +59,7 @@ let photoPosts = [
         description: 'Life is really unpredictable...I\'d never have thought I\'d met such a wonderful person',
         createdAt: new Date('2018-02-18T12:07:40'),
         author: 'Egor1995',
-        photoLink: './img/12.jpg',
+        photoLink: './img/photo/12.jpg',
         likes: [],
         hashTags: [
             '#friends',
@@ -71,7 +71,7 @@ let photoPosts = [
         description: 'Really missing that days in Oslo. Such photos reminds me of great time I spent there with my friends',
         createdAt: new Date('2018-02-19T16:31:59'),
         author: 'EgorGitar',
-        photoLink: './img/6.jpg',
+        photoLink: './img/photo/6.jpg',
         likes: [
             'AnyaKotik',
             'AnnaKirova',
@@ -89,7 +89,7 @@ let photoPosts = [
         description: 'This cat looks so self-confident. Shouldn\'t we learn from him?',
         createdAt: new Date('2018-02-20T16:45:36'),
         author: 'KirrilK',
-        photoLink: './img/4.jpg',
+        photoLink: './img/photo/4.jpg',
         likes: [
             'AnyaKotik',
             'Egor1995',
@@ -110,7 +110,7 @@ let photoPosts = [
         description: 'Hey! Look at this car! I\'ve never seen such in our city',
         createdAt: new Date('2018-02-21T09:45:01'),
         author: 'EgorGitar',
-        photoLink: './img/11.jpg',
+        photoLink: './img/photo/11.jpg',
         likes: [
             'Ivan Ivanov',
             'Egor1995',
@@ -127,7 +127,7 @@ let photoPosts = [
         description: 'Nice day with nice people',
         createdAt: new Date('2018-02-21T19:03:25'),
         author: 'Kate Sosinovich',
-        photoLink: './img/9.jpg',
+        photoLink: './img/photo/9.jpg',
         likes: [
             'AnyaKotik',
             'Egor1995',
@@ -144,7 +144,7 @@ let photoPosts = [
         description: 'My life - my rules! Best party in my life',
         createdAt: new Date('2018-02-22T23:04:21'),
         author: 'EgorGitar',
-        photoLink: './img/17.jpg',
+        photoLink: './img/photo/17.jpg',
         likes: [
             'Egor1995',
             'SamiyKrytoi'
@@ -159,7 +159,7 @@ let photoPosts = [
         description: 'Me enjoying sunny day<3',
         createdAt: new Date('2018-02-23T07:36:18'),
         author: 'Kate145',
-        photoLink: './img/3.jpg',
+        photoLink: './img/photo/3.jpg',
         likes: [
             'Ivan Ivanov',
             'AnyaKotik',
@@ -178,7 +178,7 @@ let photoPosts = [
         description: 'Me looking forward warm sunny days',
         createdAt: new Date('2018-02-23T09:21:59'),
         author: 'AnyaKotik',
-        photoLink: './img/19.jpg',
+        photoLink: './img/photo/19.jpg',
         likes: [
             'Kate Sosinovich',
             'AnyaKotik',
@@ -193,7 +193,7 @@ let photoPosts = [
         description: 'I\'m absolutely fascinated by this novel...Advise everyone!',
         createdAt: new Date('2018-02-23T10:20:14'),
         author: 'Kate145',
-        photoLink: './img/16.jpg',
+        photoLink: './img/photo/16.jpg',
         likes: [
             'SamiyKrytoi',
             'Egor1995',
@@ -210,7 +210,7 @@ let photoPosts = [
         description: '\'Be who you are\' - the best advice I\'ve ever heard. What do you think about it?',
         createdAt: new Date('2018-02-23T11:24:20'),
         author: 'Ivan Ivanov',
-        photoLink: './img/13.jpg',
+        photoLink: './img/photo/13.jpg',
         likes: [
             'Kate145',
             'AnyaKotik',
@@ -226,7 +226,7 @@ let photoPosts = [
         description: 'WOW! Is it a stone or a piece of brick wall??',
         createdAt: new Date('2018-02-23T12:45:00'),
         author: 'AnyaKotik',
-        photoLink: './img/8.jpg',
+        photoLink: './img/photo/8.jpg',
         likes: [
             'Ekaterina Sosinovich',
             'AnyaKotik',
@@ -243,7 +243,7 @@ let photoPosts = [
         description: 'Looks amazing, isn\'t it? Do you know what they are doing? If not, visit google.com',
         createdAt: new Date('2018-02-23T20:00:00'),
         author: 'SamiyKrytoi',
-        photoLink: './img/7.jpg',
+        photoLink: './img/photo/7.jpg',
         likes: [
             'Ivan Ivanov',
             'SamiyKrytoi',
@@ -260,7 +260,7 @@ let photoPosts = [
         description: 'Thanks for being such a nice team lead! Happy Birthday, Ivan!',
         createdAt: new Date('2018-02-23T20:00:00'),
         author: 'Egor1995',
-        photoLink: './img/15.jpg',
+        photoLink: './img/photo/15.jpg',
         likes: [
             'Ivan Ivanov',
             'EgorGitar',
@@ -274,7 +274,7 @@ let photoPosts = [
         description: 'This is an amazing photo! Do you like it?',
         createdAt: new Date('2018-02-23T20:00:00'),
         author: 'Kate145',
-        photoLink: './img/0.jpg',
+        photoLink: './img/photo/0.jpg',
         likes: [
             'Ivan Ivanov',
             'AnyaKotik',
@@ -291,7 +291,7 @@ let photoPosts = [
         description: 'It\'s my cat Cookie. I love him sooo much',
         createdAt: new Date('2018-02-24T14:34:22'),
         author: 'AnyaKotik',
-        photoLink: './img/1.jpg',
+        photoLink: './img/photo/1.jpg',
         likes: [
             'Ivan Ivanov',
             'Kate145',
@@ -310,7 +310,7 @@ let photoPosts = [
         description: 'Can\'t stop gazing at this photo! I\'m dreaming of visiting such kind of place',
         createdAt: new Date('2018-02-25T19:12:04'),
         author: 'Kate Sosinovich',
-        photoLink: './img/5.jpg',
+        photoLink: './img/photo/5.jpg',
         likes: [
             'Ivan Ivanov',
             'AnnaKirova',
@@ -330,7 +330,7 @@ let photoPosts = [
         description: 'Tulips and roses. Missing spring so much!!!',
         createdAt: new Date('2018-02-28T17:45:02'),
         author: 'Kate145',
-        photoLink: './img/18.jpg',
+        photoLink: './img/photo/18.jpg',
         likes: [
             'AnyaKotik',
             'Svetik1998',
@@ -344,32 +344,42 @@ let photoPosts = [
         ]
     }];
 
+const USER = 'Kate145';
+
 //- Module
 let photoActions = (function () {
     let getPhotoPosts = (skip, top, filterConfig = {}) => {
         skip = skip ? skip : 0;
         top = top ? top : 10;
         let resPhotoPosts = photoPosts;
-        if (JSON.stringify(filterConfig) !== '{}') {
+        if (Object.keys(filterConfig).length !== 0) {
             if (filterConfig.hasOwnProperty('author')) {
-                resPhotoPosts = resPhotoPosts.filter(post => post.author.startsWith(filterConfig.author));
+                if (filterConfig.author) {
+                    resPhotoPosts = resPhotoPosts.filter(post => post.author.startsWith(filterConfig.author));
+                }
             }
             if (filterConfig.hasOwnProperty('dateFrom')) {
-                resPhotoPosts = resPhotoPosts.filter(post => post.createdAt >= filterConfig.dateFrom);
+                if (filterConfig.dateFrom) {
+                    resPhotoPosts = resPhotoPosts.filter(post => post.createdAt >= filterConfig.dateFrom);
+                }
             }
             if (filterConfig.hasOwnProperty('dateTo')) {
-                resPhotoPosts = resPhotoPosts.filter(post => post.createdAt <= filterConfig.dateTo);
+                if (filterConfig.dateTo) {
+                    resPhotoPosts = resPhotoPosts.filter(post => post.createdAt <= filterConfig.dateTo);
+                }
             }
             if (filterConfig.hasOwnProperty('hashtag')) {
-                resPhotoPosts = resPhotoPosts.filter(post => {
-                    let res = false;
-                    post.hashTags.forEach(tag => {
-                        if (tag.startsWith(filterConfig.hashtag)) {
-                            res = true;
-                        }
+                if (filterConfig.hashtag) {
+                    resPhotoPosts = resPhotoPosts.filter(post => {
+                        let res = false;
+                        post.hashTags.forEach(tag => {
+                            if (tag.startsWith(filterConfig.hashtag)) {
+                                res = true;
+                            }
+                        });
+                        return res;
                     });
-                    return res;
-                });
+                }
             }
         }
         return resPhotoPosts.slice(skip, top + skip);
@@ -473,7 +483,7 @@ let photoActions = (function () {
             validateHashTags,
             validateLink
         };
-        return Object.keys(validate).every(func => validate[func](post,presence));
+        return Object.keys(validate).every(func => validate[func](post, presence));
     };
 
     let addPhotoPost = post => {
@@ -519,6 +529,105 @@ let photoActions = (function () {
     }
 })();
 
+let DOMActions = (function () {
+    let genDate = date => {
+        let options ={year: 'numeric', month: 'numeric',day: 'numeric', hour: 'numeric', minute: 'numeric'};
+        return date.toLocaleString("ru", options);
+    };
+
+    let genDesc = desc => {
+        if (desc.length > 70) {
+            return desc.substr(0, 70) + '...';
+        }
+        return desc;
+    };
+
+    let genHashTags = hashTags => {
+        let res = '';
+        hashTags.forEach(tag =>
+            res += tag + ' '
+        );
+        return res;
+    };
+
+    let genPhotoPosts = (skip, top) => {
+        skip = skip ? skip : 0;
+        top = top ? top : 10;
+
+        let dateFrom = document.getElementById('filt-input-date-from').value;
+        let dateTo = document.getElementById('filt-input-date-to').value;
+        let filterConfig = {
+            author: document.getElementById('filt-input-name').value,
+            dateFrom: dateFrom.length > 0 ? new Date(dateFrom) : null,
+            dateTo: dateTo.length > 0 ? new Date(dateTo) : null,
+            hashtag: document.getElementById('filt-input-hashtag').value
+        };
+
+        let table = document.getElementById('phototable');
+        table.innerHTML = '';
+
+        let photosToGen = photoActions.getPhotoPosts(skip, top, filterConfig);
+        let item = document.getElementById('photocell_temp').content.querySelector('div');
+        photosToGen.forEach(photo => {
+            let photoToGen = document.importNode(item, true);
+            photoToGen.getElementsByClassName('photo-img')[0].src = photo.photoLink;
+            if (photo.author === USER) {
+                photoToGen.getElementsByClassName('edit')[0].style.visibility = 'visible';
+                photoToGen.getElementsByClassName('delete')[0].style.visibility = 'visible';
+            }
+            photoToGen.getElementsByClassName('author')[0].textContent = photo.author;
+            photoToGen.getElementsByClassName('like-num')[0].textContent = photo.likes.length;
+            photoToGen.getElementsByClassName('hashtags')[0].textContent = genHashTags(photo.hashTags);
+            photoToGen.getElementsByClassName('post-date')[0].textContent = genDate(photo.createdAt);
+            photoToGen.getElementsByClassName('description')[0].textContent = genDesc(photo.description);
+            table.appendChild(photoToGen);
+        });
+    };
+
+    let genLog = () => {
+        let logRoot = document.getElementById('log');
+        logRoot.innerHTML = '';
+        let logName = document.createElement('span');
+        logName.id = 'username';
+        let logInput = document.createElement('span');
+        if (USER) {
+            logName.textContent = USER;
+            logInput.id = 'sign-out';
+            logInput.textContent = 'Sign out';
+        }
+        else {
+            logInput.id = 'sign-in';
+            logInput.textContent = 'Sign in';
+        }
+        logRoot.appendChild(logName);
+        logRoot.appendChild(logInput);
+    };
+
+    let addPhotoPost = post => {
+        photoActions.addPhotoPost(post);
+        genPhotoPosts();
+    };
+
+    let removePhotoPost = id => {
+        photoActions.removePhotoPost(id);
+        genPhotoPosts();
+    };
+
+    let editPhotoPost = (id, editedPost) => {
+        photoActions.editPhotoPost(id, editedPost);
+        genPhotoPosts();
+    };
+
+
+    return {
+        genLog,
+        genPhotoPosts,
+        addPhotoPost,
+        removePhotoPost,
+        editPhotoPost
+    }
+})();
+
 /*
 //- Test
 console.log('<------- getPhotoPosts ------->\n');
@@ -540,7 +649,7 @@ console.log(photoActions.validatePhotoPost({
     description: 'My best photo',
     createdAt: new Date('2018-02-13T06:25:41'),
     author: 'Kate145',
-    photoLink: './img/10.jpg',
+    photoLink: './img/photo/10.jpg',
     likes: [
         'Ivan Ivanov',
         'EgorGitar',
@@ -558,7 +667,7 @@ console.log(photoActions.validatePhotoPost({
     description: 'My best photo',
     createdAt: new Date('2018-02-13T06:25:41'),
     author: 'Kate145',
-    photoLink: './img/10.jpg',
+    photoLink: './img/photo/10.jpg',
     likes: [
         'Ivan Ivanov',
         'EgorGitar',
@@ -576,7 +685,7 @@ console.log(photoActions.validatePhotoPost({
     description: '',
     createdAt: new Date('2018-02-13T06:25:41'),
     author: 'Kate145',
-    photoLink: './img/10.jpg',
+    photoLink: './img/photo/10.jpg',
     likes: [
         'Ivan Ivanov',
         'EgorGitar',
@@ -593,7 +702,7 @@ console.log(photoActions.validatePhotoPost({
     id: '28',
     description: 'My best photo',
     createdAt: new Date('2018-02-13T06:25:41'),
-    photoLink: './img/10.jpg',
+    photoLink: './img/photo/10.jpg',
     likes: [
         'Ivan Ivanov',
         'EgorGitar',
@@ -615,7 +724,7 @@ console.log('The result of adding: ', photoActions.addPhotoPost({
     description: 'To love or To be loved? How you\'ve spent St. Valintine\'s day? Mine was great!',
     createdAt: new Date('2018-02-14T21:45:08'),
     author: 'AnyaKotik',
-    photoLink: './img/14.jpg',
+    photoLink: './img/photo/14.jpg',
     likes: [
         'SamiyKrytoi',
         'Egor1995',
@@ -635,7 +744,7 @@ console.log('Trying to add existing post: ', photoActions.addPhotoPost({
     description: 'To love or To be loved? How you\'ve spent St. Valintine\'s day? Mine was great!',
     createdAt: new Date('2018-02-14T21:45:08'),
     author: 'AnyaKotik',
-    photoLink: './img/14.jpg',
+    photoLink: './img/photo/14.jpg',
     likes: [
         'SamiyKrytoi',
         'Egor1995',
@@ -676,3 +785,7 @@ console.log('After removing a post the result of photoActions.getPhotoPost(\'13\
 
 console.log('Trying to remove nonexistent post: ', photoActions.removePhotoPost('543'));
 */
+window.onload = () => {
+    DOMActions.genLog();
+    DOMActions.genPhotoPosts();
+};
