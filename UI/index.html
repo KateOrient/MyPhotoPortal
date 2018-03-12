@@ -1,296 +1,65 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
+<head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="theme-color" content="#000000">
     <link rel="stylesheet" type="text/css" href="styles.css">
-    <script src="../task4/script.js"></script>
-    <script type="text/javascript">
-    let like = (target) => {
-    	let like_outline = new RegExp(".*like-outline.png");
-    	let like = new RegExp(".*like.png");
-    	if(like_outline.test(target.src)){
-    		target.src ="./img/like/like.png";
-    	}
-    	else if (like.test(target.src)){
-    		target.src="./img/like/like-outline.png";
-    	}
-    }
-    </script>
     <link rel="SHORTCUT ICON" href="./img/logo/small-logo.gif" type="image/gif">
     <title>MyPhotoPortal</title>
-  </head>
-  <body>
-    <div id="header">
-      <img id="big-logo" src="./img/logo/big-logo.png"/>
-      <div id="log">
-        <span id="username">@user1</span>
-        <span id="sign-out">Sign out</span>
-      </div>
-    </div>
-    <div id="content">
-      <div id="configrations">
+</head>
+<body>
+<div id="header">
+    <img id="big-logo" src="./img/logo/big-logo.png"/>
+    <div id="log"></div>
+</div>
+<div id="content">
+    <div id="configrations">
         <form action="" method="post" id="filt-by-name">
-          <input type="text" id="filt-input-name" name="filt-input-name" placeholder="name">
+            <input type="text" list="name-list" id="filt-input-name" name="filt-input-name" placeholder="name">
+            <datalist id="name-list"></datalist>
         </form>
         <form action="" method="post" id="filt-by-date">
-          <input type="date" id="filt-input-date-from" name="filt-input-date">
-          -
-          <input type="date" id="filt-input-date-to" name="filt-input-date-to">
+            <input type="date" id="filt-input-date-from" name="filt-input-date">
+            -
+            <input type="date" id="filt-input-date-to" name="filt-input-date-to">
         </form>
         <form action="" method="post" id="filt-by-hashtag">
-          <input type="text" list="hashtag-list" name="filt-input-hashtag" id="filt-input-hashtag" pattern="#[A-Za-z_0-9]+" placeholder="#hashtag">
-          <datalist id="hashtag-list">
-            <option>#hashtag1</option>
-            <option>#hashtag2</option>
-            <option>#spring</option>
-            <option>#winter</option>
-            <option>#summer</option>
-            <option>#autumn</option>
-          </datalist>
+            <input type="text" list="hashtag-list" name="filt-input-hashtag" id="filt-input-hashtag"
+                   pattern="#[A-Za-z_0-9]+" placeholder="#hashtag">
+            <datalist id="hashtag-list"></datalist>
         </form>
-      </div>
-      <form action=""  method="post" name="add-photo">
+    </div>
+    <form action="" method="post" name="add-photo">
         <input type="button" value="Add photo" class="add-btn"/>
-      </form>
-      <div id="phototable">
-        <div class="photo-cell">
-          <div class="edit">edit</div>
-          <div class="delete">delete</div>
-          <div class="photo">
-            <img src="./img/photo/0.jpg" class="photo-img"/>
-          </div>
-          <div class="author">@user0</div>
-          <div class="photo-info-short">
-            <div class="like-info">
-              <img src="./img/like/like-outline.png" onclick="like(this)" class="like"/>
-              <div  class="like-num">25</div>
-            </div>
-            <div class="hashtags">
-              #hashtag1 #hashtag2
-            </div>
-            <div class="post-date">
-              08.02.2018 12:24
-            </div>
-            <div class="discription">
-              This is an amazing photo! Do you like it?
-            </div>
-          </div>
-        </div>
-        <div class="photo-cell">
-          <div class="edit true">edit</div>
-          <div class="delete true">delete</div>
-          <div class="photo">
-            <img src="./img/photo/1.jpg" class="photo-img"/>
-          </div>
-          <div class="author">@user1</div>
-          <div class="photo-info-short">
-            <div class="like-info">
-              <img src="./img/like/like-outline.png" onclick="like(this)" class="like"/>
-              <div  class="like-num">34</div>
-            </div>
-            <div class="hashtags">
-              #hashtag1 #hashtag2
-            </div>
-            <div class="post-date">
-              08.02.2018 12:24
-            </div>
-            <div class="discription">
-              This is an amazing photo! Do you like it?
-            </div>
-          </div>
-        </div>
-        <div class="photo-cell">
-          <div class="edit">edit</div>
-          <div class="delete">delete</div>
-          <div class="photo">
-            <img src="./img/photo/2.jpg" class="photo-img"/>
-          </div>
-          <div class="author">@user2</div>
-          <div class="photo-info-short">
-            <div class="like-info">
-              <img src="./img/like/like-outline.png" onclick="like(this)" class="like"/>
-              <div  class="like-num">142</div>
-            </div>
-            <div class="hashtags">
-              #hashtag1 #hashtag2
-            </div>
-            <div class="post-date">
-              08.02.2018 12:24
-            </div>
-            <div class="discription">
-              This is an amazing photo! Do you like it?
-            </div>
-          </div>
-        </div>
-        <div class="photo-cell">
-          <div class="edit">edit</div>
-          <div class="delete">delete</div>
-          <div class="photo">
-            <img src="./img/photo/3.jpg" class="photo-img"/>
-          </div>
-          <div class="author">@user3</div>
-          <div class="photo-info-short">
-            <div class="like-info">
-              <img src="./img/like/like-outline.png" onclick="like(this)" class="like"/>
-              <div  class="like-num">14</div>
-            </div>
-            <div class="hashtags">
-              #hashtag1 #hashtag2
-            </div>
-            <div class="post-date">
-              08.02.2018 12:24
-            </div>
-            <div class="discription">
-              This is an amazing photo! Do you like it?
-            </div>
-          </div>
-        </div>
-        <div class="photo-cell">
-          <div class="edit">edit</div>
-          <div class="delete">delete</div>
-          <div class="photo">
-            <img src="./img/photo/4.jpg" class="photo-img"/>
-          </div>
-          <div class="author">@user4</div>
-          <div class="photo-info-short">
-            <div class="like-info">
-              <img src="./img/like/like-outline.png" onclick="like(this)" class="like"/>
-              <div  class="like-num">123</div>
-            </div>
-            <div class="hashtags">
-              #hashtag1 #hashtag2
-            </div>
-            <div class="post-date">
-              08.02.2018 12:24
-            </div>
-            <div class="discription">
-              This is an amazing photo! Do you like it?
-            </div>
-          </div>
-        </div>
-        <div class="photo-cell">
-          <div class="edit">edit</div>
-          <div class="delete">delete</div>
-          <div class="photo">
-            <img src="./img/photo/5.jpg" class="photo-img"/>
-          </div>
-          <div class="author">@user5</div>
-          <div class="photo-info-short">
-            <div class="like-info">
-              <img src="./img/like/like-outline.png" onclick="like(this)" class="like"/>
-              <div  class="like-num">452</div>
-            </div>
-            <div class="hashtags">
-              #hashtag1 #hashtag2
-            </div>
-            <div class="post-date">
-              08.02.2018 12:24
-            </div>
-            <div class="discription">
-              This is an amazing photo! Do you like it?
-            </div>
-          </div>
-        </div>
-        <div class="photo-cell">
-          <div class="edit">edit</div>
-          <div class="delete">delete</div>
-          <div class="photo">
-            <img src="./img/photo/6.jpg" class="photo-img"/>
-          </div>
-          <div class="author">@user6</div>
-          <div class="photo-info-short">
-            <div class="like-info">
-              <img src="./img/like/like-outline.png" onclick="like(this)" class="like"/>
-              <div  class="like-num">12</div>
-            </div>
-            <div class="hashtags">
-              #hashtag1 #hashtag2
-            </div>
-            <div class="post-date">
-              08.02.2018 12:24
-            </div>
-            <div class="discription">
-              This is an amazing photo! Do you like it?
-            </div>
-          </div>
-        </div>
-        <div class="photo-cell">
-          <div class="edit">edit</div>
-          <div class="delete">delete</div>
-          <div class="photo">
-            <img src="./img/photo/7.jpg" class="photo-img"/>
-          </div>
-          <div class="author">@user7</div>
-          <div class="photo-info-short">
-            <div class="like-info">
-              <img src="./img/like/like-outline.png" onclick="like(this)" class="like"/>
-              <div  class="like-num">75</div>
-            </div>
-            <div class="hashtags">
-              #hashtag1 #hashtag2
-            </div>
-            <div class="post-date">
-              08.02.2018 12:24
-            </div>
-            <div class="discription">
-              This is an amazing photo! Do you like it?
-            </div>
-          </div>
-        </div>
-        <div class="photo-cell">
-          <div class="edit">edit</div>
-          <div class="delete">delete</div>
-          <div class="photo">
-            <img src="./img/photo/8.jpg" class="photo-img"/>
-          </div>
-          <div class="author">@user8</div>
-          <div class="photo-info-short">
-            <div class="like-info">
-              <img src="./img/like/like-outline.png" onclick="like(this)" class="like"/>
-              <div  class="like-num">423</div>
-            </div>
-            <div class="hashtags">
-              #hashtag1 #hashtag2
-            </div>
-            <div class="post-date">
-              08.02.2018 12:24
-            </div>
-            <div class="discription">
-              This is an amazing photo! Do you like it?
-            </div>
-          </div>
-        </div>
-        <div class="photo-cell">
-          <div class="edit">edit</div>
-          <div class="delete">delete</div>
-          <div class="photo">
-            <img src="./img/photo/9.jpg" class="photo-img"/>
-          </div>
-          <div class="author">@user9</div>
-          <div class="photo-info-short">
-            <div class="like-info">
-              <img src="./img/like/like-outline.png" onclick="like(this)" class="like"/>
-              <div  class="like-num">67</div>
-            </div>
-            <div class="hashtags">
-              #hashtag1 #hashtag2
-            </div>
-            <div class="post-date">
-              08.02.2018 12:24
-            </div>
-            <div class="discription">
-              This is an amazing photo! Do you like it?
-            </div>
-          </div>
-        </div>
-      </div>
-      <form action="" method="post" name="show-more-photo"><input type="button" value="More" class="more-btn"/></form>
+    </form>
+    <div id="phototable">
     </div>
-    <div id="footer">
-      <span id="portal-info">MyPhotoPortal, 24.02.2018</span>
-      <span id="admin-info">Сосинович Екатерина, 2 курс 7 группа, orient.ks@gmail.com</span>
+    <form action="" method="post" name="show-more-photo"><input type="button" value="More" class="more-btn"/></form>
+</div>
+<div id="footer">
+    <span id="portal-info">MyPhotoPortal, 24.02.2018</span>
+    <span id="admin-info">Сосинович Екатерина, 2 курс 7 группа, orient.ks@gmail.com</span>
+</div>
+<template id="photocell_temp">
+    <div class="photo-cell">
+        <div class="edit" >edit</div>
+        <div class="delete">delete</div>
+        <div class="photo">
+            <img src="" class="photo-img"/>
+        </div>
+        <div class="author"></div>
+        <div class="photo-info-short">
+            <div class="like-info">
+                <img src="./img/like/like-outline.png" onclick="" class="like"/>
+                <div class="like-num"></div>
+            </div>
+            <div class="hashtags"></div>
+            <div class="post-date"></div>
+            <div class="description"></div>
+        </div>
     </div>
-  </body>
+</template>
+</body>
+<script src="script.js"></script>
 </html>
