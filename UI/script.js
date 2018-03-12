@@ -428,7 +428,7 @@ let photoActions = (function () {
 
     let validateAuthor = (post, presence) => {
         if ('author' in post) {
-            if (typeof post.author !== 'string' || post.author.length === 0) {
+            if (typeof post.author !== 'string' || post.author.length === 0 || post.author !== USER) {
                 return false;
             }
         }
@@ -524,13 +524,30 @@ let photoActions = (function () {
         return false;
     };
 
+    let getIndx = post => {
+        return photoPosts.indexOf(post);
+    };
+
+    let getNames = () => {
+        return photoPosts.map(post => post.author).filter((name, indx, self) => self.indexOf(name) === indx);
+    };
+
+    let getHashTags = () => {
+        let hashtags = [];
+        photoPosts.forEach(post => post.hashTags.forEach(tag => hashtags.push(tag)));
+        return hashtags.filter((tag, indx, self) => self.indexOf(tag) === indx);
+    };
+
     return {
         getPhotoPosts,
         getPhotoPost,
         validatePhotoPost,
         addPhotoPost,
         editPhotoPost,
-        removePhotoPost
+        removePhotoPost,
+        getIndx,
+        getNames,
+        getHashTags
     }
 })();
 
@@ -555,37 +572,31 @@ let DOMActions = (function () {
         return res;
     };
 
-    let genPhotoPosts = (skip, top) => {
-        skip = skip ? skip : 0;
-        top = top ? top : 10;
+    let genPhotoPost = post => {
+        let item = document.getElementById('photocell_temp').content.querySelector('div');
+        let postToGen = document.importNode(item, true);
 
-        let dateFrom = document.getElementById('filt-input-date-from').value;
-        let dateTo = document.getElementById('filt-input-date-to').value;
-        let filterConfig = {
-            author: document.getElementById('filt-input-name').value,
-            dateFrom: dateFrom.length > 0 ? new Date(dateFrom) : null,
-            dateTo: dateTo.length > 0 ? new Date(dateTo) : null,
-            hashtag: document.getElementById('filt-input-hashtag').value
-        };
+        postToGen.getElementsByClassName('photo-img')[0].src = post.photoLink;
+        if (post.author === USER) {
+            postToGen.getElementsByClassName('edit')[0].style.visibility = 'visible';
+            postToGen.getElementsByClassName('delete')[0].style.visibility = 'visible';
+        }
+        postToGen.getElementsByClassName('author')[0].textContent = post.author;
+        postToGen.getElementsByClassName('like-num')[0].textContent = post.likes.length;
+        postToGen.getElementsByClassName('hashtags')[0].textContent = genHashTags(post.hashTags);
+        postToGen.getElementsByClassName('post-date')[0].textContent = genDate(post.createdAt);
+        postToGen.getElementsByClassName('description')[0].textContent = genDesc(post.description);
 
+        return postToGen;
+    };
+
+    let genPhotoPosts = (postsToGen) => {
         let table = document.getElementById('phototable');
         table.innerHTML = '';
 
-        let photosToGen = photoActions.getPhotoPosts(skip, top, filterConfig);
-        let item = document.getElementById('photocell_temp').content.querySelector('div');
-        photosToGen.forEach(photo => {
-            let photoToGen = document.importNode(item, true);
-            photoToGen.getElementsByClassName('photo-img')[0].src = photo.photoLink;
-            if (photo.author === USER) {
-                photoToGen.getElementsByClassName('edit')[0].style.visibility = 'visible';
-                photoToGen.getElementsByClassName('delete')[0].style.visibility = 'visible';
-            }
-            photoToGen.getElementsByClassName('author')[0].textContent = photo.author;
-            photoToGen.getElementsByClassName('like-num')[0].textContent = photo.likes.length;
-            photoToGen.getElementsByClassName('hashtags')[0].textContent = genHashTags(photo.hashTags);
-            photoToGen.getElementsByClassName('post-date')[0].textContent = genDate(photo.createdAt);
-            photoToGen.getElementsByClassName('description')[0].textContent = genDesc(photo.description);
-            table.appendChild(photoToGen);
+        postsToGen.forEach(post => {
+            let postToGen = genPhotoPost(post);
+            table.appendChild(postToGen);
         });
     };
 
@@ -608,201 +619,144 @@ let DOMActions = (function () {
         logRoot.appendChild(logInput);
     };
 
-    /*let genNameList = () => {
-        let enteredName = document.getElementById('filt-input-name').value;
-        let names = photoPosts.map(post=>post.author);
-        if(enteredName){
-            names = names.filter(name=>name.startsWith(enteredName));
+    let genNameList = (names) => {
+        let root = document.getElementById('name-list');
+
+        names.forEach(name => {
+            let option = document.createElement('option');
+            option.textContent = name;
+            root.appendChild(option);
+        })
+    };
+
+    let genHashTagList = (hashTags) => {
+        let root = document.getElementById('hashtag-list');
+
+        hashTags.forEach(tag => {
+            let option = document.createElement('option');
+            option.textContent = tag;
+            root.appendChild(option);
+        })
+    };
+
+    let addPhotoPost = (post, indx) => {
+        let posts = document.getElementsByClassName('photo-cell');
+        console.log(posts);
+        if (indx < posts.length && indx > -1) {
+            let postToAdd = genPhotoPost(post);
+            let next = posts[indx];
+            console.log(postToAdd);
+            console.log(next);
+            next.before(postToAdd);
+            posts[posts.length - 1].remove();
         }
-    };*/
-
-    let addPhotoPost = post => {
-        photoActions.addPhotoPost(post);
-        genPhotoPosts();
     };
 
-    let removePhotoPost = id => {
-        photoActions.removePhotoPost(id);
-        genPhotoPosts();
+    let removePhotoPost = (indx) => {
+        let posts = document.getElementsByClassName('photo-cell');
+
+        if (indx < posts.length && indx > -1) {
+            let postToDel = posts[indx];
+            postToDel.remove();
+        }
     };
 
-    let editPhotoPost = (id, editedPost) => {
-        photoActions.editPhotoPost(id, editedPost);
-        genPhotoPosts();
-    };
+    let editPhotoPost = (indx, editedPost) => {
+        let posts = document.getElementsByClassName('photo-cell');
 
+        if (indx < posts.length && indx > -1) {
+            let postToEdit = posts[indx];
+            let newPost = genPhotoPost(editedPost);
+            postToEdit.replaceWith(newPost);
+        }
+    };
 
     return {
         genLog,
         genPhotoPosts,
+        genNameList,
         addPhotoPost,
         removePhotoPost,
-        editPhotoPost
+        editPhotoPost,
+        genHashTagList
     }
 })();
 
-/*
-//- Test
-console.log('<------- getPhotoPosts ------->\n');
-console.log('The result of photoActions.getPhotoPosts(null, 3, {author: \'Kate\', hashtag: \'#life\', dateTo: new Date(\'2018-02-25T00:00:00\')}) is\n\n',
-    photoActions.getPhotoPosts(null, 3, {
-        author: 'Kate',
-        hashtag: '#life',
-        dateTo: new Date('2018-02-25T00:00:00')
-    }), '\n\n');
+let genPhotoPosts = () => {
+    let skip = 0;
+    let top = 10;
 
-console.log('<------- getPhotoPost ------->\n');
-console.log('The result of photoActions.getPhotoPost(\'3\') is\n\n', photoActions.getPhotoPost('3'), '\n\n');
+    let dateFrom = document.getElementById('filt-input-date-from').value;
+    let dateTo = document.getElementById('filt-input-date-to').value;
+    let filterConfig = {
+        author: document.getElementById('filt-input-name').value,
+        dateFrom: dateFrom.length > 0 ? new Date(dateFrom) : null,
+        dateTo: dateTo.length > 0 ? new Date(dateTo) : null,
+        hashtag: document.getElementById('filt-input-hashtag').value
+    };
 
-console.log('The result of photoActions.getPhotoPost(\'27\') is\n\n', photoActions.getPhotoPost('27'), '\n\n');
+    console.log(filterConfig);
 
-console.log('<------- validatePhotoPost ------->\n');
-console.log(photoActions.validatePhotoPost({
-    id: '11',
-    description: 'My best photo',
-    createdAt: new Date('2018-02-13T06:25:41'),
-    author: 'Kate145',
-    photoLink: './img/photo/10.jpg',
-    likes: [
-        'Ivan Ivanov',
-        'EgorGitar',
-        'Kate Sosinovich',
-        'Egor1995'
-    ],
-    hashTags: [
-        '#me',
-        '#life'
-    ]
-}, true) + '\n');
+    let posts = photoActions.getPhotoPosts(skip, top, filterConfig);
 
-console.log(photoActions.validatePhotoPost({
-    id: '28',
-    description: 'My best photo',
-    createdAt: new Date('2018-02-13T06:25:41'),
-    author: 'Kate145',
-    photoLink: './img/photo/10.jpg',
-    likes: [
-        'Ivan Ivanov',
-        'EgorGitar',
-        'Kate Sosinovich',
-        'Egor1995'
-    ],
-    hashTags: [
-        '#me',
-        '#life'
-    ]
-}, true) + '\n');
-
-console.log(photoActions.validatePhotoPost({
-    id: '28',
-    description: '',
-    createdAt: new Date('2018-02-13T06:25:41'),
-    author: 'Kate145',
-    photoLink: './img/photo/10.jpg',
-    likes: [
-        'Ivan Ivanov',
-        'EgorGitar',
-        'Kate Sosinovich',
-        'Egor1995'
-    ],
-    hashTags: [
-        '#me',
-        '#life'
-    ]
-}, true) + '\n');
-
-console.log(photoActions.validatePhotoPost({
-    id: '28',
-    description: 'My best photo',
-    createdAt: new Date('2018-02-13T06:25:41'),
-    photoLink: './img/photo/10.jpg',
-    likes: [
-        'Ivan Ivanov',
-        'EgorGitar',
-        'Kate Sosinovich',
-        'Egor1995'
-    ],
-    hashTags: [
-        '#me',
-        '#life'
-    ]
-}, true) + '\n');
-
-console.log('<------- addPhotoPost ------->\n');
-console.log('Before adding a post the result of photoActions.getPhotoPost(\'31\') is\n',
-    photoActions.getPhotoPost('31'), '\n');
-
-console.log('The result of adding: ', photoActions.addPhotoPost({
-    id: '31',
-    description: 'To love or To be loved? How you\'ve spent St. Valintine\'s day? Mine was great!',
-    createdAt: new Date('2018-02-14T21:45:08'),
-    author: 'AnyaKotik',
-    photoLink: './img/photo/14.jpg',
-    likes: [
-        'SamiyKrytoi',
-        'Egor1995',
-        'EgorGitar',
-        'Kate Sosinovich'
-    ],
-    hashTags: [
-        '#love',
-        '#friends'
-    ]
-}), '\n');
-console.log('After adding a post the result of photoActions.getPhotoPost(\'31\') is\n',
-    photoActions.getPhotoPost('31'), '\n');
-
-console.log('Trying to add existing post: ', photoActions.addPhotoPost({
-    id: '15',
-    description: 'To love or To be loved? How you\'ve spent St. Valintine\'s day? Mine was great!',
-    createdAt: new Date('2018-02-14T21:45:08'),
-    author: 'AnyaKotik',
-    photoLink: './img/photo/14.jpg',
-    likes: [
-        'SamiyKrytoi',
-        'Egor1995',
-        'EgorGitar',
-        'Kate Sosinovich'
-    ],
-    hashTags: [
-        '#love',
-        '#friends'
-    ]
-}), '\n');
-
-console.log('<------- editPhotoPosts ------->\n');
-
-console.log('Before editing:\n', photoActions.getPhotoPost('13'), '\n');
-console.log('The result of editing: ', photoActions.editPhotoPost('13', {
-    description: 'Wow! I was edited!',
-    hashTags: ['#editing_is_cool']
-}), '\n');
-
-
-console.log('After editing:\n', photoActions.getPhotoPost('13'), '\n');
-
-console.log('The result of editing: ', photoActions.editPhotoPost('13', {
-    description: 'Wow! I was edited!',
-    hashTags: '#editing_is_cool',
-
-}), '\n');
-
-
-console.log('<------- removePhotoPosts ------->\n');
-console.log('Before removing a post the result of photoActions.getPhotoPost(\'13\') is\n',
-    photoActions.getPhotoPost('13'), '\n');
-
-console.log('The result of removing: ', photoActions.removePhotoPost('13'), '\n');
-console.log('After removing a post the result of photoActions.getPhotoPost(\'13\') is\n',
-    photoActions.getPhotoPost('13'), '\n');
-
-console.log('Trying to remove nonexistent post: ', photoActions.removePhotoPost('543'));
-*/
-
-window.onload=()=>{
-    DOMActions.genLog();
-    DOMActions.genPhotoPosts();
+    DOMActions.genPhotoPosts(posts);
 };
 
+let addPhotoPost = post => {
+    if (photoActions.addPhotoPost(post)) {
+        console.log('fdsfs');
+        DOMActions.addPhotoPost(post, photoActions.getIndx(post));
+    }
+};
+
+let editPhotoPost = (id, editedPost) => {
+    if (photoActions.editPhotoPost(id, editedPost)) {
+        DOMActions.editPhotoPost(photoActions.getIndx(photoActions.getPhotoPost(id)), photoActions.getPhotoPost(id));
+    }
+};
+
+let removePhotoPost = id => {
+    let indx = photoActions.getIndx(photoActions.getPhotoPost(id));
+    if (photoActions.removePhotoPost(id)) {
+        DOMActions.removePhotoPost(indx);
+    }
+};
+
+window.onload = () => {
+    DOMActions.genLog();
+    DOMActions.genNameList(photoActions.getNames());
+    DOMActions.genHashTagList(photoActions.getHashTags());
+    genPhotoPosts();
+};
+
+
+//- Tests
+/*
+addPhotoPost({
+        id: '21',
+        description: 'My new photo!!',
+        createdAt: new Date('2018-03-12T06:25:41'),
+        author: 'Kate145',
+        photoLink: './img/10.jpg',
+        likes: [],
+        hashTags: [
+            '#life_is_good',
+            '#me'
+        ]
+    });
+    addPhotoPost({
+        id: '21',
+        description: 'My new photo!!',
+        createdAt: new Date('2018-01-12T06:25:41'),
+        author: 'Kate145',
+        photoLink: './img/10.jpg',
+        likes: [],
+        hashTags: [
+            '#life_is_good',
+            '#me'
+        ]
+    });
+
+*/
 
 
