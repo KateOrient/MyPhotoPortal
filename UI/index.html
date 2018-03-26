@@ -4,23 +4,23 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="theme-color" content="#000000">
-    <link rel="stylesheet" type="text/css" href="styles.css">
+    <link rel="stylesheet" type="text/css" href="styles/styles.css">
     <link rel="SHORTCUT ICON" href="./img/logo/small-logo.gif" type="image/gif">
     <title>MyPhotoPortal</title>
 </head>
 <body>
 <div id="header">
-    <img id="big-logo" src="./img/logo/big-logo.png"/>
+    <a href=""><img id="big-logo" src="./img/logo/big-logo.png"/></a>
     <div id="log"></div>
 </div>
-<div id="content">
+<div id="content"><div id="hidden-content"></div>
     <div id="configrations">
         <form action="" method="post" id="filt-by-name">
             <input type="text" list="name-list" id="filt-input-name" name="filt-input-name" placeholder="name">
             <datalist id="name-list"></datalist>
         </form>
         <form action="" method="post" id="filt-by-date">
-            <input type="date" id="filt-input-date-from" name="filt-input-date">
+            <input type="date" id="filt-input-date-from" name="filt-input-date-from">
             -
             <input type="date" id="filt-input-date-to" name="filt-input-date-to">
         </form>
@@ -30,12 +30,12 @@
             <datalist id="hashtag-list"></datalist>
         </form>
     </div>
-    <form action="" method="post" name="add-photo">
-        <input type="button" value="Add photo" class="add-btn"/>
-    </form>
+        <input id ="add-photo" type="button" value="Add photo" onclick="addPhotoPost();" class="add-btn"/> 
     <div id="phototable">
     </div>
-    <form action="" method="post" name="show-more-photo"><input type="button" value="More" class="more-btn"/></form>
+    <form action="" method="post" name="show-more-photo">
+	   <input id="show-more-photo" type="button" value="More" class="more-btn"/>
+	 </form>
 </div>
 <div id="footer">
     <span id="portal-info">MyPhotoPortal, 24.02.2018</span>
@@ -45,13 +45,13 @@
     <div class="photo-cell">
         <div class="edit" >edit</div>
         <div class="delete">delete</div>
-        <div class="photo">
+        <div class="photo"  onclick = "viewPhotoPosts(this);">
             <img src="" class="photo-img"/>
         </div>
         <div class="author"></div>
         <div class="photo-info-short">
             <div class="like-info">
-                <img src="./img/like/like-outline.png" onclick="" class="like"/>
+                <img src="./img/like/like-outline.png" class="like"/>
                 <div class="like-num"></div>
             </div>
             <div class="hashtags"></div>
@@ -61,5 +61,8 @@
     </div>
 </template>
 </body>
-<script src="script.js"></script>
+<script src="scripts/module-data.js"></script>
+<script src="scripts/module-photoActions.js"></script>
+<script src="scripts/module-DOMActions.js"></script>
+<script src="scripts/script.js"></script>
 </html>
