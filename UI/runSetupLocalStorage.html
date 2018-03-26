@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html lang="en">
+<head></head>
+<body>
+
+<script src="scripts/photo.js"></script>
+<script>
+localStorage.clear();
+photo = photo.sort((a, b) => b.createdAt - a.createdAt);
+photo.forEach( (post,i) => { localStorage.setItem('id'+ i,  JSON.stringify(post) ); } );
+
+</script>
+
+</body>
+</html>
