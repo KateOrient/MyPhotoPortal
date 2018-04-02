@@ -11,13 +11,16 @@ var genPhotoPosts = (skip = 0, top = 10) => {
 
     let posts = photoActions.getPhotoPosts(skip, top, filterConfig);
 
-    if (posts.length < 10) document.getElementById('show-more-photo').style.display = 'none';
-    else document.getElementById('show-more-photo').style.display = 'inline';
+
+    if (posts.length < 10) document.getElementById('show-more-photo').style.display = "none";
+    else document.getElementById('show-more-photo').style.display = "inline";
 
     DOMActions.genPhotoPosts(posts);
+
 };
 
 let addPhotoPost = () => {
+
     let html = `	  
                 <div id="divOuterAddPhoto" class = "divOuterLogin">
                      <div id="divInnerAddPhoto" class = "divInnerAddPhoto">
@@ -27,7 +30,7 @@ let addPhotoPost = () => {
     document.getElementById('hidden-content').innerHTML = html;
 
     if (!user) {
-        divInnerAddPhoto.innerHTML += 'Only authorized users can add photos';
+        divInnerAddPhoto.innerHTML += "Only authorized users can add photos";
         return false;
     }
 
@@ -65,7 +68,7 @@ var editPhotoPost = (id) => {
                    Select photo :				   
 				   <input id="addPhotoLink" type = "file" /><br/><br/>					   
 				   <textarea id="addPhotoHash" placeholder="#hashtag..." rows="2" style="width:100%;position: relative;resize: none;">`
-        + post.hashTags.join(", ") +
+        + post.hashTags.join(" ") +
         `</textarea><br/><br/>	
 				    <textarea id="addPhotoDesc" placeholder="description" rows="4" style="width:100%;resize:none;">`
         + post.description +
@@ -108,6 +111,7 @@ let likeViewPhoto = (id) => {
 };
 
 let viewPhotoPosts = (t) => {
+
     let html = `	  
                 <div id="divOuterViewPhoto" class = "divOuter">
                      <div id="divInnerViewPhoto" class = "divInnerViewPhoto">
