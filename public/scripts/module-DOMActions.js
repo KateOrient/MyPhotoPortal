@@ -1,7 +1,9 @@
 let DOMActions = (function () {
     let genDate = date => {
+
+        d = new Date(Date.parse(date));
         let options = {year: 'numeric', month: 'numeric', day: 'numeric', hour: 'numeric', minute: 'numeric'};
-        return date.toLocaleString('ru', options);
+        return d.toLocaleString('ru', options);
     };
 
     let genDesc = desc => {
@@ -171,7 +173,6 @@ let DOMActions = (function () {
             let last = document.getElementsByClassName('photo-cell').length;
             let last10 = last + 10;
             let posts = photoActions.getPhotoPosts(last, last10, filterConfig);
-
             let table = document.getElementById('phototable');
             posts.forEach(post => {
                 let postToGen = DOMActions.genPhotoPost(post);
@@ -218,6 +219,7 @@ let DOMActions = (function () {
 
     let addPhotoPost = (post, indx) => {
         let posts = document.getElementsByClassName('photo-cell');
+        console.log(posts);
         if (indx < posts.length && indx > -1) {
             let postToAdd = genPhotoPost(post);
             let next = posts[indx];

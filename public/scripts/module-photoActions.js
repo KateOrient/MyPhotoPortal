@@ -1,34 +1,85 @@
 let photoActions = (function () {
-    let getLocalStorage = (marker) => {
-        let arrData = [];
-        let i = 0;
-        while (localStorage.getItem(marker + i)) {
-            arrData[i] = JSON.parse(localStorage.getItem(marker + i));
-            arrData[i].createdAt = new Date(Date.parse(arrData[i].createdAt));
-            i++;
+
+    //--Test
+    // get-запрос
+    let data = '?data=' + encodeURIComponent('тестовые данные на сервер 1');
+    let xhr = new XMLHttpRequest();
+    xhr.open('GET', '/test-get/' + data, false);
+    xhr.onreadystatechange = () => {
+        if (xhr.readyState === 4 && xhr.status === '200') {
+            console.log('ответ на GET - запрос: ' + xhr.responseText);
         }
-        return arrData;
+    };
+    xhr.send();
+
+    // post-запрос
+    data = 'data=' + encodeURIComponent('тестовые данные на сервер 2');
+    xhr = new XMLHttpRequest();
+    xhr.open('POST', '/test-post', false);
+    xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+    xhr.onreadystatechange = () => {
+        if (xhr.readyState === 4 && xhr.status === '200') {
+            console.log('ответ на POST запрос: ' + xhr.responseText);
+        }
+    };
+    xhr.send(data);
+
+// put-запрос
+    data = 'data=' + encodeURIComponent('тестовые данные на сервер 3');
+    xhr = new XMLHttpRequest();
+    xhr.open('PUT', '/test-put', false);
+    xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+    xhr.onreadystatechange = () => {
+        if (xhr.readyState === 4 && xhr.status === '200') {
+            console.log('ответ на PUT-запрос: ' + xhr.responseText);
+        }
+    };
+    xhr.send(data);
+
+// delete-запрос
+    data = '?data=' + encodeURIComponent('тестовые данные на сервер 4');
+    xhr = new XMLHttpRequest();
+    xhr.open('DELETE', '/test-delete/' + data, false);
+    xhr.onreadystatechange = () => {
+        if (xhr.readyState === 4 && xhr.status === '200') {
+            console.log('ответ на DELETE-запрос: ' + xhr.responseText);
+        }
+    };
+    xhr.send();
+// end  test
+
+    let readJsonData = () => {
+        let arrPost = [];
+        let reqServer = new XMLHttpRequest();
+        reqServer.open('GET', '/read', false);
+        reqServer.onreadystatechange = () => {
+            if (reqServer.readyState === 4 && reqServer.status == '200') {
+                arrPost = JSON.parse(reqServer.responseText);
+            }
+        };
+        reqServer.send();
+        return arrPost;
     };
 
-    let setLocalStorage = (marker, arrDate) => {
+    let saveJsonData = (arrPost) => {
+        let body = 'data=' + encodeURIComponent(JSON.stringify(arrPost));
+        let reqServer = new XMLHttpRequest();
+        reqServer.open('POST', '/save', false);
+        reqServer.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
 
-        let i = 0;
-        while (localStorage.getItem(marker + i)) {
-            localStorage.removeItem(marker + i);
-            i++;
-        }
-
-        arrDate.forEach((post, j) => {
-            localStorage.setItem(marker + j, JSON.stringify(post));
-        });
-
+        reqServer.onreadystatechange = () => {
+            if (reqServer.readyState === 4 && reqServer.status == '200') {
+                console.log(reqServer.responseText);
+            }
+        };
+        reqServer.send(body);
     };
 
-    let photoPosts = getLocalStorage('id');
+    let photoPosts = readJsonData('/read');
 
     let getPhotoPosts = (skip, top, filterConfig = {}) => {
 
-        photoPosts = photoPosts.sort((a, b) => b.createdAt - a.createdAt);
+        photoPosts = photoPosts.sort((a, b) => Date.parse(b.createdAt) - Date.parse(a.createdAt));
         skip = skip ? skip : 0;
         top = top ? top : 10;
         let resPhotoPosts = photoPosts;
@@ -175,20 +226,18 @@ let photoActions = (function () {
         photoPosts[i].description = desc;
         photoPosts[i].createdAt = new Date();
         photoPosts[i].author = user;
-        url = url.split("\\");
+        url = url.split('\\');
         photoPosts[i].photoLink = './img/photo/' + url[url.length - 1];
         photoPosts[i].likes = [];
         photoPosts[i].hashTags = hash.split(' ');
 
-        setLocalStorage('id', photoPosts);
+        saveJsonData(photoPosts);
 
         DOMActions.showPostPhoto();
-
-
-        console.log(photoPosts[i]);
     };
 
     let editPhotoPost = (id, desc, url, hash) => {
+
         let i = 0;
         while (photoPosts[i].id !== id) i++;
 
@@ -196,10 +245,11 @@ let photoActions = (function () {
         photoPosts[i].createdAt = new Date();
         photoPosts[i].hashTags = hash.split(' ');
         if (url) {
-            url = url.split("\\");
+            url = url.split('\\');
             photoPosts[i].photoLink = './img/photo/' + url[url.length - 1];
         }
-        setLocalStorage('id', photoPosts);
+
+        saveJsonData(photoPosts);
 
         DOMActions.showPostPhoto();
     };
@@ -209,7 +259,9 @@ let photoActions = (function () {
         photoPosts.forEach((post, i) => {
             if (post.id === id) photoPosts.splice(i, 1);
         });
-        setLocalStorage('id', photoPosts);
+
+        saveJsonData(photoPosts);
+
         DOMActions.showPostPhoto();
     };
 
@@ -237,18 +289,19 @@ let photoActions = (function () {
             }
         }
 
-        setLocalStorage('id', photoPosts);
+        saveJsonData(photoPosts);
 
         elImg.src = './img/like/like-outline.png';
-        elImg.title = photoPosts[i].likes.join(", ");
+        elImg.title = photoPosts[i].likes.join(', ');
         elNum.textContent = photoPosts[i].likes.length;
 
 
-        let doubleEl = document.querySelector("div[data-id='" + id + "']").querySelector(".like-info").querySelector(".like");
+        let doubleEl = document.querySelector('div[data-id=\'' + id + '\']').querySelector('.like-info').querySelector('.like');
         doubleEl.src = './img/like/like-outline.png';
-        doubleEl.title = photoPosts[i].likes.join(", ");
-        let doubleElNum = document.querySelector("div[data-id='" + id + "']").querySelector(".like-info").querySelector(".like-num");
+        doubleEl.title = photoPosts[i].likes.join(', ');
+        let doubleElNum = document.querySelector('div[data-id=\'' + id + '\']').querySelector('.like-info').querySelector('.like-num');
         doubleElNum.textContent = photoPosts[i].likes.length;
+
     };
 
     let likePhotoPost = (id, elImg, elNum) => {
@@ -258,22 +311,23 @@ let photoActions = (function () {
 
         photoPosts[i].likes[photoPosts[i].likes.length] = user;
 
-        setLocalStorage('id', photoPosts);
+        saveJsonData(photoPosts);
 
         elImg.src = './img/like/like.png';
-        elImg.title = photoPosts[i].likes.join(", ");
+        elImg.title = photoPosts[i].likes.join(', ');
         elNum.textContent = photoPosts[i].likes.length;
 
-        let doubleEl = document.querySelector("div[data-id='" + id + "']").querySelector('.like-info').querySelector('.like');
+        let doubleEl = document.querySelector('div[data-id=\'' + id + '\']').querySelector('.like-info').querySelector('.like');
         doubleEl.src = './img/like/like.png';
         doubleEl.title = photoPosts[i].likes.join(', ');
-        let doubleElNum = document.querySelector("div[data-id='" + id + "']").querySelector('.like-info').querySelector('.like-num');
+        let doubleElNum = document.querySelector('div[data-id=\'' + id + '\']').querySelector('.like-info').querySelector('.like-num');
         doubleElNum.textContent = photoPosts[i].likes.length;
     };
 
+
     return {
-        getLocalStorage,
-        setLocalStorage,
+        readJsonData,
+        saveJsonData,
         photoPosts,
         getPhotoPosts,
         getPhotoPost,
