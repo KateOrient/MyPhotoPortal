@@ -1,9 +1,7 @@
 let DOMActions = (function () {
-
-
     let genDate = date => {
         let options = {year: 'numeric', month: 'numeric', day: 'numeric', hour: 'numeric', minute: 'numeric'};
-        return date.toLocaleString("ru", options);
+        return date.toLocaleString('ru', options);
     };
 
     let genDesc = desc => {
@@ -125,6 +123,7 @@ let DOMActions = (function () {
 		                  <input type="text" id="name-input-login" placeholder="login"><br>
                           <input type="password" id="pass-input-login" placeholder="password"><br>
 			              <input id="submit-input-login" type="submit" value ="sing-in"><br>
+						  <div>admin/1234<br>kate145/1234</div>
 		             </div>
 	             </div>`;
                 document.getElementById('hidden-content').innerHTML = html;
@@ -179,8 +178,8 @@ let DOMActions = (function () {
                 table.appendChild(postToGen);
             });
 
-            if (last + 10 >= photoActions.photoPosts.length) document.getElementById('show-more-photo').style.display = "none";
-            else document.getElementById('show-more-photo').style.display = "inline";
+            if (last + 10 >= photoActions.photoPosts.length) document.getElementById('show-more-photo').style.display = 'none';
+            else document.getElementById('show-more-photo').style.display = 'inline';
         };
     };
 
@@ -196,7 +195,7 @@ let DOMActions = (function () {
     let genNameList = (names) => {
         let root = document.getElementById('name-list');
 
-        document.getElementById('name-list').innerHTML = "";
+        document.getElementById('name-list').innerHTML = '';
 
         names.forEach(name => {
             let option = document.createElement('option');
@@ -208,7 +207,7 @@ let DOMActions = (function () {
     let genHashTagList = (hashTags) => {
         let root = document.getElementById('hashtag-list');
 
-        document.getElementById('hashtag-list').innerHTML = "";
+        document.getElementById('hashtag-list').innerHTML = '';
 
         hashTags.forEach(tag => {
             let option = document.createElement('option');
