@@ -1,6 +1,5 @@
 let photoActions = (function () {
-
-    var getLocalStorage = (marker) => {
+    let getLocalStorage = (marker) => {
         let arrData = [];
         let i = 0;
         while (localStorage.getItem(marker + i)) {
@@ -11,18 +10,21 @@ let photoActions = (function () {
         return arrData;
     };
 
-    var setLocalStorage = (marker, arrDate) => {
+    let setLocalStorage = (marker, arrDate) => {
+
         let i = 0;
         while (localStorage.getItem(marker + i)) {
             localStorage.removeItem(marker + i);
             i++;
         }
+
         arrDate.forEach((post, j) => {
             localStorage.setItem(marker + j, JSON.stringify(post));
         });
+
     };
 
-    let photoPosts = getLocalStorage("id");
+    let photoPosts = getLocalStorage('id');
 
     let getPhotoPosts = (skip, top, filterConfig = {}) => {
 
@@ -178,7 +180,7 @@ let photoActions = (function () {
         photoPosts[i].likes = [];
         photoPosts[i].hashTags = hash.split(' ');
 
-        setLocalStorage("id", photoPosts);
+        setLocalStorage('id', photoPosts);
 
         DOMActions.showPostPhoto();
 
@@ -187,7 +189,6 @@ let photoActions = (function () {
     };
 
     let editPhotoPost = (id, desc, url, hash) => {
-
         let i = 0;
         while (photoPosts[i].id !== id) i++;
 
@@ -198,8 +199,7 @@ let photoActions = (function () {
             url = url.split("\\");
             photoPosts[i].photoLink = './img/photo/' + url[url.length - 1];
         }
-        setLocalStorage("id", photoPosts);
-
+        setLocalStorage('id', photoPosts);
 
         DOMActions.showPostPhoto();
     };
@@ -209,7 +209,7 @@ let photoActions = (function () {
         photoPosts.forEach((post, i) => {
             if (post.id === id) photoPosts.splice(i, 1);
         });
-        setLocalStorage("id", photoPosts);
+        setLocalStorage('id', photoPosts);
         DOMActions.showPostPhoto();
     };
 
@@ -237,7 +237,7 @@ let photoActions = (function () {
             }
         }
 
-        setLocalStorage("id", photoPosts);
+        setLocalStorage('id', photoPosts);
 
         elImg.src = './img/like/like-outline.png';
         elImg.title = photoPosts[i].likes.join(", ");
@@ -249,7 +249,6 @@ let photoActions = (function () {
         doubleEl.title = photoPosts[i].likes.join(", ");
         let doubleElNum = document.querySelector("div[data-id='" + id + "']").querySelector(".like-info").querySelector(".like-num");
         doubleElNum.textContent = photoPosts[i].likes.length;
-
     };
 
     let likePhotoPost = (id, elImg, elNum) => {
@@ -259,20 +258,18 @@ let photoActions = (function () {
 
         photoPosts[i].likes[photoPosts[i].likes.length] = user;
 
-        setLocalStorage("id", photoPosts);
+        setLocalStorage('id', photoPosts);
 
         elImg.src = './img/like/like.png';
         elImg.title = photoPosts[i].likes.join(", ");
         elNum.textContent = photoPosts[i].likes.length;
 
-        let doubleEl = document.querySelector("div[data-id='" + id + "']").querySelector(".like-info").querySelector(".like");
+        let doubleEl = document.querySelector("div[data-id='" + id + "']").querySelector('.like-info').querySelector('.like');
         doubleEl.src = './img/like/like.png';
-        doubleEl.title = photoPosts[i].likes.join(", ");
-        let doubleElNum = document.querySelector("div[data-id='" + id + "']").querySelector(".like-info").querySelector(".like-num");
+        doubleEl.title = photoPosts[i].likes.join(', ');
+        let doubleElNum = document.querySelector("div[data-id='" + id + "']").querySelector('.like-info').querySelector('.like-num');
         doubleElNum.textContent = photoPosts[i].likes.length;
-
     };
-
 
     return {
         getLocalStorage,

@@ -11,16 +11,13 @@ var genPhotoPosts = (skip = 0, top = 10) => {
 
     let posts = photoActions.getPhotoPosts(skip, top, filterConfig);
 
-
-    if (posts.length < 10) document.getElementById('show-more-photo').style.display = "none";
-    else document.getElementById('show-more-photo').style.display = "inline";
+    if (posts.length < 10) document.getElementById('show-more-photo').style.display = 'none';
+    else document.getElementById('show-more-photo').style.display = 'inline';
 
     DOMActions.genPhotoPosts(posts);
-
 };
 
 let addPhotoPost = () => {
-
     let html = `	  
                 <div id="divOuterAddPhoto" class = "divOuterLogin">
                      <div id="divInnerAddPhoto" class = "divInnerAddPhoto">
@@ -30,7 +27,7 @@ let addPhotoPost = () => {
     document.getElementById('hidden-content').innerHTML = html;
 
     if (!user) {
-        divInnerAddPhoto.innerHTML += "Only authorized users can add photos";
+        divInnerAddPhoto.innerHTML += 'Only authorized users can add photos';
         return false;
     }
 
@@ -111,7 +108,6 @@ let likeViewPhoto = (id) => {
 };
 
 let viewPhotoPosts = (t) => {
-
     let html = `	  
                 <div id="divOuterViewPhoto" class = "divOuter">
                      <div id="divInnerViewPhoto" class = "divInnerViewPhoto">
@@ -143,6 +139,7 @@ let viewPhotoPosts = (t) => {
     divInnerViewPhoto.innerHTML += html;
     window.scrollTo(0, 0);
 };
+
 
 window.onload = () => {
 
