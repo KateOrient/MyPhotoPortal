@@ -1,298 +1,295 @@
 body {
-	position: absolute;
-	margin: 0;
-	height: 100%;
-	width: 100%;
-	background-color: #EDEDED;
-	color: #333333;
-	font-family: "tahoma";
-	font-size: 12px;
+    position: absolute;
+    margin: 0;
+    height: 100%;
+    width: 100%;
+    background-color: #EDEDED;
+    color: #333333;
+    font-family: "tahoma";
+    font-size: 12px;
 }
 
 #header {
-	position: fixed;
-	z-index: 1000;
-	width: 100%;
-	height: 60px;
-	top: 0;
-	align-items: center;
-	border-bottom: 1px solid #E1E1E1;
-	background-color: white;
+    position: fixed;
+    z-index: 1000;
+    width: 100%;
+    height: 60px;
+    top: 0;
+    align-items: center;
+    border-bottom: 1px solid #E1E1E1;
+    background-color: white;
 }
 
 #content {
-	position: relative;
-	height: max-content;
-	text-align: center;
-	margin: 60px 0 50px 0;
+    position: relative;
+    height: max-content;
+    text-align: center;
+    margin: 60px 0 50px 0;
 }
 
 #footer {
-	position: fixed;
-	z-index: 1000;
-	width: 100%;
-	height: 50px;
-	bottom: 0;
-	border-top: 1px solid #E1E1E1;
-	background-color: white;
+    position: fixed;
+    z-index: 1000;
+    width: 100%;
+    height: 50px;
+    bottom: 0;
+    border-top: 1px solid #E1E1E1;
+    background-color: white;
 }
 
 #big-logo {
-	float: left;
-	height: 40px;
-	padding: 5px 0 0 5px;
+    float: left;
+    height: 40px;
+    padding: 5px 0 0 5px;
 }
 
 #username {
-	padding-right: 20px;
-	cursor: pointer;
-	color: #FE8C11;
+    padding-right: 20px;
+    cursor: pointer;
+    color: #FE8C11;
 }
 
 #log {
-	margin: 20px 20px 0 0;
-	text-align: right;
-	font-size: 13px;
+    margin: 20px 20px 0 0;
+    text-align: right;
+    font-size: 13px;
 }
 
 #sign-in, #sign-up, #sign-out {
-	color: #6723F0;
-	text-decoration: underline;
-	cursor: pointer;
+    color: #6723F0;
+    text-decoration: underline;
+    cursor: pointer;
 }
 
 #configrations {
-	display: block;
-	margin: 0;
-	padding: 2px 5vw 2px 5vw;
-	justify-content: space-between;
-	align-items: center;
-	background-color: white;
+    display: block;
+    margin: 0;
+    padding: 2px 5vw 2px 5vw;
+    justify-content: space-between;
+    align-items: center;
+    background-color: white;
 }
 
 #filt-by-name, #filt-by-date, #filt-by-hashtag {
-	margin: 0.5vh 5vh 0.5vh 5vh;
-	display: inline-block;
-	cursor: pointer;
+    margin: 0.5vh 5vh 0.5vh 5vh;
+    display: inline-block;
+    cursor: pointer;
 }
 
 .more-btn, .add-btn {
-	position: relative;
-	height: 40px;
-	width: max-content;
-	margin: 10px 0 10px 0;
-	border: 1px solid #C2C1C1;
-	color: #333333;
-	font-size: 2.5vh;
-	cursor: pointer;
+    position: relative;
+    height: 40px;
+    width: max-content;
+    margin: 10px 0 10px 0;
+    border: 1px solid #C2C1C1;
+    color: #333333;
+    font-size: 2.5vh;
+    cursor: pointer;
 }
 
 #phototable {
-	height: 100%;
-	margin: auto;
-	padding: 0;
+    height: 100%;
+    margin: auto;
+    padding: 0;
 }
 
 .photo-cell {
-	display: inline-block;
-	background-color: white;
-	min-height: 55vh;
-	width: 37vh;
-	border: 1px solid #E1E1E1;
-	text-align: left;
+    display: inline-block;
+    background-color: white;
+    min-height: 55vh;
+    width: 37vh;
+    border: 1px solid #E1E1E1;
+    text-align: left;
 }
 
-.delete{
-	display: inline-block;
+.delete {
+    display: inline-block;
     visibility: hidden;
-	height: 10px;
-	margin: 3px;
-	float: right;
-	text-align: right;
-	text-decoration: underline;
-	cursor: pointer;
+    height: 10px;
+    margin: 3px;
+    float: right;
+    text-align: right;
+    text-decoration: underline;
+    cursor: pointer;
 }
 
 .edit {
     display: inline-block;
     visibility: hidden;
-	cursor: pointer;
-	height: 10px;
-	margin: 3px;
-	text-decoration:underline;
+    cursor: pointer;
+    height: 10px;
+    margin: 3px;
+    text-decoration: underline;
 }
 
 .photo {
-	display: flex;
-	height: 32vh;
-	width: calc(33vh - 1px);
-	margin: 5px 2vh 0 2vh;
-	padding: 0;
-	justify-content: center;
-	align-items: center;
-	background-color: #EDEDED;
-	cursor: pointer;
+    display: flex;
+    height: 32vh;
+    width: calc(33vh - 1px);
+    margin: 5px 2vh 0 2vh;
+    padding: 0;
+    justify-content: center;
+    align-items: center;
+    background-color: #EDEDED;
+    cursor: pointer;
 }
 
 .photo-img {
-	height: auto;
-	max-height: 32vh;
-	width: auto;
-	max-width: calc(33vh - 1px);
+    height: auto;
+    max-height: 32vh;
+    width: auto;
+    max-width: calc(33vh - 1px);
 }
 
 .like-info {
-	display: table;
-	height: max-content;
+    display: table;
+    height: max-content;
 }
 
 .like-num {
-	position: relative;
-	display: table-cell;
-	width: 50px;
-	padding-left: 3px;
-	border: none;
-	font-size: 11px;
-	vertical-align: middle;
+    position: relative;
+    display: table-cell;
+    width: 50px;
+    padding-left: 3px;
+    border: none;
+    font-size: 11px;
+    vertical-align: middle;
 }
 
 .like {
-	position: relative;
-	display: inline-block;
-	margin: 0 0 0 2vh;
-	cursor: pointer;
+    position: relative;
+    display: inline-block;
+    margin: 0 0 0 2vh;
+    cursor: pointer;
 }
 
 .author {
-	float: right;
-	height: 4vh;
-	margin: 2px 2vh 0 0;
-	text-align: left;
-	align-items: center;
+    float: right;
+    height: 4vh;
+    margin: 2px 2vh 0 0;
+    text-align: left;
+    align-items: center;
 }
 
 .hashtags {
-	position: relative;
+    position: relative;
     overflow: hidden;
     height: 2.2vh;
-	margin: 2px 0 0 3vh;
-	font-size: 11px;
-	color: #6723F0;
-	cursor: pointer;
+    margin: 2px 0 0 3vh;
+    font-size: 11px;
+    color: #6723F0;
+    cursor: pointer;
 }
 
 .post-date {
-	margin: 5px 2vh 0 2vh;
-	font-size: 11px;
-	color: #FE8C11;
+    margin: 5px 2vh 0 2vh;
+    font-size: 11px;
+    color: #FE8C11;
 }
 
 .description {
     overflow: hidden;
-	position: relative;
-	margin: 5px 2vh 0 2vh;
+    position: relative;
+    margin: 5px 2vh 0 2vh;
     height: 5vh;
 }
 
 #portal-info {
-	display: inline-block;
-	float: left;
-	width: 40%;
-	padding: 7px;
+    display: inline-block;
+    float: left;
+    width: 40%;
+    padding: 7px;
 }
 
 #admin-info {
-	display: inline-block;
-	width: 40%;
-	padding: 7px;
+    display: inline-block;
+    width: 40%;
+    padding: 7px;
 }
 
-.divOuter{
-   z-index: 999; 
-   position: absolute; 
-   top: 0; 
-   left: 0; 
-   height: auto; 
-   width: 100%; 
-   background-color: rgba(0,0,0,0.6);	
+.divOuter {
+    z-index: 999;
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: auto;
+    width: 100%;
+    background-color: rgba(0, 0, 0, 0.6);
 }
 
-.divOuterLogin{
-   z-index: 999; 
-   position: absolute; 
-   top: 0; 
-   left: 0; 
-   height: inherit; 
-   width: 100%; 
-   background-color: rgba(0,0,0,0.6);	
+.divOuterLogin {
+    z-index: 999;
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: inherit;
+    width: 100%;
+    background-color: rgba(0, 0, 0, 0.6);
 }
 
 .divInner {
-   background-color: white;  
-   display: inline-block; 
-   padding: 30px;
-   margin: 17vmin; 
-   margin-top: 20vh;
-   width: auto; 
-   display: inline-block;
-   vertical-align: middle;	
-   text-align: center;
+    background-color: white;
+    display: inline-block;
+    padding: 30px;
+    margin: 17vmin;
+    margin-top: 20vh;
+    width: auto;
+    vertical-align: middle;
+    text-align: center;
 }
 
 .divInnerAddPhoto {
-   background-color: white;  
-   display: inline-block; 
-   padding: 30px;
-   margin: 10vmin; 
-   margin-top: 20vh;
-   width: 30%;  height: auto; 
-   display: inline-block;
-   vertical-align: middle;	
-   text-align: center;
+    background-color: white;
+    display: inline-block;
+    padding: 30px;
+    margin: 10vmin;
+    margin-top: 20vh;
+    width: 30%;
+    height: auto;
+    vertical-align: middle;
+    text-align: center;
 }
 
 .divInnerViewPhoto {
-   background-color: white;  
-   display: inline-block; 
-   padding: 30px;
-   margin: 10vmin; 
-   margin-top: 20vh;
-   width: 70%;  height: 100%; 
-   display: inline-block;
-   vertical-align: middle;	
-   text-align: center;
+    background-color: white;
+    display: inline-block;
+    padding: 30px;
+    margin: 10vmin;
+    margin-top: 20vh;
+    width: 70%;
+    height: 100%;
+    vertical-align: middle;
+    text-align: center;
 }
 
-.divInnerEditPhoto{
-   background-color: white;  
-   display: inline-block; 
-   padding: 30px;
-   margin: 10vmin; 
-   margin-top: 20vh;
-   width: auto;  height: auto; 
-   display: inline-block;
-   vertical-align: middle;	
-   text-align: center;
+.divInnerEditPhoto {
+    background-color: white;
+    display: inline-block;
+    padding: 30px;
+    margin: 10vmin;
+    margin-top: 20vh;
+    width: auto;
+    height: auto;
+    vertical-align: middle;
+    text-align: center;
 }
 
-
-.divInner > input { 
-   margin: 5px;
-   float: left;
-} 
-
+.divInner > input {
+    margin: 5px;
+    float: left;
+}
 
 .bClose {
-	position:absolute;
-	top:0px; 
-	right: 5px; 
-	font-size: 35px; 
-	color: white;
-	cursor: pointer;
+    position: absolute;
+    top: 0;
+    right: 5px;
+    font-size: 35px;
+    color: white;
+    cursor: pointer;
 }
 
 u {
-	cursor: pointer;
+    cursor: pointer;
 }
 
 

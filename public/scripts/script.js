@@ -9,14 +9,12 @@ var genPhotoPosts = (skip = 0, top = 10) => {
         hashtag: document.getElementById('filt-input-hashtag').value
     };
 
-    let posts = photoActions.getPhotoPosts(skip, top, filterConfig);
+    let posts = photoActions.getPhotoPostsServer(skip, top, filterConfig);
 
-
-    if (posts.length < 10) document.getElementById('show-more-photo').style.display = "none";
-    else document.getElementById('show-more-photo').style.display = "inline";
+    if (posts.length < 10) document.getElementById('show-more-photo').style.display = 'none';
+    else document.getElementById('show-more-photo').style.display = 'inline';
 
     DOMActions.genPhotoPosts(posts);
-
 };
 
 let addPhotoPost = () => {
@@ -30,7 +28,7 @@ let addPhotoPost = () => {
     document.getElementById('hidden-content').innerHTML = html;
 
     if (!user) {
-        divInnerAddPhoto.innerHTML += "Only authorized users can add photos";
+        divInnerAddPhoto.innerHTML += 'Only authorized users can add photos';
         return false;
     }
 
@@ -46,8 +44,7 @@ let addPhotoPost = () => {
     divInnerAddPhoto.innerHTML += html;
 
     submitPhotoPost.onclick = () => {
-        photoActions.addPhotoPost(addPhotoDesc.value, addPhotoLink.value, addPhotoHash.value);
-
+        photoActions.addPhotoPostServer(addPhotoDesc.value, addPhotoLink.value, addPhotoHash.value, localStorage.getItem('user'));
     }
 };
 
@@ -61,9 +58,8 @@ var editPhotoPost = (id) => {
 	             </div>`;
     document.getElementById('hidden-content').innerHTML = html;
 
-
     let post = {};
-    post = photoActions.getPhotoPost(id);
+    post = photoActions.getPhotoPostServer(id);
     html = `<form><img src ="` + post.photoLink + `" style = "width:20%;"/><br>     
                    Select photo :				   
 				   <input id="addPhotoLink" type = "file" /><br/><br/>					   
@@ -81,37 +77,12 @@ var editPhotoPost = (id) => {
     window.scrollTo(0, 0);
 
     submitEditPost.onclick = () => {
-        photoActions.editPhotoPost(id, addPhotoDesc.value, addPhotoLink.value, addPhotoHash.value);
+        photoActions.editPhotoPostServer(id, addPhotoDesc.value, addPhotoLink.value, addPhotoHash.value, localStorage.getItem('user'));
     }
-};
 
-let removePhotoPost = id => {
-    let indx = photoActions.getIndx(photoActions.getPhotoPost(id));
-    if (photoActions.removePhotoPost(id)) {
-        DOMActions.removePhotoPost(indx);
-    }
-};
-
-let likeViewPhoto = (id) => {
-
-    if (user) {
-
-        post = photoActions.getPhotoPost('' + id);
-
-        if (post.likes.indexOf(user) !== -1) {
-            photoActions.outlikePhotoPost(id,
-                document.getElementById('like-view'),
-                document.getElementById('like-num-view'));
-        } else {
-            photoActions.likePhotoPost(id,
-                document.getElementById('like-view'),
-                document.getElementById('like-num-view'));
-        }
-    }
 };
 
 let viewPhotoPosts = (t) => {
-
     let html = `	  
                 <div id="divOuterViewPhoto" class = "divOuter">
                      <div id="divInnerViewPhoto" class = "divInnerViewPhoto">
@@ -121,39 +92,25 @@ let viewPhotoPosts = (t) => {
     document.getElementById('hidden-content').innerHTML = html;
 
     let post = {};
-    post = photoActions.getPhotoPost(t.parentNode.dataset.id);
+    post = photoActions.getPhotoPostServer(t.parentNode.dataset.id);
 
     html = '<img src ="' + post.photoLink + '" style = "width:50%;"/><br>';
     html += '<div>' + DOMActions.genDate(post.createdAt) + '</div><br>';
-
     html += '<div id="hashTags-view">' + DOMActions.genHashTags(post.hashTags) + '</div><br>';
-
     html += '<div><i>' + post.description + '</i></div><br>';
-    html += '<div class="like-info">';
-    if (post.likes.indexOf(user) !== -1) {
-        html += '<img id = "like-view" src="./img/like/like.png" onclick="likeViewPhoto(' + t.parentNode.dataset.id
-            + ');" title="' + post.likes.join(", ") + '" class="like"/>';
-    } else {
-        html += '<img id = "like-view" src="./img/like/like-outline.png" onclick="likeViewPhoto(' + t.parentNode.dataset.id
-            + ');" title="' + post.likes.join(", ") + '" class="like"/>';
-    }
-    html += '<div id = "like-num-view" class="like-num">' + post.likes.length + '</div>';
-    html += '</div>';
+    html += '<div class="like-info"></div>';
 
     divInnerViewPhoto.innerHTML += html;
+
+    if (user) {
+        photoActions.likePhotoPostServer(post.id, user);
+        photoActions.likePhotoPostServer(post.id, user);
+    }
     window.scrollTo(0, 0);
 };
 
-
 window.onload = () => {
-
-    DOMActions.genLog();
-    DOMActions.genNameList(photoActions.getNames());
-    DOMActions.genHashTagList(photoActions.getHashTags());
-    genPhotoPosts();
-
-    DOMActions.filterEvents();
-    DOMActions.morePhoto();
+    DOMActions.showPostPhoto();
 };
 
 
