@@ -1,7 +1,7 @@
 let DOMActions = (function () {
-    let genDate = date => {
 
-        d = new Date(Date.parse(date));
+    let genDate = date => {
+        let d = new Date(Date.parse(date));
         let options = {year: 'numeric', month: 'numeric', day: 'numeric', hour: 'numeric', minute: 'numeric'};
         return d.toLocaleString('ru', options);
     };
@@ -18,7 +18,6 @@ let DOMActions = (function () {
         hashTags.forEach(tag =>
             res += '<u onclick="DOMActions.filtHashtag(this.innerHTML)">' + tag + '</u> &nbsp;'
         );
-
         return res;
     };
 
@@ -44,7 +43,7 @@ let DOMActions = (function () {
             };
             postToGen.getElementsByClassName('delete')[0].style.visibility = 'visible';
             postToGen.getElementsByClassName('delete')[0].onclick = () => {
-                photoActions.removePhotoPost(postToGen.dataset.id);
+                photoActions.removePhotoPostServer(postToGen.dataset.id);
             }
         }
 
@@ -52,30 +51,19 @@ let DOMActions = (function () {
 
         if (post.likes.indexOf(user) !== -1) {
             postToGen.getElementsByClassName('like')[0].src = './img/like/like.png';
-            postToGen.getElementsByClassName('like')[0].title = post.likes.join(", ");
+            postToGen.getElementsByClassName('like')[0].title = post.likes.join(', ');
         }
         else {
             postToGen.getElementsByClassName('like')[0].src = './img/like/like-outline.png';
-            postToGen.getElementsByClassName('like')[0].title = post.likes.join(", ");
+            postToGen.getElementsByClassName('like')[0].title = post.likes.join(', ');
         }
         postToGen.getElementsByClassName('like-num')[0].textContent = post.likes.length;
 
         postToGen.getElementsByClassName('like')[0].onclick = () => {
-            if (user) {
-                if (post.likes.indexOf(user) !== -1) {
-                    photoActions.outlikePhotoPost(post.id,
-                        postToGen.getElementsByClassName('like')[0],
-                        postToGen.getElementsByClassName('like-num')[0]);
-                } else {
-                    photoActions.likePhotoPost(post.id,
-                        postToGen.getElementsByClassName('like')[0],
-                        postToGen.getElementsByClassName('like-num')[0]);
-                }
-            }
+            if (user) photoActions.likePhotoPostServer(post.id, user);
         };
 
         postToGen.getElementsByClassName('hashtags')[0].innerHTML = genHashTags(post.hashTags);
-
 
         postToGen.getElementsByClassName('post-date')[0].textContent = genDate(post.createdAt);
         postToGen.getElementsByClassName('description')[0].textContent = genDesc(post.description);
@@ -172,7 +160,11 @@ let DOMActions = (function () {
 
             let last = document.getElementsByClassName('photo-cell').length;
             let last10 = last + 10;
-            let posts = photoActions.getPhotoPosts(last, last10, filterConfig);
+
+            let posts = photoActions.getPhotoPostsServer(last, last10, filterConfig);
+            console.log(posts);
+
+
             let table = document.getElementById('phototable');
             posts.forEach(post => {
                 let postToGen = DOMActions.genPhotoPost(post);
@@ -217,52 +209,17 @@ let DOMActions = (function () {
         })
     };
 
-    let addPhotoPost = (post, indx) => {
-        let posts = document.getElementsByClassName('photo-cell');
-        console.log(posts);
-        if (indx < posts.length && indx > -1) {
-            let postToAdd = genPhotoPost(post);
-            let next = posts[indx];
-            console.log(postToAdd);
-            console.log(next);
-            next.before(postToAdd);
-            posts[posts.length - 1].remove();
-        }
-    };
-
-    let removePhotoPost = (indx) => {
-        let posts = document.getElementsByClassName('photo-cell');
-
-        if (indx < posts.length && indx > -1) {
-            let postToDel = posts[indx];
-            postToDel.remove();
-        }
-    };
-
-    let editPhotoPost = (indx, editedPost) => {
-        let posts = document.getElementsByClassName('photo-cell');
-
-        if (indx < posts.length && indx > -1) {
-            let postToEdit = posts[indx];
-            let newPost = genPhotoPost(editedPost);
-            postToEdit.replaceWith(newPost);
-        }
-    };
-
     return {
-        genDate,
         genLog,
+        genDate,
         genHashTags,
-        showPostPhoto,
+        genNameList,
+        genHashTagList,
         genPhotoPost,
         genPhotoPosts,
-        morePhoto,
         filterEvents,
         filtHashtag,
-        genNameList,
-        addPhotoPost,
-        removePhotoPost,
-        editPhotoPost,
-        genHashTagList
+        morePhoto,
+        showPostPhoto
     }
 })();

@@ -1,22 +1,5 @@
 [
     {
-        "id": "19",
-        "description": "Tulips and roses. Missing spring so much!!!",
-        "createdAt": "2018-02-28T14:45:02.000Z",
-        "author": "kate145",
-        "photoLink": "./img/photo/18.jpg",
-        "likes": [
-            "Svetik1998",
-            "Kate Sosinovich"
-        ],
-        "hashTags": [
-            "#spring",
-            "#flowers",
-            "#roses",
-            "#tulips"
-        ]
-    },
-    {
         "id": "6",
         "description": "Can't stop gazing at this photo! I'm dreaming of visiting such kind of place",
         "createdAt": "2018-02-25T16:12:04.000Z",
@@ -44,9 +27,9 @@
         "photoLink": "./img/photo/0.jpg",
         "likes": [
             "Ivan Ivanov",
-            "admin",
             "SamiyKrytoi",
-            "Egor1995"
+            "Egor1995",
+            "admin"
         ],
         "hashTags": [
             "#life",
@@ -63,7 +46,8 @@
             "Ivan Ivanov",
             "EgorGitar",
             "Kate Sosinovich",
-            "kate145"
+            "kate145",
+            "admin"
         ],
         "hashTags": []
     },
@@ -75,8 +59,8 @@
         "photoLink": "./img/photo/13.jpg",
         "likes": [
             "kate145",
-            "admin",
-            "Egor1995"
+            "Egor1995",
+            "admin"
         ],
         "hashTags": [
             "#life",
@@ -92,27 +76,13 @@
         "likes": [
             "SamiyKrytoi",
             "Egor1995",
-            "Kate Sosinovich"
+            "Kate Sosinovich",
+            "kate145"
         ],
         "hashTags": [
             "#book",
             "#life",
             "#life_and_people"
-        ]
-    },
-    {
-        "id": "20",
-        "description": "Me looking forward warm sunny days",
-        "createdAt": "2018-02-23T06:21:59.000Z",
-        "author": "admin",
-        "photoLink": "./img/photo/19.jpg",
-        "likes": [
-            "Kate Sosinovich",
-            "admin",
-            "EgorGitar"
-        ],
-        "hashTags": [
-            "#warm_vs_cold"
         ]
     },
     {
@@ -133,6 +103,21 @@
             "#life",
             "#nature",
             "#me"
+        ]
+    },
+    {
+        "id": "18",
+        "description": "My life - my rules! Best party in my life",
+        "createdAt": "2018-02-22T20:04:21.000Z",
+        "author": "EgorGitar",
+        "photoLink": "./img/photo/17.jpg",
+        "likes": [
+            "Egor1995",
+            "SamiyKrytoi"
+        ],
+        "hashTags": [
+            "#party",
+            "#friends"
         ]
     },
     {
@@ -272,6 +257,52 @@
         "hashTags": [
             "#me",
             "#life"
+        ]
+    },
+    {
+        "id": "22",
+        "description": "",
+        "createdAt": "2018-04-09T15:39:40.160Z",
+        "author": "kate145",
+        "photoLink": "./img/photo/6.jpg",
+        "likes": [
+            "admin"
+        ],
+        "hashTags": [
+            ""
+        ]
+    },
+    {
+        "id": "23",
+        "description": "",
+        "createdAt": "2018-04-09T15:39:56.976Z",
+        "author": "kate145",
+        "photoLink": "./img/photo/7.jpg",
+        "likes": [],
+        "hashTags": [
+            ""
+        ]
+    },
+    {
+        "id": "24",
+        "description": "ываыавыаы",
+        "createdAt": "2018-04-09T15:57:54.912Z",
+        "author": "kate145",
+        "photoLink": "./img/photo/19.jpg",
+        "likes": [],
+        "hashTags": [
+            ""
+        ]
+    },
+    {
+        "id": "20",
+        "description": "",
+        "createdAt": "2018-04-10T13:40:41.219Z",
+        "author": "admin",
+        "photoLink": "./img/photo/7.jpg",
+        "likes": [],
+        "hashTags": [
+            ""
         ]
     }
 ]
