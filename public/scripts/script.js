@@ -60,7 +60,7 @@ var editPhotoPost = (id) => {
 
     let post = {};
     post = photoActions.getPhotoPostServer(id);
-    html = `<form><img src ="` + post.photoLink + `" style = "width:20%;"/><br>     
+    html = `<form><img src ="` + post.photoLink + `" style = "max-width:20vmax;"/><br>     
                    Select photo :				   
 				   <input id="addPhotoLink" type = "file" /><br/><br/>					   
 				   <textarea id="addPhotoHash" placeholder="#hashtag..." rows="2" style="width:100%;position: relative;resize: none;">`

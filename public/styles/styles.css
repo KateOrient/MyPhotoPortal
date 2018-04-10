@@ -209,20 +209,18 @@ body {
 
 .divOuter {
     z-index: 999;
-    position: absolute;
-    top: 0;
+    position: fixed;
     left: 0;
-    height: auto;
+    height: 100%;
     width: 100%;
     background-color: rgba(0, 0, 0, 0.6);
 }
 
 .divOuterLogin {
     z-index: 999;
-    position: absolute;
-    top: 0;
+    position: fixed;
     left: 0;
-    height: inherit;
+    height: 100%;
     width: 100%;
     background-color: rgba(0, 0, 0, 0.6);
 }
@@ -257,9 +255,16 @@ body {
     margin: 10vmin;
     margin-top: 20vh;
     width: 70%;
-    height: 100%;
+    height: 50%;
     vertical-align: middle;
     text-align: center;
+}
+
+.divInnerViewPhoto > img {
+    height: auto;
+    max-height: 400px;
+    width: auto;
+    max-width: 400px;
 }
 
 .divInnerEditPhoto {
@@ -272,6 +277,13 @@ body {
     height: auto;
     vertical-align: middle;
     text-align: center;
+}
+
+.divInnerEditPhoto > form > img {
+    height: auto;
+    max-height: 100px;
+    width: auto;
+    max-width: 100px;
 }
 
 .divInner > input {

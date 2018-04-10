@@ -52,39 +52,6 @@
         "hashTags": []
     },
     {
-        "id": "8",
-        "description": "Looks fine, isn't it? Do you know what they are doing? If not, visit google.com",
-        "createdAt": "2018-04-09T15:02:24.238Z",
-        "author": "admin",
-        "photoLink": "./img/photo/7.jpg",
-        "likes": [
-            "Ivan Ivanov",
-            "SamiyKrytoi",
-            "Egor1995",
-            "Ekaterina Sosinovich"
-        ],
-        "hashTags": [
-            "#life",
-            "#hashtag2"
-        ]
-    },
-    {
-        "id": "9",
-        "description": "WOW! Is it a stone or a piece of brick wall??",
-        "createdAt": "2018-02-23T09:45:00.000Z",
-        "author": "admin",
-        "photoLink": "./img/photo/8.jpg",
-        "likes": [
-            "Ekaterina Sosinovich",
-            "EgorGitar",
-            "Egor1995"
-        ],
-        "hashTags": [
-            "#hashtag1",
-            "#hashtag2"
-        ]
-    },
-    {
         "id": "14",
         "description": "'Be who you are' - the best advice I've ever heard. What do you think about it?",
         "createdAt": "2018-02-23T08:24:20.000Z",
@@ -92,8 +59,8 @@
         "photoLink": "./img/photo/13.jpg",
         "likes": [
             "kate145",
-            "admin",
-            "Egor1995"
+            "Egor1995",
+            "admin"
         ],
         "hashTags": [
             "#life",
@@ -116,20 +83,6 @@
             "#book",
             "#life",
             "#life_and_people"
-        ]
-    },
-    {
-        "id": "20",
-        "description": "Me looking forward warm sunny days",
-        "createdAt": "2018-02-23T06:21:59.000Z",
-        "author": "admin",
-        "photoLink": "./img/photo/19.jpg",
-        "likes": [
-            "Kate Sosinovich",
-            "EgorGitar"
-        ],
-        "hashTags": [
-            "#warm_vs_cold"
         ]
     },
     {
@@ -307,47 +260,14 @@
         ]
     },
     {
-        "id": "20",
-        "description": "",
-        "createdAt": "2018-04-09T15:15:15.767Z",
-        "author": "admin",
-        "photoLink": "./img/photo/19.jpg",
-        "likes": [],
-        "hashTags": [
-            "fdsf"
-        ]
-    },
-    {
-        "id": "21",
-        "description": "",
-        "createdAt": "2018-04-09T15:16:38.599Z",
-        "author": "admin",
-        "photoLink": "./img/photo/4.jpg",
-        "likes": [
-            "kate145"
-        ],
-        "hashTags": [
-            ""
-        ]
-    },
-    {
-        "id": "22",
-        "description": "",
-        "createdAt": "2018-04-09T15:17:00.424Z",
-        "author": "admin",
-        "photoLink": "./img/photo/6.jpg",
-        "likes": [],
-        "hashTags": [
-            ""
-        ]
-    },
-    {
         "id": "22",
         "description": "",
         "createdAt": "2018-04-09T15:39:40.160Z",
         "author": "kate145",
         "photoLink": "./img/photo/6.jpg",
-        "likes": [],
+        "likes": [
+            "admin"
+        ],
         "hashTags": [
             ""
         ]
@@ -369,6 +289,17 @@
         "createdAt": "2018-04-09T15:57:54.912Z",
         "author": "kate145",
         "photoLink": "./img/photo/19.jpg",
+        "likes": [],
+        "hashTags": [
+            ""
+        ]
+    },
+    {
+        "id": "20",
+        "description": "",
+        "createdAt": "2018-04-10T13:40:41.219Z",
+        "author": "admin",
+        "photoLink": "./img/photo/7.jpg",
         "likes": [],
         "hashTags": [
             ""
