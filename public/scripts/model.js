@@ -1,4 +1,23 @@
-let photoActions = (function () {
+let photoModel = (function () {
+
+    let getPhotoPostsServerLongPolling = (skip, top, filterConfig) => {
+        let res;
+        let data = '?skip=' + encodeURIComponent(skip) + '&top=' + encodeURIComponent(top);
+        let body = 'filterConfig=' + encodeURIComponent(JSON.stringify(filterConfig));
+
+        let xhr = new XMLHttpRequest();
+        xhr.open('POST', '/getPhotoPostLongPoling/' + data, false);
+        xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+        xhr.onreadystatechange = () => {
+            if (xhr.readyState === 4 && xhr.status === 200) {
+                res = JSON.parse(xhr.responseText);
+            }
+        };
+        xhr.send(body);
+        return res;
+    };
+
+
     let getPhotoPostServer = (id) => {
         let res;
         let data = '?id=' + encodeURIComponent(id);
@@ -30,44 +49,49 @@ let photoActions = (function () {
         return res;
     };
 
-    let addPhotoPostServer = (desc, url, hashtag, user) => {
+    let addPhotoPostServer = () => {
         let res;
-        let body = 'desc=' + encodeURIComponent(desc) + '&url=' + encodeURIComponent(url) +
-            '&hashtag=' + encodeURIComponent(hashtag) + '&user=' + encodeURIComponent(user);
+
+        let formData = new FormData(document.forms.formAdd);
         let xhr = new XMLHttpRequest();
         xhr.open('POST', '/addPhotoPost/', false);
-        xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
         xhr.onreadystatechange = () => {
             if (xhr.readyState === 4 && xhr.status === 200) {
                 res = xhr.responseText;
             }
         };
-        xhr.send(body);
+        xhr.send(formData);
+        delete formData;
+
         if (res === 'ok') {
             photoPosts = readJsonData('/read');
-            window.genPhotoPosts(0, 10);
+            photoView.genPhotoPosts(0, 10);
         }
     };
 
-    let editPhotoPostServer = (id, desc, url, hashtag, user) => {
+    let editPhotoPostServer = () => {
         let res;
-        let data = '?id=' + id;
-        let body = 'desc=' + encodeURIComponent(desc) + '&url=' + encodeURIComponent(url) +
-            '&hashtag=' + encodeURIComponent(hashtag) + '&user=' + encodeURIComponent(user);
+
+        let formDataEdit = new FormData(document.forms.formEdit);
+
         let xhr = new XMLHttpRequest();
-        xhr.open('PUT', '/editPhotoPost/' + data, false);
-        xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+        xhr.open('PUT', '/editPhotoPost/', false);
         xhr.onreadystatechange = () => {
             if (xhr.readyState === 4 && xhr.status === 200) {
                 res = xhr.responseText;
             }
         };
-        xhr.send(body);
+        xhr.send(formDataEdit);
+        delete formDataEdit;
+
 
         if (res === 'ok') {
             photoPosts = readJsonData('/read');
-            window.genPhotoPosts(0, 10);
+            photoView.genPhotoPosts(0, 10);
+            photoView.bCloseHiddenContent();
         }
+
+        return false;
     };
 
     let removePhotoPostServer = (id) => {
@@ -80,14 +104,18 @@ let photoActions = (function () {
             }
         };
         xhr.send();
+
         if (res === 'ok') {
             photoPosts = readJsonData('/read');
-            window.genPhotoPosts(0, 10);
+            photoView.genPhotoPosts(0, 10);
         }
     };
 
-    let likePhotoPostServer = (id, user) => {
+    let likePhotoPostServer = (id) => {
+
+        let user = localStorage.getItem('user');
         let res;
+
         let data = '?id=' + encodeURIComponent(id) + '&user=' + encodeURIComponent(user);
         let xhr = new XMLHttpRequest();
         xhr.open('GET', '/likePhotoPost/' + data, false);
@@ -97,17 +125,7 @@ let photoActions = (function () {
             }
         };
         xhr.send();
-
-        document.querySelector('div[data-id=\'' + id + '\']').querySelector('.like-info').innerHTML = res;
-        document.querySelector('div[data-id=\'' + id + '\']').querySelector('.like').onclick = () => {
-            if (user) photoActions.likePhotoPostServer(id, user);
-        };
-        if (document.getElementById('divInnerViewPhoto')) {
-            document.getElementById('divInnerViewPhoto').querySelector('.like-info').innerHTML = res;
-            document.getElementById('divInnerViewPhoto').querySelector('.like').onclick = () => {
-                if (user) photoActions.likePhotoPostServer(id, user);
-            }
-        }
+        return res;
     };
 
     let readJsonData = () => {
@@ -124,6 +142,7 @@ let photoActions = (function () {
     };
 
     let saveJsonData = (arrPost) => {
+
         let body = 'data=' + encodeURIComponent(JSON.stringify(arrPost));
         let reqServer = new XMLHttpRequest();
         reqServer.open('POST', '/save', false);
@@ -137,7 +156,7 @@ let photoActions = (function () {
         reqServer.send(body);
     };
 
-    let photoPosts = readJsonData('/read');
+    var photoPosts = readJsonData('/read');
 
     let getNames = () => {
         return photoPosts.map(post => post.author).filter((name, indx, self) => self.indexOf(name) === indx);
@@ -149,17 +168,34 @@ let photoActions = (function () {
         return hashtags.filter((tag, indx, self) => self.indexOf(tag) === indx);
     };
 
+    let genDate = date => {
+        d = new Date(Date.parse(date));
+        let options = {year: 'numeric', month: 'numeric', day: 'numeric', hour: 'numeric', minute: 'numeric'};
+        return d.toLocaleString('ru', options);
+    };
+
+    let genDesc = desc => {
+        if (desc.length > 70) {
+            return desc.substr(0, 70) + '...';
+        }
+        return desc;
+    };
+
+    let genHashTags = hashTags => {
+        let res = '';
+        hashTags.forEach(tag => {
+            res += '<u class="listHashtag">' + tag + '</u> &nbsp;';
+        });
+        return res;
+    };
+
+
     return {
-        likePhotoPostServer,
-        removePhotoPostServer,
-        editPhotoPostServer,
-        addPhotoPostServer,
-        getPhotoPostServer,
-        getPhotoPostsServer,
-        readJsonData,
-        saveJsonData,
+        likePhotoPostServer, removePhotoPostServer, editPhotoPostServer, addPhotoPostServer,
+        getPhotoPostServer, getPhotoPostsServer, getPhotoPostsServerLongPolling,
+        readJsonData, saveJsonData,
         photoPosts,
-        getNames,
-        getHashTags
+        getNames, getHashTags,
+        genDate, genHashTags, genDesc
     }
 })();
