@@ -1,13 +1,34 @@
 const f = require('./app-func.js');
 
+
 let express = require('express');
+
+let app = express();
+app.use(express.static(__dirname + '/public/'));
+
 let fs = require('fs');
+
+var multer = require('multer');
+var nameUploadFile = '';
+var storage = multer.diskStorage({
+    destination: function (req, file, callback) {
+        callback(null, './public/img/photo');
+    },
+    filename: function (req, file, callback) {
+        nameUploadFile = Date.now() + '-' + file.originalname;
+        callback(null, nameUploadFile);
+    }
+});
+var upload = multer({storage: storage});
 
 var bodyParser = require('body-parser');
 var urlencodedParser = bodyParser.urlencoded({extended: false});
 
-let app = express();
-app.use(express.static(__dirname + '/public/'));
+
+app.post('/getPhotoPostLongPoling/', urlencodedParser, (req, res) => {
+
+    res.end(JSON.stringify(f.getPhotoPostsLimitFiltr(req.query.skip, req.query.top, JSON.parse(req.body.filterConfig))));
+});
 
 app.get('/', (req, res) => {
     res.sendFile(__dirname + '/index.html');
@@ -30,18 +51,23 @@ app.post('/getPhotoPost', urlencodedParser, (req, res) => {
     res.end(JSON.stringify(f.getPhotoPostsLimitFiltr(req.query.skip, req.query.top, JSON.parse(req.body.filterConfig))));
 });
 
-app.post('/addPhotoPost', urlencodedParser, (req, res) => {
-    f.addPhotoPostJson(req.body.desc, req.body.url, req.body.hashtag, req.body.user);
+app.post('/addPhotoPost', upload.single('namePhotoLink'), (req, res) => {
+
+    f.addPhotoPostJson(req.body.namePhotoDesc, nameUploadFile, req.body.namePhotoHash, req.body.namePhotoUser);
     res.end('ok');
 });
 
-app.put('/editPhotoPost', urlencodedParser, (req, res) => {
-    f.editPhotoPost(req.query.id, req.body.desc, req.body.url, req.body.hashtag, req.body.user);
+app.put('/editPhotoPost', upload.single('editPhotoLink'), (req, res) => {
+
+    f.editPhotoPost(req.body.editId, req.body.editPhotoDesc, nameUploadFile, req.body.editPhotoHash, req.body.namePhotoUserEdit);
+    nameUploadFile = '';
     res.end('ok');
 });
 
 app.delete('/removePhotoPost', urlencodedParser, (req, res) => {
+
     f.removePhotoPost(req.query.id);
+
     res.end('ok');
 });
 
