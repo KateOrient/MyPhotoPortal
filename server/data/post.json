@@ -7,8 +7,7 @@
         "photoLink": "./img/photo/18.jpg",
         "likes": [
             "Svetik1998",
-            "Kate Sosinovich",
-            "admin"
+            "Kate Sosinovich"
         ],
         "hashTags": [
             "#spring",
@@ -28,7 +27,7 @@
             "AnnaKirova",
             "SamiyKrytoi",
             "EgorGitar",
-            ""
+            "admin"
         ],
         "hashTags": [
             "#landscape",
@@ -36,25 +35,6 @@
             "#life",
             "#trip",
             "#dream"
-        ]
-    },
-    {
-        "id": "2",
-        "description": "It's my cat Cookie. I love him sooo much",
-        "createdAt": "2018-02-24T11:34:22.000Z",
-        "author": "admin",
-        "photoLink": "./img/photo/1.jpg",
-        "likes": [
-            "Ivan Ivanov",
-            "kate145",
-            "SamiyKrytoi",
-            "Egor1995",
-            "Natya Leonova",
-            "KirrilK"
-        ],
-        "hashTags": [
-            "#my_cat",
-            "#fluffy"
         ]
     },
     {
@@ -87,23 +67,6 @@
             "kate145"
         ],
         "hashTags": []
-    },
-    {
-        "id": "8",
-        "description": "Looks amazing, isn't it? Do you know what they are doing? If not, visit google.com",
-        "createdAt": "2018-02-23T17:01:24.000Z",
-        "author": "admin",
-        "photoLink": "./img/photo/7.jpg",
-        "likes": [
-            "Ivan Ivanov",
-            "SamiyKrytoi",
-            "Egor1995",
-            "Ekaterina Sosinovich"
-        ],
-        "hashTags": [
-            "#life",
-            "#hashtag2"
-        ]
     },
     {
         "id": "9",

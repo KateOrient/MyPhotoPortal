@@ -24,10 +24,9 @@ let likePhotoPost = (id, user) => {
     fs.writeFileSync('./server/data/post.json', JSON.stringify(photoPosts, '', 4));
 
     return html;
-}
+};
 
 let removePhotoPost = (id) => {
-
     let photoPosts = JSON.parse(fs.readFileSync('./server/data/post.json', 'utf8'));
 
     let i = 0;
@@ -43,13 +42,13 @@ let removePhotoPost = (id) => {
     photoPosts.splice(i, 1);
 
     fs.writeFileSync('./server/data/post.json', JSON.stringify(photoPosts, '', 4));
-}
+};
 
 let editPhotoPost = (id, desc, url, hash, user) => {
     let photoPosts = JSON.parse(fs.readFileSync('./server/data/post.json', 'utf8'));
 
     let i = 0;
-    while (photoPosts[i].id != String(id)) i++;
+    while (photoPosts[i].id !== String(id)) i++;
 
     photoPosts[i].description = desc;
     photoPosts[i].createdAt = new Date();
@@ -58,7 +57,6 @@ let editPhotoPost = (id, desc, url, hash, user) => {
     if (url) {
         let urlOld = photoPosts[i].photoLink.split('\/');
         photoPosts[i].photoLink = './img/photo/' + url;
-
         let urlOldImage = './public/img/photo/' + urlOld[urlOld.length - 1];
         fs.unlink(urlOldImage, () => {
             console.log('replacement file: ' + urlOldImage);
@@ -101,7 +99,6 @@ let getPhotoPostId = (id) => {
 };
 
 let getPhotoPostsLimitFiltr = (skip, top, filterConfig = {}) => {
-
     let photoPosts = JSON.parse(fs.readFileSync('./server/data/post.json', 'utf8'));
 
     photoPosts = photoPosts.sort((a, b) => Date.parse(b.createdAt) - Date.parse(a.createdAt));
@@ -141,7 +138,6 @@ let getPhotoPostsLimitFiltr = (skip, top, filterConfig = {}) => {
     }
     return resPhotoPosts.slice(skip, top);
 };
-
 
 module.exports.likePhotoPost = likePhotoPost;
 module.exports.removePhotoPost = removePhotoPost;

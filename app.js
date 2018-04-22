@@ -25,11 +25,6 @@ var bodyParser = require('body-parser');
 var urlencodedParser = bodyParser.urlencoded({extended: false});
 
 
-app.post('/getPhotoPostLongPoling/', urlencodedParser, (req, res) => {
-
-    res.end(JSON.stringify(f.getPhotoPostsLimitFiltr(req.query.skip, req.query.top, JSON.parse(req.body.filterConfig))));
-});
-
 app.get('/', (req, res) => {
     res.sendFile(__dirname + '/index.html');
 });
@@ -47,13 +42,31 @@ app.get('/getPhotoPost', urlencodedParser, (req, res) => {
     res.end(JSON.stringify(f.getPhotoPostId(req.query.id)));
 });
 
+var events = require('events');
+var dispatcher = new events.EventEmitter();
+
 app.post('/getPhotoPost', urlencodedParser, (req, res) => {
-    res.end(JSON.stringify(f.getPhotoPostsLimitFiltr(req.query.skip, req.query.top, JSON.parse(req.body.filterConfig))));
+
+    dispatcher.emit('message', JSON.stringify(f.getPhotoPostsLimitFiltr(req.query.skip, req.query.top, JSON.parse(req.body.filterConfig))));
+
+    res.set('Content-Type', 'text/plain;charset=utf-8');
+    res.end('ok');
 });
+
+app.get('/subscribe', (req, res) => {
+    res.set('Content-Type', 'text/plain;charset=utf-8');
+    res.set('Cache-Control', 'no-cache, must-revalidate');
+
+    dispatcher.once('message', message => {
+        res.end(message);
+    });
+});
+
 
 app.post('/addPhotoPost', upload.single('namePhotoLink'), (req, res) => {
 
     f.addPhotoPostJson(req.body.namePhotoDesc, nameUploadFile, req.body.namePhotoHash, req.body.namePhotoUser);
+
     res.end('ok');
 });
 
@@ -65,7 +78,6 @@ app.put('/editPhotoPost', upload.single('editPhotoLink'), (req, res) => {
 });
 
 app.delete('/removePhotoPost', urlencodedParser, (req, res) => {
-
     f.removePhotoPost(req.query.id);
 
     res.end('ok');
