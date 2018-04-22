@@ -1,5 +1,4 @@
 let photoView = (function () {
-
     let showPostPhoto = () => {
         photoView.bCloseHiddenContent();
         photoView.genLog();
@@ -36,7 +35,6 @@ let photoView = (function () {
     };
 
     let addPhotoPost = () => {
-
         let html = `	  
                 <div id="divOuterAddPhoto" class = "divOuterLogin">
                      <div id="divInnerAddPhoto" class = "divInnerAddPhoto">
@@ -46,7 +44,7 @@ let photoView = (function () {
         document.getElementById('hidden-content').innerHTML = html;
 
         if (!user) {
-            divInnerAddPhoto.innerHTML += "Only authorized users can add photos";
+            divInnerAddPhoto.innerHTML += 'Only authorized users can add photos';
             return false;
         }
 
@@ -61,7 +59,6 @@ let photoView = (function () {
 				   <input id="submitPhotoPost" type="submit" value="save"  style="width:40%;" class="add-btn"/>
              </form> `;
         divInnerAddPhoto.innerHTML += html;
-
 
     };
 
@@ -81,7 +78,6 @@ let photoView = (function () {
 		             </div>
 	             </div>`;
         document.getElementById('hidden-content').innerHTML = html;
-
 
         let post = {};
         post = photoModel.getPhotoPostServer(id);
@@ -115,14 +111,14 @@ let photoView = (function () {
     let removePhotoPost = (t) => {
         let id = t.parentNode.dataset.id;
         photoModel.removePhotoPostServer(id);
+        photoView.showPostPhoto();
         return false;
     };
 
     let likePhotoPost = (t) => {
-
         let id = t.parentNode.dataset.id;
         let html = photoModel.likePhotoPostServer(id);
-        let likeInfo = document.querySelectorAll("div[data-id='" + id + "'][class=like-info]");
+        let likeInfo = document.querySelectorAll('div[data-id=\'' + id + '\'][class=like-info]');
 
         likeInfo[0].innerHTML = html;
         if (likeInfo [1]) {
@@ -181,8 +177,6 @@ let photoView = (function () {
 
     var genPhotoPosts = (skip = 0, top = 10) => {
 
-        let lengthPost = 1;
-
         let dateFrom = document.getElementById('filt-input-date-from').value;
         let dateTo = document.getElementById('filt-input-date-to').value;
         let filterConfig = {
@@ -192,31 +186,14 @@ let photoView = (function () {
             'hashtag': document.getElementById('filt-input-hashtag').value
         };
 
-        while (skip < top) {
+        let posts = photoModel.getPhotoPostsServer(skip, top, filterConfig);
 
-            let post = photoModel.getPhotoPostsServerLongPolling(skip, skip + 1, filterConfig)[0];
+        if (posts && posts.length < 10) document.getElementById('show-more-photo').style.display = 'none';
+        else document.getElementById('show-more-photo').style.display = 'inline';
 
-            if (!post) {
-
-                if (lengthPost < 10) document.getElementById('show-more-photo').style.display = "none";
-                else document.getElementById('show-more-photo').style.display = "inline";
-                return false;
-            }
-            let table = document.getElementById('phototable');
-            if (skip === 0) table.innerHTML = '';
-
-            table.appendChild(genPhotoPost(post));
-
-            if (document.querySelector("div[data-id='" + post.id + "']")) {
-                skip++;
-                lengthPost++;
-            }
-        }
     };
 
     let morePhoto = () => {
-
-        let lengthPost = 1;
 
         let dateFrom = document.getElementById('filt-input-date-from').value;
         let dateTo = document.getElementById('filt-input-date-to').value;
@@ -227,37 +204,20 @@ let photoView = (function () {
             hashtag: document.getElementById('filt-input-hashtag').value
         };
 
-        let skip = document.getElementsByClassName('photo-cell').length;
-        let top = skip + 10;
+        let last = document.getElementsByClassName('photo-cell').length;
+        let last10 = last + 10;
 
+        let posts = photoModel.getPhotoPostsServer(last, last10, filterConfig);
 
-        while (skip < top) {
-
-            let post = photoModel.getPhotoPostsServerLongPolling(skip, skip + 1, filterConfig)[0];
-
-            if (!post) {
-
-                if (lengthPost < 10) document.getElementById('show-more-photo').style.display = "none";
-                else document.getElementById('show-more-photo').style.display = "inline";
-                return false;
-            }
-            let table = document.getElementById('phototable');
-            if (skip == 0) table.innerHTML = '';
-
-            table.appendChild(genPhotoPost(post));
-
-            if (document.querySelector("div[data-id='" + post.id + "']")) {
-                skip++;
-                lengthPost++;
-            }
-        }
+        if (posts && last + 10 >= photoModel.photoPosts.length) document.getElementById('show-more-photo').style.display = 'none';
+        else document.getElementById('show-more-photo').style.display = 'inline';
 
     };
 
     let genNameList = (names) => {
         let root = document.getElementById('name-list');
 
-        document.getElementById('name-list').innerHTML = "";
+        document.getElementById('name-list').innerHTML = '';
 
         names.forEach(name => {
             let option = document.createElement('option');
@@ -269,7 +229,7 @@ let photoView = (function () {
     let genHashTagList = (hashTags) => {
         let root = document.getElementById('hashtag-list');
 
-        document.getElementById('hashtag-list').innerHTML = "";
+        document.getElementById('hashtag-list').innerHTML = '';
 
         hashTags.forEach(tag => {
             let option = document.createElement('option');
@@ -300,15 +260,12 @@ let photoView = (function () {
     };
 
     let genLogOut = () => {
-
         localStorage.setItem('user', '');
         user = localStorage.getItem('user');
-
-        photoView.showPostPhoto();
+        document.location.reload();
     };
 
     let genLogIn = () => {
-
         let html = `	  
                 <div id="divOuterLogin" class = "divOuterLogin">
                      <div class = "divInner">
@@ -323,16 +280,14 @@ let photoView = (function () {
     };
 
     let genLogForm = () => {
-
         let enterUser = document.getElementById('name-input-login').value;
-        if (photoModel.getNames().indexOf(enterUser) == -1) enterUser = '';
+        if (photoModel.getNames().indexOf(enterUser) === -1) enterUser = '';
 
         divOuterLogin.remove();
 
         localStorage.setItem('user', enterUser);
         user = localStorage.getItem('user');
-
-        photoView.showPostPhoto();
+        document.location.reload();
     };
 
     return {

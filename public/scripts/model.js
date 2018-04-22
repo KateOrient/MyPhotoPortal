@@ -1,23 +1,4 @@
 let photoModel = (function () {
-
-    let getPhotoPostsServerLongPolling = (skip, top, filterConfig) => {
-        let res;
-        let data = '?skip=' + encodeURIComponent(skip) + '&top=' + encodeURIComponent(top);
-        let body = 'filterConfig=' + encodeURIComponent(JSON.stringify(filterConfig));
-
-        let xhr = new XMLHttpRequest();
-        xhr.open('POST', '/getPhotoPostLongPoling/' + data, false);
-        xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-        xhr.onreadystatechange = () => {
-            if (xhr.readyState === 4 && xhr.status === 200) {
-                res = JSON.parse(xhr.responseText);
-            }
-        };
-        xhr.send(body);
-        return res;
-    };
-
-
     let getPhotoPostServer = (id) => {
         let res;
         let data = '?id=' + encodeURIComponent(id);
@@ -32,21 +13,36 @@ let photoModel = (function () {
         return res;
     };
 
+    function subscribe() {
+        let xhr = new XMLHttpRequest();
+        xhr.open('GET', '/subscribe', true);
+
+        xhr.onload = function () {
+
+            posts = JSON.parse(xhr.responseText);
+
+            photoView.genPhotoPostsView(posts);
+
+            subscribe();
+        };
+        xhr.openerror = xhr.onabort = function () {
+            setTimeout(subscribe, 100)
+        };
+        xhr.send('');
+    }
+
+    subscribe();
+
+    let xhr;
     let getPhotoPostsServer = (skip, top, filterConfig) => {
-        let res;
+
         let data = '?skip=' + encodeURIComponent(skip) + '&top=' + encodeURIComponent(top);
         let body = 'filterConfig=' + encodeURIComponent(JSON.stringify(filterConfig));
 
         let xhr = new XMLHttpRequest();
         xhr.open('POST', '/getPhotoPost/' + data, false);
         xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-        xhr.onreadystatechange = () => {
-            if (xhr.readyState === 4 && xhr.status === 200) {
-                res = JSON.parse(xhr.responseText);
-            }
-        };
         xhr.send(body);
-        return res;
     };
 
     let addPhotoPostServer = () => {
@@ -62,6 +58,7 @@ let photoModel = (function () {
         };
         xhr.send(formData);
         delete formData;
+
 
         if (res === 'ok') {
             photoPosts = readJsonData('/read');
@@ -83,7 +80,6 @@ let photoModel = (function () {
         };
         xhr.send(formDataEdit);
         delete formDataEdit;
-
 
         if (res === 'ok') {
             photoPosts = readJsonData('/read');
@@ -112,7 +108,6 @@ let photoModel = (function () {
     };
 
     let likePhotoPostServer = (id) => {
-
         let user = localStorage.getItem('user');
         let res;
 
@@ -142,7 +137,6 @@ let photoModel = (function () {
     };
 
     let saveJsonData = (arrPost) => {
-
         let body = 'data=' + encodeURIComponent(JSON.stringify(arrPost));
         let reqServer = new XMLHttpRequest();
         reqServer.open('POST', '/save', false);
@@ -156,7 +150,7 @@ let photoModel = (function () {
         reqServer.send(body);
     };
 
-    var photoPosts = readJsonData('/read');
+    let photoPosts = readJsonData('/read');
 
     let getNames = () => {
         return photoPosts.map(post => post.author).filter((name, indx, self) => self.indexOf(name) === indx);
@@ -189,10 +183,9 @@ let photoModel = (function () {
         return res;
     };
 
-
     return {
         likePhotoPostServer, removePhotoPostServer, editPhotoPostServer, addPhotoPostServer,
-        getPhotoPostServer, getPhotoPostsServer, getPhotoPostsServerLongPolling,
+        getPhotoPostServer, getPhotoPostsServer,
         readJsonData, saveJsonData,
         photoPosts,
         getNames, getHashTags,

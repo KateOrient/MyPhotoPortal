@@ -69,7 +69,7 @@ var eventDelegation = (e) => {
             return false;
         }
 
-        if (target.className === 'like') {
+        if (target.className === 'like' && user) {
             photoView.likePhotoPost(target);
             return false;
         }
@@ -106,7 +106,6 @@ var eventDelegation = (e) => {
 
         target = target.parentNode;
     } while (target);
-
     return false;
 };
 
@@ -117,7 +116,7 @@ var filterEvents = () => {
                 photoView.genPhotoPosts();
             });
         });
-}
+};
 
 
 
