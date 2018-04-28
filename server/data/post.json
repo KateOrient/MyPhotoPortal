@@ -7,7 +7,8 @@
         "photoLink": "./img/photo/18.jpg",
         "likes": [
             "Svetik1998",
-            "Kate Sosinovich"
+            "Kate Sosinovich",
+            "admin"
         ],
         "hashTags": [
             "#spring",
@@ -46,8 +47,7 @@
         "likes": [
             "Ivan Ivanov",
             "SamiyKrytoi",
-            "Egor1995",
-            "admin"
+            "Egor1995"
         ],
         "hashTags": [
             "#life",
@@ -69,19 +69,19 @@
         "hashTags": []
     },
     {
-        "id": "9",
-        "description": "WOW! Is it a stone or a piece of brick wall??",
-        "createdAt": "2018-02-23T09:45:00.000Z",
+        "id": "8",
+        "description": "Looks amazing, isn't it? Do you know what they are doing? If not, visit google.com",
+        "createdAt": "2018-02-23T17:01:24.000Z",
         "author": "admin",
-        "photoLink": "./img/photo/8.jpg",
+        "photoLink": "./img/photo/7.jpg",
         "likes": [
-            "Ekaterina Sosinovich",
-            "EgorGitar",
+            "Ivan Ivanov",
+            "SamiyKrytoi",
             "Egor1995",
-            "admin"
+            "Ekaterina Sosinovich"
         ],
         "hashTags": [
-            "#hashtag1",
+            "#life",
             "#hashtag2"
         ]
     },
@@ -93,8 +93,7 @@
         "photoLink": "./img/photo/13.jpg",
         "likes": [
             "kate145",
-            "Egor1995",
-            "admin"
+            "Egor1995"
         ],
         "hashTags": [
             "#life",
@@ -110,7 +109,8 @@
         "likes": [
             "SamiyKrytoi",
             "Egor1995",
-            "Kate Sosinovich"
+            "Kate Sosinovich",
+            "admin"
         ],
         "hashTags": [
             "#book",
@@ -126,8 +126,7 @@
         "photoLink": "./img/photo/19.jpg",
         "likes": [
             "Kate Sosinovich",
-            "EgorGitar",
-            "admin"
+            "EgorGitar"
         ],
         "hashTags": [
             "#warm_vs_cold"
@@ -194,7 +193,8 @@
         "likes": [
             "Ivan Ivanov",
             "Egor1995",
-            "kate145"
+            "kate145",
+            "admin"
         ],
         "hashTags": [
             "#car",
@@ -213,8 +213,7 @@
             "LenaLena",
             "Svetik1998",
             "Kate Sosinovich",
-            "AnnaKirova",
-            "admin"
+            "AnnaKirova"
         ],
         "hashTags": [
             "#cat",
@@ -263,31 +262,13 @@
             "Ivan Ivanov",
             "SamiyKrytoi",
             "Egor1995",
-            "KirrilK",
-            "admin"
+            "KirrilK"
         ],
         "hashTags": [
             "#seaside",
             "#life",
             "#friends",
             "#enjoyment"
-        ]
-    },
-    {
-        "id": "15",
-        "description": "To love or To be loved? How you've spent St. Valintine's day? Mine was great!",
-        "createdAt": "2018-02-14T18:45:08.000Z",
-        "author": "admin",
-        "photoLink": "./img/photo/14.jpg",
-        "likes": [
-            "SamiyKrytoi",
-            "Egor1995",
-            "EgorGitar",
-            "Kate Sosinovich"
-        ],
-        "hashTags": [
-            "#love",
-            "#friends"
         ]
     },
     {

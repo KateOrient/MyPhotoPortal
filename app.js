@@ -1,6 +1,5 @@
 const f = require('./app-func.js');
 
-
 let express = require('express');
 
 let app = express();
@@ -8,9 +7,9 @@ app.use(express.static(__dirname + '/public/'));
 
 let fs = require('fs');
 
-var multer = require('multer');
-var nameUploadFile = '';
-var storage = multer.diskStorage({
+let multer = require('multer');
+let nameUploadFile = '';
+let storage = multer.diskStorage({
     destination: function (req, file, callback) {
         callback(null, './public/img/photo');
     },
@@ -19,10 +18,10 @@ var storage = multer.diskStorage({
         callback(null, nameUploadFile);
     }
 });
-var upload = multer({storage: storage});
+let upload = multer({storage: storage});
 
-var bodyParser = require('body-parser');
-var urlencodedParser = bodyParser.urlencoded({extended: false});
+let bodyParser = require('body-parser');
+let urlencodedParser = bodyParser.urlencoded({extended: false});
 
 
 app.get('/', (req, res) => {
@@ -42,36 +41,16 @@ app.get('/getPhotoPost', urlencodedParser, (req, res) => {
     res.end(JSON.stringify(f.getPhotoPostId(req.query.id)));
 });
 
-var events = require('events');
-var dispatcher = new events.EventEmitter();
-
 app.post('/getPhotoPost', urlencodedParser, (req, res) => {
-
-    dispatcher.emit('message', JSON.stringify(f.getPhotoPostsLimitFiltr(req.query.skip, req.query.top, JSON.parse(req.body.filterConfig))));
-
-    res.set('Content-Type', 'text/plain;charset=utf-8');
-    res.end('ok');
+    res.end(JSON.stringify(f.getPhotoPostsLimitFiltr(req.query.skip, req.query.top, JSON.parse(req.body.filterConfig))));
 });
-
-app.get('/subscribe', (req, res) => {
-    res.set('Content-Type', 'text/plain;charset=utf-8');
-    res.set('Cache-Control', 'no-cache, must-revalidate');
-
-    dispatcher.once('message', message => {
-        res.end(message);
-    });
-});
-
 
 app.post('/addPhotoPost', upload.single('namePhotoLink'), (req, res) => {
-
     f.addPhotoPostJson(req.body.namePhotoDesc, nameUploadFile, req.body.namePhotoHash, req.body.namePhotoUser);
-
     res.end('ok');
 });
 
 app.put('/editPhotoPost', upload.single('editPhotoLink'), (req, res) => {
-
     f.editPhotoPost(req.body.editId, req.body.editPhotoDesc, nameUploadFile, req.body.editPhotoHash, req.body.namePhotoUserEdit);
     nameUploadFile = '';
     res.end('ok');
@@ -79,7 +58,6 @@ app.put('/editPhotoPost', upload.single('editPhotoLink'), (req, res) => {
 
 app.delete('/removePhotoPost', urlencodedParser, (req, res) => {
     f.removePhotoPost(req.query.id);
-
     res.end('ok');
 });
 

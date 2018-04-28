@@ -233,8 +233,7 @@ body {
    padding: 30px;
    margin: 17vmin; 
    margin-top: 20vh;
-   width: auto; 
-   display: inline-block;
+   width: auto;
    vertical-align: middle;	
    text-align: center;
 }
@@ -245,8 +244,7 @@ body {
    padding: 30px;
    margin: 10vmin; 
    margin-top: 20vh;
-   width: 30%;  height: auto; 
-   display: inline-block;
+   width: 30%;  height: auto;
    vertical-align: middle;	
    text-align: center;
 }
@@ -257,8 +255,7 @@ body {
    padding: 30px;
    margin: 10vmin; 
    margin-top: 20vh;
-   width: 70%;  height: 100%; 
-   display: inline-block;
+   width: 70%;  height: 100%;
    vertical-align: middle;	
    text-align: center;
 }
@@ -269,8 +266,7 @@ body {
    padding: 30px;
    margin: 10vmin; 
    margin-top: 20vh;
-   width: auto;  height: auto; 
-   display: inline-block;
+   width: auto;  height: auto;
    vertical-align: middle;	
    text-align: center;
 }
@@ -284,7 +280,7 @@ body {
 
 .bClose {
 	position:absolute;
-	top:0px; 
+	top:0;
 	right: 5px; 
 	font-size: 35px; 
 	color: white;

@@ -33,72 +33,58 @@ var eventDelegation = (e) => {
             photoView.showPostPhoto();
             return false;
         }
-
         if (target.className === 'photo') {
             photoView.viewPhotoPosts(target);
             return false;
         }
-
         if (target.className === 'edit') {
             photoView.editPhotoPost(target);
             return false;
         }
-
         if (target.className === 'delete') {
             photoView.removePhotoPost(target);
             return false;
         }
-
         if (target.id === 'add-photo') {
             photoView.addPhotoPost();
             return false;
         }
-
         if (target.className === 'bClose') {
             photoView.bCloseHiddenContent();
             return false;
         }
-
         if (target.className === 'listHashtag') {
             photoView.filtHashtag(target);
             return false;
         }
-
         if (target.id === 'show-more-photo') {
             photoView.morePhoto();
             return false;
         }
-
         if (target.className === 'like' && user) {
             photoView.likePhotoPost(target);
             return false;
         }
-
         if (target.id === 'sign-out') {
             photoView.genLogOut();
             return false;
         }
-
         if (target.id === 'sign-in') {
             photoView.genLogIn();
             return false;
         }
-
         if (target.id === 'submit-input-login') {
             photoView.genLogForm();
             return false;
         }
-
         if (target.id === 'submit-input-login') {
             photoView.genLogForm();
             return false;
         }
-
         if (target.id === 'submitEditPost') {
             photoView.editPhotoPostSave();
             return false;
         }
-
         if (target.id === 'submitPhotoPost') {
             photoView.addPhotoPostSave();
             return false;
@@ -106,6 +92,7 @@ var eventDelegation = (e) => {
 
         target = target.parentNode;
     } while (target);
+
     return false;
 };
 
