@@ -57,16 +57,11 @@ let editPhotoPost = (id, desc, url, hash, user) => {
     if (url) {
         let urlOld = photoPosts[i].photoLink.split('\/');
         photoPosts[i].photoLink = './img/photo/' + url;
-        let urlOldImage = './public/img/photo/' + urlOld[urlOld.length - 1];
-        fs.unlink(urlOldImage, () => {
-            console.log('replacement file: ' + urlOldImage);
-        });
     }
     fs.writeFileSync('./server/data/post.json', JSON.stringify(photoPosts, '', 4));
 };
 
 let addPhotoPostJson = (desc, url, hash, user) => {
-
     let photoPosts = JSON.parse(fs.readFileSync('./server/data/post.json', 'utf8'));
 
     let i = photoPosts.length;
@@ -92,9 +87,7 @@ let maxId = (arr) => {
 };
 
 let getPhotoPostId = (id) => {
-
     let photoPosts = JSON.parse(fs.readFileSync('./server/data/post.json', 'utf8'));
-
     return photoPosts.find(el => el.id === id);
 };
 
@@ -138,6 +131,7 @@ let getPhotoPostsLimitFiltr = (skip, top, filterConfig = {}) => {
     }
     return resPhotoPosts.slice(skip, top);
 };
+
 
 module.exports.likePhotoPost = likePhotoPost;
 module.exports.removePhotoPost = removePhotoPost;

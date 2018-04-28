@@ -1,164 +1,230 @@
 let photoModel = (function () {
-    let getPhotoPostServer = (id) => {
-        let res;
-        let data = '?id=' + encodeURIComponent(id);
-        let xhr = new XMLHttpRequest();
-        xhr.open('GET', '/getPhotoPost/' + data, false);
-        xhr.onreadystatechange = () => {
-            if (xhr.readyState === 4 && xhr.status === 200) {
-                res = JSON.parse(xhr.responseText);
-            }
-        };
-        xhr.send();
-        return res;
+    let getPhotoPostPromise = (id) => {
+        return new Promise((resolve, reject) => {
+            let data = '?id=' + encodeURIComponent(id);
+            let xhr = new XMLHttpRequest();
+            xhr.open('GET', '/getPhotoPost/' + data, true);
+
+            xhr.onload = () => {
+                if (xhr.status === 200) {
+                    resolve(xhr.response);
+                } else {
+                    let error = new Error(xhr.statusText);
+                    error.code = xhr.status;
+                    reject(error);
+                }
+            };
+            xhr.onerror = () => {
+                reject(new Error('Network Error'));
+            };
+
+            xhr.send();
+        });
     };
 
-    function subscribe() {
-        let xhr = new XMLHttpRequest();
-        xhr.open('GET', '/subscribe', true);
+    let getPhotoPostsPromise = (skip, top, filterConfig) => {
+        return new Promise((resolve, reject) => {
+            let data = '?skip=' + encodeURIComponent(skip) + '&top=' + encodeURIComponent(top);
+            let body = 'filterConfig=' + encodeURIComponent(JSON.stringify(filterConfig));
 
-        xhr.onload = function () {
+            let xhr = new XMLHttpRequest();
+            xhr.open('POST', '/getPhotoPost/' + data, true);
+            xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
 
-            posts = JSON.parse(xhr.responseText);
+            xhr.onload = () => {
+                if (xhr.status === 200) {
+                    resolve(xhr.response);
+                } else {
+                    let error = new Error(xhr.statusText);
+                    error.code = xhr.status;
+                    reject(error);
+                }
+            };
+            xhr.onerror = () => {
+                reject(new Error('Network Error'));
+            };
 
-            photoView.genPhotoPostsView(posts);
+            xhr.send(body);
+        });
+    };
 
-            subscribe();
-        };
-        xhr.openerror = xhr.onabort = function () {
-            setTimeout(subscribe, 100)
-        };
-        xhr.send('');
-    }
-
-    subscribe();
-
-    let xhr;
     let getPhotoPostsServer = (skip, top, filterConfig) => {
+        let tempFunc = async (skip, top, filterConfig) => {
+            let posts = JSON.parse(await  getPhotoPostsPromise(skip, top, filterConfig));
+            photoView.genPhotoPostsInPromise(skip, posts);
+        };
+        tempFunc(skip, top, filterConfig);
 
-        let data = '?skip=' + encodeURIComponent(skip) + '&top=' + encodeURIComponent(top);
-        let body = 'filterConfig=' + encodeURIComponent(JSON.stringify(filterConfig));
+        return [];
+    };
 
-        let xhr = new XMLHttpRequest();
-        xhr.open('POST', '/getPhotoPost/' + data, false);
-        xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-        xhr.send(body);
+    let addPhotoPostPromise = () => {
+        return new Promise((resolve, reject) => {
+            let formData = new FormData(document.forms.formAdd);
+            let xhr = new XMLHttpRequest();
+            xhr.open('POST', '/addPhotoPost/', true);
+            xhr.onload = () => {
+                if (xhr.status === 200) {
+                    resolve(xhr.response);
+                } else {
+                    let error = new Error(xhr.statusText);
+                    error.code = xhr.status;
+                    reject(error);
+                }
+            };
+            xhr.onerror = () => {
+                reject(new Error('Network Error'));
+            };
+
+            xhr.send(formData);
+            delete formData;
+
+        });
     };
 
     let addPhotoPostServer = () => {
-        let res;
-
-        let formData = new FormData(document.forms.formAdd);
-        let xhr = new XMLHttpRequest();
-        xhr.open('POST', '/addPhotoPost/', false);
-        xhr.onreadystatechange = () => {
-            if (xhr.readyState === 4 && xhr.status === 200) {
-                res = xhr.responseText;
-            }
-        };
-        xhr.send(formData);
-        delete formData;
-
-
-        if (res === 'ok') {
-            photoPosts = readJsonData('/read');
-            photoView.genPhotoPosts(0, 10);
-        }
-    };
-
-    let editPhotoPostServer = () => {
-        let res;
-
-        let formDataEdit = new FormData(document.forms.formEdit);
-
-        let xhr = new XMLHttpRequest();
-        xhr.open('PUT', '/editPhotoPost/', false);
-        xhr.onreadystatechange = () => {
-            if (xhr.readyState === 4 && xhr.status === 200) {
-                res = xhr.responseText;
-            }
-        };
-        xhr.send(formDataEdit);
-        delete formDataEdit;
-
-        if (res === 'ok') {
-            photoPosts = readJsonData('/read');
-            photoView.genPhotoPosts(0, 10);
-            photoView.bCloseHiddenContent();
-        }
-
+        addPhotoPostPromise()
+            .then(response => {
+                    photoPosts = readJsonData('/read');
+                    photoView.genPhotoPosts(0, 10);
+                },
+                error => console.log(`rejected: ${error}`)
+            );
         return false;
     };
 
-    let removePhotoPostServer = (id) => {
-        let res;
-        let xhr = new XMLHttpRequest();
-        xhr.open('DELETE', '/removePhotoPost/?id=' + encodeURIComponent(id), false);
-        xhr.onreadystatechange = () => {
-            if (xhr.readyState === 4 && xhr.status === 200) {
-                res = xhr.responseText;
-            }
-        };
-        xhr.send();
+    let editPhotoPostPromise = () => {
+        return new Promise((resolve, reject) => {
+            let formDataEdit = new FormData(document.forms.formEdit);
+            let xhr = new XMLHttpRequest();
+            xhr.open('PUT', '/editPhotoPost/', true);
 
-        if (res === 'ok') {
-            photoPosts = readJsonData('/read');
-            photoView.genPhotoPosts(0, 10);
-        }
+            xhr.onload = () => {
+                if (xhr.status === 200) {
+                    resolve(xhr.response);
+                } else {
+                    let error = new Error(xhr.statusText);
+                    error.code = xhr.status;
+                    reject(error);
+                }
+            };
+            xhr.onerror = () => {
+                reject(new Error('Network Error'));
+            };
+
+            xhr.send(formDataEdit);
+            delete formDataEdit;
+
+        });
     };
 
-    let likePhotoPostServer = (id) => {
-        let user = localStorage.getItem('user');
-        let res;
+    let editPhotoPostServer = () => {
+        editPhotoPostPromise()
+            .then(response => {
+                    photoPosts = readJsonData('/read');
+                    photoView.genPhotoPosts(0, 10);
+                    photoView.bCloseHiddenContent();
+                },
+                error => console.log(`rejected: ${error}`)
+            );
+        return false;
+    };
 
-        let data = '?id=' + encodeURIComponent(id) + '&user=' + encodeURIComponent(user);
-        let xhr = new XMLHttpRequest();
-        xhr.open('GET', '/likePhotoPost/' + data, false);
-        xhr.onreadystatechange = () => {
-            if (xhr.readyState === 4 && xhr.status === 200) {
-                res = xhr.responseText;
-            }
-        };
-        xhr.send();
-        return res;
+    let removePhotoPostPromise = (id) => {
+        return new Promise((resolve, reject) => {
+            let xhr = new XMLHttpRequest();
+            xhr.open('DELETE', '/removePhotoPost/?id=' + encodeURIComponent(id), true);
+            xhr.onload = () => {
+                if (xhr.status === 200) {
+                    resolve(xhr.response);
+                } else {
+                    let error = new Error(xhr.statusText);
+                    error.code = xhr.status;
+                    reject(error);
+                }
+            };
+            xhr.onerror = () => {
+                reject(new Error('Network Error'));
+            };
+            xhr.send();
+        });
+    };
+
+    let removePhotoPostServer = (id) => {
+        removePhotoPostPromise(id)
+            .then(response => {
+                    photoPosts = readJsonData('/read');
+                    photoView.genPhotoPosts(0, 10);
+                },
+                error => console.log(`rejected: ${error}`)
+            );
+        return false;
+    };
+
+    let likePhotoPostPromise = (id) => {
+        return new Promise((resolve, reject) => {
+            let user = localStorage.getItem('user');
+
+            let data = '?id=' + encodeURIComponent(id) + '&user=' + encodeURIComponent(user);
+            let xhr = new XMLHttpRequest();
+            xhr.open('GET', '/likePhotoPost/' + data, true);
+            xhr.onload = () => {
+                if (xhr.status === 200) {
+                    resolve(xhr.response);
+                } else {
+                    let error = new Error(xhr.statusText);
+                    error.code = xhr.status;
+                    reject(error);
+                }
+            };
+            xhr.onerror = () => {
+                reject(new Error('Network Error'));
+            };
+
+            xhr.send();
+        });
+    };
+
+    let readJsonDataPromise = () => {
+        return new Promise((resolve, reject) => {
+            let xhr = new XMLHttpRequest();
+            xhr.open('GET', '/read', true);
+
+            xhr.onload = () => {
+                if (xhr.status === 200) {
+                    return resolve(xhr.responseText);
+                } else {
+                    let error = new Error(xhr.statusText);
+                    error.code = xhr.status;
+                    return reject(error);
+                }
+            };
+            xhr.onerror = () => {
+                reject(new Error('Network Error'));
+            };
+
+            xhr.send();
+        });
     };
 
     let readJsonData = () => {
-        let arrPost = [];
-        let reqServer = new XMLHttpRequest();
-        reqServer.open('GET', '/read', false);
-        reqServer.onreadystatechange = () => {
-            if (reqServer.readyState === 4 && reqServer.status === 200) {
-                arrPost = JSON.parse(reqServer.responseText);
-            }
-        };
-        reqServer.send();
-        return arrPost;
+        readJsonDataPromise()
+            .then(response => {
+                    photoModel.photoPosts = JSON.parse(response);
+                },
+                error => console.log(`rejected: ${error}`)
+            );
+        return [];
     };
 
-    let saveJsonData = (arrPost) => {
-        let body = 'data=' + encodeURIComponent(JSON.stringify(arrPost));
-        let reqServer = new XMLHttpRequest();
-        reqServer.open('POST', '/save', false);
-        reqServer.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-
-        reqServer.onreadystatechange = () => {
-            if (reqServer.readyState === 4 && reqServer.status === 200) {
-                console.log(reqServer.responseText);
-            }
-        };
-        reqServer.send(body);
-    };
-
-    let photoPosts = readJsonData('/read');
-
+    let photoPosts = readJsonData();
     let getNames = () => {
-        return photoPosts.map(post => post.author).filter((name, indx, self) => self.indexOf(name) === indx);
+        return photoModel.photoPosts.map(post => post.author).filter((name, indx, self) => self.indexOf(name) === indx);
     };
 
     let getHashTags = () => {
         let hashtags = [];
-        photoPosts.forEach(post => post.hashTags.forEach(tag => hashtags.push(tag)));
+        photoModel.photoPosts.forEach(post => post.hashTags.forEach(tag => hashtags.push(tag)));
         return hashtags.filter((tag, indx, self) => self.indexOf(tag) === indx);
     };
 
@@ -184,9 +250,9 @@ let photoModel = (function () {
     };
 
     return {
-        likePhotoPostServer, removePhotoPostServer, editPhotoPostServer, addPhotoPostServer,
-        getPhotoPostServer, getPhotoPostsServer,
-        readJsonData, saveJsonData,
+        removePhotoPostServer, editPhotoPostServer, addPhotoPostServer,
+        getPhotoPostsServer,
+        getPhotoPostPromise, likePhotoPostPromise,
         photoPosts,
         getNames, getHashTags,
         genDate, genHashTags, genDesc
