@@ -84,7 +84,7 @@ let photoModel = (function () {
 
     let addPhotoPostServer = () => {
         addPhotoPostPromise()
-            .then(response => {
+            .then(() => {
                     photoPosts = readJsonData('/read');
                     photoView.genPhotoPosts(0, 10);
                 },
@@ -120,7 +120,7 @@ let photoModel = (function () {
 
     let editPhotoPostServer = () => {
         editPhotoPostPromise()
-            .then(response => {
+            .then(() => {
                     photoPosts = readJsonData('/read');
                     photoView.genPhotoPosts(0, 10);
                     photoView.bCloseHiddenContent();
@@ -152,7 +152,7 @@ let photoModel = (function () {
 
     let removePhotoPostServer = (id) => {
         removePhotoPostPromise(id)
-            .then(response => {
+            .then(() => {
                     photoPosts = readJsonData('/read');
                     photoView.genPhotoPosts(0, 10);
                 },
@@ -229,7 +229,7 @@ let photoModel = (function () {
     };
 
     let genDate = date => {
-        d = new Date(Date.parse(date));
+        let d = new Date(Date.parse(date));
         let options = {year: 'numeric', month: 'numeric', day: 'numeric', hour: 'numeric', minute: 'numeric'};
         return d.toLocaleString('ru', options);
     };
