@@ -1,5 +1,8 @@
 const f = require('./app-func.js');
 
+var mongoClient = require('mongodb').MongoClient;
+f.fillMongodbFromJson('./server/data/post.json');
+
 let usersList = require('./server/data/user.json');
 const crypto = require('crypto');
 
@@ -67,7 +70,7 @@ passport.use(new LocalStrategy({
     function (username, password, done) {
         if (usersList[username]) {
             //console.log('пользователь ' + username + ' есть');
-            
+
             let decipher = crypto.createDecipher('aes-256-cbc', username);
             let decryptedPassword = decipher.update(usersList[username], 'hex', 'utf8');
             decryptedPassword += decipher.final('utf8');
@@ -99,7 +102,7 @@ passport.deserializeUser(function (username, done) {
 });
 
 app.post('/login/',
-    upload.single(''), 
+    upload.single(''),
     passport.authenticate('local'),
     (req, res) => {
         //console.log(req.user.username);
@@ -125,7 +128,20 @@ app.get('/', (req, res) => {
 });
 
 app.get('/read', (req, res) => {
-    res.end(fs.readFileSync('./server/data/post.json', 'utf8'));
+    let urlDB = 'mongodb://localhost:27017/';
+    mongoClient.connect(urlDB, function (err, client) {
+
+        let db = client.db('mpp');
+        db.collection('photo').find().toArray(function (err, results) {
+            console.log('---------------------------------------------------');
+            console.log('произвольный JSON документ из коллекции photo');
+            console.log('---------------------------------------------------');
+            console.log(results[Math.floor(Math.random() * (results.length + 1))]);
+            console.log('---------------------------------------------------');
+            res.end(JSON.stringify(results, '', 4));
+            client.close();
+        });
+    });
 });
 
 app.post('/save', urlencodedParser, (req, res) => {

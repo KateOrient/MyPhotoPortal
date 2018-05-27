@@ -1,5 +1,7 @@
 let fs = require('fs');
 
+let mongoClient = require('mongodb').MongoClient;
+
 let likePhotoPost = (id, user) => {
     let photoPosts = JSON.parse(fs.readFileSync('./server/data/post.json', 'utf8'));
 
@@ -13,12 +15,12 @@ let likePhotoPost = (id, user) => {
                 photoPosts[i].likes.splice(j, 1);
             }
         }
-        html = '<img src=\"./img/like/like-outline.png\" class=\"like\" title=\"' + photoPosts[i].likes.join(', ') + '\">';
-        html += '<div class=\"like-num\">' + photoPosts[i].likes.length + '</div>';
+        html = '<img src=\'./img/like/like-outline.png\' class=\'like\' title=\'' + photoPosts[i].likes.join(', ') + '\'>';
+        html += '<div class=\'like-num\'>' + photoPosts[i].likes.length + '</div>';
     } else {
         photoPosts[i].likes[photoPosts[i].likes.length] = user;
-        html = '<img src=\"./img/like/like.png\" class=\"like\" title=\"' + photoPosts[i].likes.join(', ') + '\">';
-        html += '<div class=\"like-num\">' + photoPosts[i].likes.length + '</div>';
+        html = '<img src=\'./img/like/like.png\' class=\'like\' title=\'' + photoPosts[i].likes.join(', ') + '\'>';
+        html += '<div class=\'like-num\'>' + photoPosts[i].likes.length + '</div>';
     }
 
     fs.writeFileSync('./server/data/post.json', JSON.stringify(photoPosts, '', 4));
@@ -132,6 +134,32 @@ let getPhotoPostsLimitFiltr = (skip, top, filterConfig = {}) => {
     return resPhotoPosts.slice(skip, top);
 };
 
+let fillMongodbFromJson = (file) => {
+    let photoPosts = JSON.parse(fs.readFileSync(file, 'utf8'));
+
+    let urlDB = 'mongodb://localhost:27017/';
+
+    mongoClient.connect(urlDB, function (err, client) {
+        if(client) {
+            let db = client.db('mpp');
+
+            db.collection('photo').drop();
+
+            let i = 0;
+            while (photoPosts[i]) {
+                db.collection('photo').insertOne(photoPosts[i], function (err, result) {
+                    if (err) {
+                        return console.log(err);
+                    }
+                });
+                i++;
+            }
+            client.close();
+        }
+
+    });
+};
+
 
 module.exports.likePhotoPost = likePhotoPost;
 module.exports.removePhotoPost = removePhotoPost;
@@ -139,6 +167,7 @@ module.exports.addPhotoPostJson = addPhotoPostJson;
 module.exports.editPhotoPost = editPhotoPost;
 module.exports.getPhotoPostId = getPhotoPostId;
 module.exports.getPhotoPostsLimitFiltr = getPhotoPostsLimitFiltr;
+module.exports.fillMongodbFromJson = fillMongodbFromJson;
 	
 	
 	
