@@ -325,7 +325,7 @@ let photoView = (function () {
                      <div class = "divInner">
 		                  <b class="bClose">X</b>
 
-						  <form id='formLogin" name="formLogin" method = "POST"  enctype="multipart/form-data">
+						  <form id="formLogin" name="formLogin" method = "POST"  enctype="multipart/form-data">
 		                       <input type="text" id="name-input-login" name="login" placeholder="login"><br><br>
                                <input type="password" id="name-input-pass"  name="pass"  placeholder="password"><br><br>
 			                   <input id="submit-input-login" type="submit" value ="sing-in"><br><br>						  

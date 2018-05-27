@@ -121,7 +121,7 @@ let eventDelegation = (e) => {
     return false;
 };
 
-let filterEvents = () => {
+var filterEvents = () => {
     ['filt-input-name', 'filt-input-date-from', 'filt-input-date-to', 'filt-input-hashtag'].forEach(
         (id) => {
             document.getElementById(id).addEventListener('input', () => {
