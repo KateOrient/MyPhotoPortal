@@ -1,4 +1,54 @@
 let photoModel = (function () {
+	
+    let getLoginFormPromise = () => {
+		
+       return new Promise((resolve, reject) => {			
+		    var res;		
+            let formData = new FormData(document.forms.formLogin);
+            let xhr = new XMLHttpRequest();
+            xhr.open('POST', '/login/');
+		
+            xhr.onload = () => {
+                if (xhr.status === 200) {					
+                    resolve(xhr.response);
+                } else {
+                    let error = new Error(xhr.statusText);
+                    error.code = xhr.status;
+                    reject(error);
+                }
+            };
+            xhr.onerror = () => {
+                reject(new Error('Network Error'));
+            };
+            xhr.send(formData);			
+            delete formData;		
+        });	
+    };
+
+    let getLogiOutPromise = () => {
+		
+        return new Promise((resolve, reject) => {
+            let data = '';
+            let xhr = new XMLHttpRequest();
+            xhr.open('GET', '/logout/' + data, true);
+            xhr.onload = () => {
+                if (xhr.status === 200) {
+                    resolve(xhr.response);
+                } else {
+                    let error = new Error(xhr.statusText);
+                    error.code = xhr.status;
+                    reject(error);
+                }
+            };
+            xhr.onerror = () => {
+                reject(new Error('Network Error'));
+            };
+            xhr.send();
+        });		
+	
+    };	
+	
+	
     let getPhotoPostPromise = (id) => {
         return new Promise((resolve, reject) => {
             let data = '?id=' + encodeURIComponent(id);
@@ -84,7 +134,7 @@ let photoModel = (function () {
 
     let addPhotoPostServer = () => {
         addPhotoPostPromise()
-            .then(() => {
+            .then(response => {
                     photoPosts = readJsonData('/read');
                     photoView.genPhotoPosts(0, 10);
                 },
@@ -120,7 +170,7 @@ let photoModel = (function () {
 
     let editPhotoPostServer = () => {
         editPhotoPostPromise()
-            .then(() => {
+            .then(response => {
                     photoPosts = readJsonData('/read');
                     photoView.genPhotoPosts(0, 10);
                     photoView.bCloseHiddenContent();
@@ -152,7 +202,7 @@ let photoModel = (function () {
 
     let removePhotoPostServer = (id) => {
         removePhotoPostPromise(id)
-            .then(() => {
+            .then(response => {
                     photoPosts = readJsonData('/read');
                     photoView.genPhotoPosts(0, 10);
                 },
@@ -229,7 +279,7 @@ let photoModel = (function () {
     };
 
     let genDate = date => {
-        let d = new Date(Date.parse(date));
+        d = new Date(Date.parse(date));
         let options = {year: 'numeric', month: 'numeric', day: 'numeric', hour: 'numeric', minute: 'numeric'};
         return d.toLocaleString('ru', options);
     };
@@ -252,8 +302,8 @@ let photoModel = (function () {
     return {
         removePhotoPostServer, editPhotoPostServer, addPhotoPostServer,
         getPhotoPostsServer,
-        getPhotoPostPromise, likePhotoPostPromise,
-        photoPosts,
+        getPhotoPostPromise, likePhotoPostPromise, getLoginFormPromise, getLogiOutPromise,
+        photoPosts, 
         getNames, getHashTags,
         genDate, genHashTags, genDesc
     }

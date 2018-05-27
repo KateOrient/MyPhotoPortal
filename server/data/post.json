@@ -39,6 +39,26 @@
         ]
     },
     {
+        "id": "2",
+        "description": "It's my cat Cookie. I love him sooo much",
+        "createdAt": "2018-02-24T11:34:22.000Z",
+        "author": "admin",
+        "photoLink": "./img/photo/1.jpg",
+        "likes": [
+            "Ivan Ivanov",
+            "SamiyKrytoi",
+            "Egor1995",
+            "Natya Leonova",
+            "KirrilK",
+            "kate145",
+            "admin"
+        ],
+        "hashTags": [
+            "#my_cat",
+            "#fluffy"
+        ]
+    },
+    {
         "id": "1",
         "description": "This is an amazing photo! Do you like it?",
         "createdAt": "2018-02-23T17:45:32.000Z",
@@ -64,7 +84,9 @@
             "Ivan Ivanov",
             "EgorGitar",
             "Kate Sosinovich",
-            "kate145"
+            "kate145",
+            "admin",
+            ""
         ],
         "hashTags": []
     },
@@ -78,10 +100,28 @@
             "Ivan Ivanov",
             "SamiyKrytoi",
             "Egor1995",
-            "Ekaterina Sosinovich"
+            "Ekaterina Sosinovich",
+            "admin"
         ],
         "hashTags": [
             "#life",
+            "#hashtag2"
+        ]
+    },
+    {
+        "id": "9",
+        "description": "WOW! Is it a stone or a piece of brick wall??",
+        "createdAt": "2018-02-23T09:45:00.000Z",
+        "author": "admin",
+        "photoLink": "./img/photo/8.jpg",
+        "likes": [
+            "Ekaterina Sosinovich",
+            "EgorGitar",
+            "Egor1995",
+            "admin"
+        ],
+        "hashTags": [
+            "#hashtag1",
             "#hashtag2"
         ]
     },
@@ -92,8 +132,9 @@
         "author": "Ivan Ivanov",
         "photoLink": "./img/photo/13.jpg",
         "likes": [
+            "Egor1995",
             "kate145",
-            "Egor1995"
+            "admin"
         ],
         "hashTags": [
             "#life",
@@ -126,7 +167,8 @@
         "photoLink": "./img/photo/19.jpg",
         "likes": [
             "Kate Sosinovich",
-            "EgorGitar"
+            "EgorGitar",
+            ""
         ],
         "hashTags": [
             "#warm_vs_cold"
@@ -193,8 +235,7 @@
         "likes": [
             "Ivan Ivanov",
             "Egor1995",
-            "kate145",
-            "admin"
+            "kate145"
         ],
         "hashTags": [
             "#car",
@@ -213,7 +254,8 @@
             "LenaLena",
             "Svetik1998",
             "Kate Sosinovich",
-            "AnnaKirova"
+            "AnnaKirova",
+            "admin"
         ],
         "hashTags": [
             "#cat",
@@ -262,13 +304,31 @@
             "Ivan Ivanov",
             "SamiyKrytoi",
             "Egor1995",
-            "KirrilK"
+            "KirrilK",
+            "admin"
         ],
         "hashTags": [
             "#seaside",
             "#life",
             "#friends",
             "#enjoyment"
+        ]
+    },
+    {
+        "id": "15",
+        "description": "To love or To be loved? How you've spent St. Valintine's day? Mine was great!",
+        "createdAt": "2018-02-14T18:45:08.000Z",
+        "author": "admin",
+        "photoLink": "./img/photo/14.jpg",
+        "likes": [
+            "SamiyKrytoi",
+            "Egor1995",
+            "EgorGitar",
+            "Kate Sosinovich"
+        ],
+        "hashTags": [
+            "#love",
+            "#friends"
         ]
     },
     {
