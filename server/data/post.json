@@ -151,7 +151,8 @@
             "SamiyKrytoi",
             "Egor1995",
             "Kate Sosinovich",
-            "admin"
+            "admin",
+            ""
         ],
         "hashTags": [
             "#book",
@@ -167,8 +168,7 @@
         "photoLink": "./img/photo/19.jpg",
         "likes": [
             "Kate Sosinovich",
-            "EgorGitar",
-            ""
+            "EgorGitar"
         ],
         "hashTags": [
             "#warm_vs_cold"
